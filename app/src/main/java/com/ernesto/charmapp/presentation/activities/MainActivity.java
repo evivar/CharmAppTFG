@@ -11,6 +11,9 @@ import android.widget.Button;
 import com.ernesto.charmapp.R;
 import com.ernesto.charmapp.presentation.activities.doctorActivities.DoctorLoginActivity;
 import com.ernesto.charmapp.presentation.activities.patientActivities.PatientLoginActivity;
+import com.skyhope.eventcalenderlibrary.CalenderEvent;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
 }
