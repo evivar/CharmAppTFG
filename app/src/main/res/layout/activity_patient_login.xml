@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:gravity="top"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/titleLbl"
+        android:layout_width="match_parent"
+        android:layout_height="182dp"
+        android:layout_gravity="bottom|center"
+        android:background="@drawable/bottomroundedcard"
+        android:fontFamily="@font/pacifico"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="70sp"
+        tools:text="CharmApp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-20dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/background"
+        android:paddingTop="20dp"
+        android:textAlignment="center"
+        app:cardBackgroundColor="#ffffff"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="8dp"
+        app:cardPreventCornerOverlap="false">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="73dp" />
+
+            <EditText
+                android:id="@+id/emailTxt_patientLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="#000000"
+                android:drawableStart="@drawable/usericon"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Usuario"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:maxHeight="24dp"
+                android:onClick="editEmail"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textColor="#000000"
+                android:textColorHighlight="#78D1D2"
+                android:textColorHint="#000000"
+                android:textColorLink="#78D1D2" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="14dp" />
+
+            <EditText
+                android:id="@+id/passwordTxt_patientLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="#000000"
+                android:drawableStart="@drawable/passicon"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Contraseña"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:maxHeight="24dp"
+                android:onClick="editPassword"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#000000"
+                android:textColorHighlight="#78D1D2"
+                android:textColorHint="#000000"
+                android:textColorLink="#78D1D2" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <Button
+                android:id="@+id/logInBtn_patientLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/roundedbutton"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="INICIAR SESIÓN"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/registerBtn_patientLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/roundedbutton"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="REGISTRARSE"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

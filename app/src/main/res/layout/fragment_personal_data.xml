@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/personalDataLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".presentation.fragments.doctorFragments.PersonalDataFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/datosPersonalesLbl_personalData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Datos personales"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/emailLbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Correo"/>
+
+                <EditText
+                    android:id="@+id/emailTxt_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textEmailAddress"
+                    android:textSize="14sp"
+                    android:tag="email"/>
+
+                <TextView
+                    android:id="@+id/phoneLbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Teléfono" />
+
+                <EditText
+                    android:id="@+id/phoneTxt_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="phone"
+                    android:textSize="14sp"
+                    android:tag="phone" />
+
+                <TextView
+                    android:id="@+id/nameLbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre" />
+
+                <EditText
+                    android:id="@+id/nameTxt_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp"
+                    android:tag="name"/>
+
+                <TextView
+                    android:id="@+id/surname1Lbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Primer apellido" />
+
+                <EditText
+                    android:id="@+id/surname1Txt_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp"
+                    android:tag="surname1"/>
+
+                <TextView
+                    android:id="@+id/surname2Lbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Segundo Apellido" />
+
+                <EditText
+                    android:id="@+id/surname2Txt_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/codeLbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Código de asignación" />
+
+                <EditText
+                    android:id="@+id/codeTxt_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/birthLbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha de nacimiento" />
+
+                <EditText
+                    android:id="@+id/birdTxt_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:inputType="date"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/genderLbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sexo" />
+
+                <Spinner
+                    android:id="@+id/genderSpinner_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:entries="@array/sex_spinner" />
+
+                <TextView
+                    android:id="@+id/professionLbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Profesión" />
+
+                <TextView
+                    android:id="@+id/professionPlaceLbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lugar de profesión" />
+
+                <RadioGroup
+                    android:id="@+id/professionPlaceRGroup_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
+
+                    <RadioButton
+                        android:id="@+id/professionPlaceClosedRButton_personalData"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lugar cerrado la mayoría del tiempo"
+                        android:tag="Lugar cerrado"/>
+
+                    <RadioButton
+                        android:id="@+id/professionPlaceOpenedRButton_personalData"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lugar abierto la mayoría del tiempo"
+                        android:tag="Lugar abierto"/>
+
+                    <RadioButton
+                        android:id="@+id/professionPlaceBothRButton_personalData"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mitad del tiempo lugar cerrado y la otra mitad en lugar abierto"
+                        android:tag="Mitad del tiempo en lugar cerrado y mitad abierto"/>
+
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/sectorLbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sector de profesión" />
+
+                <Spinner
+                    android:id="@+id/professionSpinner_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:entries="@array/profession_spiner" />
+
+                <Spinner
+                    android:id="@+id/sectorSpinner_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:entries="@array/sector_spinner" />
+
+                <TextView
+                    android:id="@+id/otherSectorLbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Si es otro, decir cuál" />
+
+                <EditText
+                    android:id="@+id/otherSectorTxt_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/neighbourCPLbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Código postal del lugar de residencia" />
+
+                <EditText
+                    android:id="@+id/neighbourCPTxt_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/workCPRLbl_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Código postal del lugar de trabajo" />
+
+                <EditText
+                    android:id="@+id/workCPTxt_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/nextBtn_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/roundedbutton"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="SIGUIENTE"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/backBtn_personalData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/roundedbutton"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="ATRAS"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

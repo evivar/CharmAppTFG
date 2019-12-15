@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.fragments.doctorFragments.LifeHabitsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/habitosDeVidaLbl_lifeHabits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Hábitos de vida"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/smokingLbl_lifeHabits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fumador" />
+
+                <RadioGroup
+                    android:id="@+id/smokingRGroup_lifeHabits"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RadioButton
+                        android:id="@+id/smokingYesRButton_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="Sí"
+                        android:text="Si" />
+
+                    <RadioButton
+                        android:id="@+id/smokingNoRButton_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="No"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/alcoholLbl_lifeHabits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Alcohol" />
+
+                <RadioGroup
+                    android:id="@+id/alcoholRGroup_lifeHabits"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RadioButton
+                        android:id="@+id/alcoholDailyRButton_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="Diario"
+                        android:text="Diariamente" />
+
+                    <RadioButton
+                        android:id="@+id/alcoholWeekendRButton_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="Fines de Semana"
+                        android:text="Fines de semana" />
+
+                    <RadioButton
+                        android:id="@+id/alcoholSporadicRButton_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="Esporádicamente"
+                        android:text="Esporádicamente" />
+
+                    <RadioButton
+                        android:id="@+id/alcoholNeverRButton_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="Nunca"
+                        android:text="Nunca" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/caffeineLbl_lifeHabits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cafeina" />
+
+                <RadioGroup
+                    android:id="@+id/caffeineRGroup_lifeHabits"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RadioButton
+                        android:id="@+id/caffeineYesRButton_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="Sí"
+                        android:text="Si" />
+
+                    <RadioButton
+                        android:id="@+id/caffeineNoRButton_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="No"
+                        android:text="No" />
+
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/dietLbl_lifeHabits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Consume frutas y verduras diariamente?" />
+
+                <RadioGroup
+                    android:id="@+id/dietRGroup_lifeHabits"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RadioButton
+                        android:id="@+id/dietYesRButton_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="Sí"
+                        android:text="Si" />
+
+                    <RadioButton
+                        android:id="@+id/dietNoRButton_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="No"
+                        android:text="No" />
+
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/sportLbl_lifeHabits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Hace ejercicio 3 veces o más a la semana?" />
+
+                <RadioGroup
+                    android:id="@+id/sportRGroup_lifeHabits"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RadioButton
+                        android:id="@+id/sportYesRButton_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="Sí"
+                        android:text="Si" />
+
+                    <RadioButton
+                        android:id="@+id/sportNoRButton_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="No"
+                        android:text="No" />
+
+                </RadioGroup>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/nextBtn_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/roundedbutton"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="SIGUIENTE"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/backBtn_lifeHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/roundedbutton"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="ATRAS"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

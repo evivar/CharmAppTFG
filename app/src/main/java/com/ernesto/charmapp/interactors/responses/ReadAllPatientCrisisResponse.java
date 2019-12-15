@@ -1,0 +1,35 @@
+package com.ernesto.charmapp.interactors.responses;
+
+import com.ernesto.charmapp.domain.Headache;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+public class ReadAllPatientCrisisResponse {
+
+    @SerializedName("Error")
+    @Expose
+    private Boolean error;
+    @SerializedName("Crisis")
+    @Expose
+    private List<Headache> crisis = null;
+
+    public Boolean getError() {
+        return error;
+    }
+
+    public void setError(Boolean error) {
+        this.error = error;
+    }
+
+    public List<Headache> getCrisis() {
+        return crisis;
+    }
+
+    public void setCrisis(List<Headache> crisis) {
+        this.crisis = crisis;
+    }
+
+
+}

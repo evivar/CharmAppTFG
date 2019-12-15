@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.fragments.patientFragments.DiaryFragment">
+
+    <com.github.florent37.diagonallayout.DiagonalLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="#00000000"
+        android:elevation="30dp"
+        app:diagonal_angle="10"
+        app:diagonal_direction="left"
+        app:diagonal_position="bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background"
+            android:clipChildren="false"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/nameLbl_DiagonalLayout_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diario"
+                android:textColor="#ffffff"
+                android:textSize="48sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </com.github.florent37.diagonallayout.DiagonalLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/sleepTimeLbl_diary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tiempo de sueño" />
+
+                <EditText
+                    android:id="@+id/sleepTimeTxt_diary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/sportTimeLbl_diary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Cúanto tiempo de deporte hizo ayer?" />
+
+                <Spinner
+                    android:id="@+id/sportTimeSpinner_diary"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:entries="@array/sportTime_spinner" />
+
+                <TextView
+                    android:id="@+id/alcoholLbl_diary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Cuánto alcohol tomó ayer?" />
+
+                <Spinner
+                    android:id="@+id/alcoholSpinner_diary"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:entries="@array/alcohol_spinner" />
+
+                <TextView
+                    android:id="@+id/smokeLbl_diary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Cuánto fumó ayer?" />
+
+                <Spinner
+                    android:id="@+id/smokeSpinner_diary"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:entries="@array/smoking_spinner" />
+
+                <TextView
+                    android:id="@+id/feelingLbl_diary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Cómo se sintió ayer?" />
+
+                <EditText
+                    android:id="@+id/feelingTxt_diary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/saveBtn_diary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/roundedbutton"
+                    android:text="Guardar" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

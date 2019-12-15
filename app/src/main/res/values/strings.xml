@@ -1,3 +1,101 @@
 <resources>
     <string name="app_name">CharmApp</string>
+
+    <string name="todo">TODO</string>
+
+    <string name="password">Contraseña</string>
+    <string name="correo_electr_nico">Correo electrónico</string>
+    <string name="mostrar_pass">Mostrar contraseña</string>
+    <string name="usuario">Usuario</string>
+    <string name="pass">Contraseña</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="registrarse">Registrarse</string>
+
+    <string name="navigation_drawer_copen">Abrir navigation drawer</string>
+    <string name="navigation_drawer_close">Cerrar navigation drawer</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="sex_spinner">
+        <item></item>
+        <item>Hombre</item>
+        <item>Mujer</item>
+        <item>Prefiero no decirlo</item>
+    </string-array>
+
+    <string-array name="profession_spiner">
+        <item></item>
+        <item>Activo</item>
+        <item>Paro</item>
+    </string-array>
+
+    <string-array name="sector_spinner">
+        <item></item>
+        <item>Sector sanitario</item>
+        <item>Educación</item>
+        <item>Ingeniería</item>
+        <item>Informática</item>
+        <item>Restauración</item>
+        <item>Comercio</item>
+        <item>Administración/Oficina</item>
+        <item>Transporte</item>
+        <item>Seguridad (policía/militar)</item>
+        <item>Sector ganadero/agrícola/pesquero/forestal</item>
+        <item>Construcción</item>
+        <item>Servicios financieros</item>
+        <item>Comunicación audiovisual</item>
+        <item>Industria</item>
+        <item>Otros</item>
+    </string-array>
+
+    <string-array name="sportTime_spinner">
+        <item></item>
+        <item>Nada</item>
+        <item>30 Minutos</item>
+        <item>1 hora</item>
+        <item>2 horas</item>
+        <item>Más de 2 horas</item>
+    </string-array>
+
+    <string-array name="alcohol_spinner">
+        <item></item>
+        <item>No</item>
+        <item>1-2 cervezas</item>
+        <item>Más de 2 cervezas</item>
+        <item>1-2 copas de vino</item>
+        <item>Más de 2 copas de vino</item>
+        <item>1-2 copas de bebida destiladas</item>
+        <item>Más de 2 copas de bebida destilada</item>
+    </string-array>
+
+    <string-array name="smoking_spinner">
+        <item></item>
+        <item>Nada</item>
+        <item>1-10 cigarrillos</item>
+        <item>10-20 cigarrillos</item>
+        <item>20-30 cigarrillos</item>
+        <item>Más de 30 cigarrillos</item>
+    </string-array>
+
+    <string-array name="yes_no_spiner">
+        <item></item>
+        <item>Sí</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="painScale_spiner">
+        <item></item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+
 </resources>
