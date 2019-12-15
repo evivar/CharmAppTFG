@@ -76,7 +76,7 @@ public class PatientIndexFragment extends Fragment {
                         if (!readDiaryResponse.getError()) {
                             Diary lastDiary = readDiaryResponse.getDiario();
                             Date date = new Date(System.currentTimeMillis());
-                            // Revisar lo de si no hay ningun diario metido
+                            /* TODO: Revisar que si no hay ningun diary en la BBDD salta un NullPointerException */
                             if ((!lastDiary.getDate().equals(date.toString()))) {
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)

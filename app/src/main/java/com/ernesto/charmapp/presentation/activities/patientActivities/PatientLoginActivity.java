@@ -16,6 +16,11 @@ import com.ernesto.charmapp.data.SharedPreferencesManager;
 import com.ernesto.charmapp.interactors.responses.PatientLoginResponse;
 import com.ernesto.charmapp.interactors.validators.LoginValidator;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,7 +57,11 @@ public class PatientLoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                login();
+                try {
+                    login();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -65,11 +74,13 @@ public class PatientLoginActivity extends AppCompatActivity {
         });
     }
 
-    public void login() {
+    public void login() throws NoSuchAlgorithmException {
         // Ver como hacer una interfaz para todos los validadores
         email = emailTxt.getText().toString();
         password = passwordTxt.getText().toString();
         if (validator.validate(email, password)) {
+            /* TODO: Ya hashea la contraseña con SHA512, solo falta almacenarla así en la BBDD */
+            System.out.println(SHA512(password));
             Call<PatientLoginResponse> loginPatient = RetrofitClient
                     .getInstance()
                     .getAPI()
@@ -95,6 +106,19 @@ public class PatientLoginActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private String SHA512(String password) throws NoSuchAlgorithmException {
+        String hashedPassword = "";
+
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
+
+        messageDigest.update(password.getBytes(StandardCharsets.UTF_8));
+        byte[] digest = messageDigest.digest();
+        hashedPassword = String.format("%064x", new BigInteger(1, digest));
+        System.out.println(hashedPassword);
+
+        return hashedPassword;
     }
 
     public void register() {
