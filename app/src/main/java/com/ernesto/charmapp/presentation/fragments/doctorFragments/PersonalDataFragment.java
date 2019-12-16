@@ -50,10 +50,6 @@ public class PersonalDataFragment extends Fragment {
 
     private String surname2;
 
-    private EditText patient_idTxt;
-
-    private String patient_id;
-
     private EditText birthDateTxt;
 
     private String birthDate;
@@ -113,7 +109,6 @@ public class PersonalDataFragment extends Fragment {
         nameTxt = v.findViewById(R.id.nameTxt_personalData);
         surname1Txt = v.findViewById(R.id.surname1Txt_personalData);
         surname2Txt = v.findViewById(R.id.surname2Txt_personalData);
-        patient_idTxt = v.findViewById(R.id.codeTxt_personalData);
         birthDateTxt = v.findViewById(R.id.birdTxt_personalData);
         genderSpinner = v.findViewById(R.id.genderSpinner_personalData);
         professionSpinner = v.findViewById(R.id.professionSpinner_personalData);
@@ -140,7 +135,7 @@ public class PersonalDataFragment extends Fragment {
                 if (validateFields()) {
                     professionPlace = professionPlaceRButton.getText().toString();
                     // Rellena los datos de la clase RegisterForm
-                    form.completePersonalData(email, phone, name, surname1, surname2, patient_id, birthDate, gender, profession,
+                    form.completePersonalData(email, phone, name, surname1, surname2, birthDate, gender, profession,
                             professionPlace, sector, otherSector, homeCP, jobCP);
                     //System.out.println(form);
                     // Pasa a la siguiente parte del formulario
@@ -184,7 +179,7 @@ public class PersonalDataFragment extends Fragment {
 
 
     public boolean validateFields() {
-        return validator.validate(email, phone, name, surname1, surname2, patient_id, birthDate, gender, profession,
+        return validator.validate(email, phone, name, surname1, surname2, birthDate, gender, profession,
                 professionPlaceRButton, sector, otherSector, homeCP, jobCP);
     }
 
@@ -212,7 +207,6 @@ public class PersonalDataFragment extends Fragment {
         name = nameTxt.getText().toString();
         surname1 = surname1Txt.getText().toString();
         surname2 = surname2Txt.getText().toString();
-        patient_id = patient_idTxt.getText().toString();
         birthDate = birthDateTxt.getText().toString();
         gender = genderSpinner.getSelectedItem().toString();
         profession = professionSpinner.getSelectedItem().toString();

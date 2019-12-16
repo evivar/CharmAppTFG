@@ -198,8 +198,7 @@
                         android:background="@drawable/roundedbutton"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
-                        android:text="SIGUIENTE"
-                        android:textStyle="bold" />
+                        android:text="SIGUIENTE" />
 
                     <Button
                         android:id="@+id/backBtn_lifeHabits"
@@ -209,8 +208,7 @@
                         android:background="@drawable/roundedbutton"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
-                        android:text="ATRAS"
-                        android:textStyle="bold" />
+                        android:text="ATRAS" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

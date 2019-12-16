@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ABABAB"
+    tools:context="com.ernesto.charmapp.presentation.activities.MainActivity">
+    <!-- TODO: Cambiar el tools.:context por la actividad o el fragment correspondiente -->
+
+    <com.skyhope.eventcalenderlibrary.CalenderEvent
+        android:id="@+id/calender_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="228dp"
+        android:layout_marginBottom="228dp"
+        app:current_month_day_color="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:month_color="#000000"
+        app:next_icon="@drawable/ic_arrow_right"
+        app:off_month_day_color="#00a58f"
+        app:previous_icon="@drawable/ic_arrow_left"
+        app:selector_color="@color/colorPrimary"
+        app:week_name_color="@color/colorAccent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--
+    TODO:
+        AÑADIR UN EVENTO AL CALENDARIO
+        CalenderEvent calenderEvent = findViewById(R.id.calender_event);
+        Event event = new Event(calendar.getTimeInMillis(), "Test");
+        // to set desire day time milli second in first parameter
+        //or you set color for each event
+        Event event = new Event(calendar.getTimeInMillis(), "Test",Color.RED);
+        calenderEvent.addEvent(event);
+        ELIMINAR UN EVENTO DEL CALENDARIO -> No creo que se use
+        calenderEvent.removeEvent(event);
+ -->

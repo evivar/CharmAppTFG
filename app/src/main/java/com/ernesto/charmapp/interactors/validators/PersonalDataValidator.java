@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 public class PersonalDataValidator {
 
     private final Pattern PHONE_VALIDATOR = Pattern.compile("^(6|7)[0-9]{8}$");
-    private final Pattern PATIENT_ID_VALIDATOR = Pattern.compile("CH((0[1-9])|([1-4][0-9])|([5][0-4]))((1[8-9])|([2-9][0-9]))(\\d{3})$");
     private final Pattern POSTAL_CODE_VALIDATOR = Pattern.compile("^((((01)|([1-4]{1}[0-9]{1})|(5[0-2]{1}))([0-9]{2})[1-9]{1})|(((0[2-9]{1})|([1-4]{1}[0-9]{1})|(5[0-2]{1}))([0-9]{3})))$");
     private String wrongFields;
 
@@ -18,7 +17,7 @@ public class PersonalDataValidator {
 
     // Con el spinner hacer un switch de los id de las opciones
 
-    public boolean validate(String email, String phone, String name, String surname1, String surname2, String patient_id, String birthDate, String gender, String profession,
+    public boolean validate(String email, String phone, String name, String surname1, String surname2, String birthDate, String gender, String profession,
                             RadioButton professionPlace, String sector, String otherSector, String homeCP, String jobCP) {
         boolean valid = true;
 
@@ -45,11 +44,6 @@ public class PersonalDataValidator {
         if((surname2.isEmpty()) || (name.length() == 0)){
             valid = false;
             wrongFields += "Segundo apellido\n";
-        }
-
-        if(!PATIENT_ID_VALIDATOR.matcher(patient_id).matches()){
-            valid = false;
-            wrongFields += "Código de asignación\n";
         }
 
         if((birthDate.isEmpty()) || (birthDate.length() != 10)){

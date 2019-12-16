@@ -19,8 +19,6 @@ public class RegisterForm implements Serializable {
 
     private String surname2;
 
-    private String patient_id;
-
     private String birthDate;
 
     private String gender;
@@ -59,14 +57,13 @@ public class RegisterForm implements Serializable {
 
     private ArrayList<String> symptoms;
 
-    public void completePersonalData(String email, String phone, String name, String surname1, String surname2, String patient_id, String birthDate, String gender, String profession,
+    public void completePersonalData(String email, String phone, String name, String surname1, String surname2, String birthDate, String gender, String profession,
                                      String professionPlace, String sector, String otherSector, String homeCP, String jobCP){
         this.email = email;
         this.phone = phone;
         this.name = name;
         this.surname1 = surname1;
         this.surname2 = surname2;
-        this.patient_id = patient_id;
         this.birthDate = birthDate;
         this.gender = gender;
         this.profession = profession;
@@ -108,7 +105,6 @@ public class RegisterForm implements Serializable {
         res += name +"\n";
         res += surname1 +"\n";
         res += surname2 +"\n";
-        res += patient_id +"\n";
         res += birthDate +"\n";
         res += gender +"\n";
         res += profession +"\n";

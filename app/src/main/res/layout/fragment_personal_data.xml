@@ -116,20 +116,6 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/codeLbl_personalData"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Código de asignación" />
-
-                <EditText
-                    android:id="@+id/codeTxt_personalData"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:textSize="14sp" />
-
-                <TextView
                     android:id="@+id/birthLbl_personalData"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -273,8 +259,7 @@
                     android:background="@drawable/roundedbutton"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:text="SIGUIENTE"
-                    android:textStyle="bold" />
+                    android:text="SIGUIENTE" />
 
                 <Button
                     android:id="@+id/backBtn_personalData"
@@ -284,8 +269,7 @@
                     android:background="@drawable/roundedbutton"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:text="ATRAS"
-                    android:textStyle="bold" />
+                    android:text="ATRAS" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
