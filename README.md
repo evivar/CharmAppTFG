@@ -8,4 +8,3 @@ Repositorio del TFG - CharmApp para Android
   - GSON: [GitHub GSON](https://github.com/google/gson)
   - DiagonalLayout: [GitHub DiagonalLayout](https://github.com/florent37/DiagonalLayout)
   - ExpandableLayout: [GitHub ExpandableLayout](https://github.com/skydoves/expandablelayout)
-CAGADOTE
