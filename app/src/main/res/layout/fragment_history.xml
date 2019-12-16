@@ -27,15 +27,15 @@
         app:week_name_color="@color/colorAccent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--
-    TODO:
-        AÑADIR UN EVENTO AL CALENDARIO
-        CalenderEvent calenderEvent = findViewById(R.id.calender_event);
-        Event event = new Event(calendar.getTimeInMillis(), "Test");
-        // to set desire day time milli second in first parameter
-        //or you set color for each event
-        Event event = new Event(calendar.getTimeInMillis(), "Test",Color.RED);
-        calenderEvent.addEvent(event);
-        ELIMINAR UN EVENTO DEL CALENDARIO -> No creo que se use
-        calenderEvent.removeEvent(event);
- -->
+    <!--
+        TODO:
+            AÑADIR UN EVENTO AL CALENDARIO
+            CalenderEvent calenderEvent = findViewById(R.id.calender_event);
+            Event event = new Event(calendar.getTimeInMillis(), "Test");
+            // to set desire day time milli second in first parameter
+            //or you set color for each event
+            Event event = new Event(calendar.getTimeInMillis(), "Test",Color.RED);
+            calenderEvent.addEvent(event);
+            ELIMINAR UN EVENTO DEL CALENDARIO -> No creo que se use
+            calenderEvent.removeEvent(event);
+     -->
