@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".presentation.fragments.patientFragments.HistoryCrisisAndDiaryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/dateLbl"
         android:layout_width="match_parent"
@@ -59,10 +58,10 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:paddingLeft="25dp"
-                android:paddingRight="25dp">
+                android:paddingTop="10dp"
+                android:paddingRight="25dp"
+                android:paddingBottom="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -194,10 +193,10 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:paddingLeft="25dp"
-                android:paddingRight="25dp">
+                android:paddingTop="10dp"
+                android:paddingRight="25dp"
+                android:paddingBottom="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
