@@ -8,7 +8,7 @@
     tools:context=".presentation.fragments.patientFragments.HistoryCrisisAndDiaryFragment">
 
     <TextView
-        android:id="@+id/dateLbl"
+        android:id="@+id/dateLbl_History"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="dd-mm-AAAA"

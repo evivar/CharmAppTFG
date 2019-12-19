@@ -1,10 +1,12 @@
 package com.ernesto.charmapp.presentation.fragments.patientFragments;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,7 @@ import com.ernesto.charmapp.domain.Patient;
 import com.ernesto.charmapp.interactors.responses.ActiveCrisisResponse;
 import com.ernesto.charmapp.interactors.responses.ReadDiaryResponse;
 import com.ernesto.charmapp.interactors.responses.ReadPatientActiveCrisisResponse;
+import com.ernesto.charmapp.presentation.dialogs.DateDialog;
 import com.ernesto.charmapp.presentation.dialogs.InfoDialog;
 
 import java.sql.Date;
@@ -40,6 +43,8 @@ public class PatientIndexFragment extends Fragment {
     private Button historyBtn;
 
     private boolean activeCrisis;
+
+    private String dateString;
 
     public static PatientIndexFragment create(Patient patient) {
         Bundle args = new Bundle();
@@ -142,8 +147,38 @@ public class PatientIndexFragment extends Fragment {
                 });
             }
         });
+
+        historyBtn = v.findViewById(R.id.historialBtn_patientMain);
+        historyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+                        .addToBackStack(null)
+                        .replace(R.id.fragmentContainer_patient, HistoryFragment.create(patient), "HISTORY_FRAGMENT")
+                        .commit();
+            }
+        });
+
+
         return v;
     }
 
+    public void showDatePickerDialog() {
+        DateDialog newFragment = DateDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 porque Enero es el 0
+                final String selectedDate = twoDigits(month + 1) + "/" + twoDigits(day) + "/" + year;
+                dateString = selectedDate;
+            }
+        });
+
+        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+    }
+
+    private String twoDigits(int n) {
+        return (n <= 9) ? ("0" + n) : String.valueOf(n);
+    }
 
 }

@@ -31,6 +31,7 @@ import com.skyhope.eventcalenderlibrary.model.Event;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +48,8 @@ public class HistoryFragment extends Fragment {
 
     private String maxDateBack;
 
-    public static HistoryFragment create(Patient patient, Diary diary){
+    // Pasar la fecha tambien
+    public static HistoryFragment create(Patient patient){
         Bundle args = new Bundle();
         args.putSerializable("patient", patient);
         HistoryFragment f = new HistoryFragment();
@@ -66,25 +68,25 @@ public class HistoryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_history, container, false);
-
+        this.dateString = "";
         CalenderEvent calenderEvent = v.findViewById(R.id.calender_event);
 
-        Calendar calendar = new GregorianCalendar();
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        Event event = new Event(calendar.getTimeInMillis(), "Test");
-        calenderEvent.addEvent(event);
+        Calendar calendar = GregorianCalendar.getInstance(new Locale("es", "ES"));
 
         calenderEvent.initCalderItemClickCallback(new CalenderDayClickListener() {
+
+
             @Override
             public void onGetDay(DayContainerModel dayContainerModel) {
-                dateString = dayContainerModel.getDate();
+                dateString = dayContainerModel.getYear() + "-" + (dayContainerModel.getMonthNumber() + 1) + "-" + dayContainerModel.getDay();
+                System.out.printf(dateString);
                 /* TODO: Restringir el acceso de eventos hasta un máximo de 30 días atras */
                 // No hace falta comprobar que el calendario tenga eventos, ya que siempre tiene que tener diarios y puede tener crisis
                 // Cuando hace click en un dia -> Lo lleva al fragment donde estan los expandables layouts
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
-                        .addToBackStack(null)
                         .replace(R.id.fragmentContainer_patient, HistoryCrisisAndDiaryFragment.create(patient, dateString), "HISTORY_CRISIS_AND_DIARY_FRAGMENT")
+                        .addToBackStack(null)
                         .commit();
             }
         });

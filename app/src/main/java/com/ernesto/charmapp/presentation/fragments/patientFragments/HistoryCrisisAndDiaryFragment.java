@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ernesto.charmapp.R;
 import com.ernesto.charmapp.domain.Diary;
@@ -40,6 +41,9 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
 
     private Headache headache;
 
+    private TextView dateLbl;
+
+
     public static HistoryFragment create(Patient patient, String dateString){
         Bundle args = new Bundle();
         args.putSerializable("patient", patient);
@@ -62,7 +66,10 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_history_crisis_and_diary, container, false);
 
+        System.out.println(dateString);
 
+        this.dateLbl = v.findViewById(R.id.dateLbl_History);
+        this.dateLbl.setText(dateString);
 
         return v;
     }

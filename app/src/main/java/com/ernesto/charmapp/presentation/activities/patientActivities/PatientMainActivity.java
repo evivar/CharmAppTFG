@@ -16,13 +16,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ernesto.charmapp.R;
+import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.data.SharedPreferencesManager;
+import com.ernesto.charmapp.domain.Headache;
 import com.ernesto.charmapp.domain.Patient;
+import com.ernesto.charmapp.interactors.responses.ReadPatientActiveCrisisResponse;
 import com.ernesto.charmapp.presentation.activities.MainActivity;
 import com.ernesto.charmapp.presentation.dialogs.LogOutDialog;
+import com.ernesto.charmapp.presentation.fragments.patientFragments.HeadacheFragment;
 import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientIndexFragment;
 import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientProfileFragment;
 import com.google.android.material.navigation.NavigationView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PatientMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -88,11 +96,40 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
                         .commit();
                 break;
             case R.id.nav_attack:
-                /*getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
-                        .addToBackStack(null)
-                        .replace(R.id.fragmentContainer_attack, AttackFragment.newInstance(), "ATTACK_FRAGMENT")
-                        .commit();*/
+                Call<ReadPatientActiveCrisisResponse> readPatientActiveCrisis = RetrofitClient.getInstance().getAPI().readPatientActiveCrisis(patient.getPatientId());
+                readPatientActiveCrisis.enqueue(new Callback<ReadPatientActiveCrisisResponse>() {
+                    @Override
+                    public void onResponse(Call<ReadPatientActiveCrisisResponse> call, Response<ReadPatientActiveCrisisResponse> response) {
+                        ReadPatientActiveCrisisResponse readPatientActiveCrisisResponse = response.body();
+                        if(!readPatientActiveCrisisResponse.getError()){
+                            if(readPatientActiveCrisisResponse.getCrisis().getPatientId() == null){
+                                System.out.println("Nueva crisis");
+                                getSupportFragmentManager().beginTransaction()
+                                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+                                        .addToBackStack(null)
+                                        .replace(R.id.fragmentContainer_patient, HeadacheFragment.create(new Headache(), patient, false), "HEADACHE_FRAGMENT")
+                                        .commit();
+                            }
+                            else{
+                                System.out.println("Editar crisis");
+                                getSupportFragmentManager().beginTransaction()
+                                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+                                        .addToBackStack(null)
+                                        .replace(R.id.fragmentContainer_patient, HeadacheFragment.create(readPatientActiveCrisisResponse.getCrisis(), patient, true), "HEADACHE_FRAGMENT")
+                                        .commit();
+                            }
+                        }
+                        else{
+                            // Falla la lectura TODO: Revisar esto
+                            //Toast.makeText(getSupportFragmentManager().getFragment(), "ERROR EN LA LECTURA DEL HEADACHE", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ReadPatientActiveCrisisResponse> call, Throwable t) {
+
+                    }
+                });
                 break;
             case R.id.nav_calendar:
                 /*getSupportFragmentManager().beginTransaction()
