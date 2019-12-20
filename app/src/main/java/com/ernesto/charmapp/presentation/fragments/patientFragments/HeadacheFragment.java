@@ -168,7 +168,7 @@ public class HeadacheFragment extends Fragment {
                             }
                         });
                     }
-                    else{
+                    if(!editing){
                         Call<CreateCrisisResponse> createCrisis = RetrofitClient
                                 .getInstance()
                                 .getAPI()
@@ -177,17 +177,17 @@ public class HeadacheFragment extends Fragment {
                             @Override
                             public void onResponse(Call<CreateCrisisResponse> call, Response<CreateCrisisResponse> response) {
                                 CreateCrisisResponse createCrisisResponse = response.body();
-                                if(!createCrisisResponse.getEstadoDelError()){
+                                if(createCrisisResponse != null && !createCrisisResponse.getEstadoDelError()){
                                     System.out.println("Crisis creada correctamente");
                                     Toast.makeText(getActivity(), "Crisis creada correctamente", Toast.LENGTH_LONG).show();
                                     getActivity().getSupportFragmentManager().beginTransaction()
                                             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
-                                            .addToBackStack(null)
                                             .replace(R.id.fragmentContainer_patient, PatientIndexFragment.create(patient), "PATIENT_INDEX_FRAGMENT")
+                                            .addToBackStack(null)
                                             .commit();
                                 }
                                 else{
-                                    Toast.makeText(getActivity(), createCrisisResponse.getMensaje(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), "ERROR: No se pudo crear la crisis", Toast.LENGTH_LONG).show();
                                 }
                             }
 

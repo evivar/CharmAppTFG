@@ -85,7 +85,7 @@ public class HistoryFragment extends Fragment {
                 // Cuando hace click en un dia -> Lo lleva al fragment donde estan los expandables layouts
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
-                        .replace(R.id.fragmentContainer_patient, HistoryCrisisAndDiaryFragment.create(patient, dateString), "HISTORY_CRISIS_AND_DIARY_FRAGMENT")
+                        .add(R.id.fragmentContainer_patient, HistoryCrisisAndDiaryFragment.create(patient, dateString), "HISTORY_CRISIS_AND_DIARY_FRAGMENT")
                         .addToBackStack(null)
                         .commit();
             }

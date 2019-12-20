@@ -9,7 +9,7 @@ public class RetrofitClient {
 
     private static final String BASE_URL = "http://147.96.127.212/CharmAppAPI/public/";
 
-    private static final String BASE_URL_PC = "http://192.168.0.34/CharmAppAPI/public/";
+    private static final String BASE_URL_PC = "http://192.168.0.20/CharmAppAPI/public/";
 
 
     private static RetrofitClient instance;

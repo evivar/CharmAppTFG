@@ -125,7 +125,7 @@ public interface APICalls {
     @POST("createHeadache")
     Call<CreateCrisisResponse> createCrisis(
             @Field("patient_id") String patient_id,
-            @Field("ch_id") String ch_id, // <- ELIMINARLO
+            @Field("ch_id") String ch_id, // TODO: Eliminar el ch_id
             @Field("start_datetime") String start_datetime,
             @Field("end_datetime") String end_datatime,
             @Field("sport") String sport,
