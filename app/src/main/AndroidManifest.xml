@@ -11,10 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.activities.patientActivities.PatientMainActivity"/>
+        <activity android:name=".presentation.activities.patientActivities.PatientMainActivity" />
         <activity android:name=".presentation.activities.patientActivities.PatientLoginActivity" />
         <activity android:name=".presentation.activities.doctorActivities.DoctorMainActivity" />
-        <activity android:name=".presentation.activities.doctorActivities.DoctorLoginActivity" ></activity>
+        <activity android:name=".presentation.activities.doctorActivities.DoctorLoginActivity" />
         <activity android:name=".presentation.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

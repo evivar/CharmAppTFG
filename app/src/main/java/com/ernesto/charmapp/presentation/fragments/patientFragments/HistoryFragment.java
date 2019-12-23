@@ -71,21 +71,18 @@ public class HistoryFragment extends Fragment {
         this.dateString = "";
         CalenderEvent calenderEvent = v.findViewById(R.id.calender_event);
 
-        Calendar calendar = GregorianCalendar.getInstance(new Locale("es", "ES"));
-
         calenderEvent.initCalderItemClickCallback(new CalenderDayClickListener() {
-
 
             @Override
             public void onGetDay(DayContainerModel dayContainerModel) {
                 dateString = dayContainerModel.getYear() + "-" + (dayContainerModel.getMonthNumber() + 1) + "-" + dayContainerModel.getDay();
-                System.out.printf(dateString);
+                System.out.println(dateString);
                 /* TODO: Restringir el acceso de eventos hasta un máximo de 30 días atras */
                 // No hace falta comprobar que el calendario tenga eventos, ya que siempre tiene que tener diarios y puede tener crisis
                 // Cuando hace click en un dia -> Lo lleva al fragment donde estan los expandables layouts
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
-                        .add(R.id.fragmentContainer_patient, HistoryCrisisAndDiaryFragment.create(patient, dateString), "HISTORY_CRISIS_AND_DIARY_FRAGMENT")
+                        .replace(R.id.fragmentContainer_patient, HistoryCrisisAndDiaryFragment.create(patient, dateString), "HISTORY_CRISIS_AND_DIARY_FRAGMENT")
                         .addToBackStack(null)
                         .commit();
             }
@@ -93,6 +90,8 @@ public class HistoryFragment extends Fragment {
 
         return v;
     }
+
+
 
     public void showErrorDialog() {
         ErrorDialog errorDialog = new ErrorDialog("Error", "Solo puedes consultar los últimos 30 días");

@@ -25,6 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/* TODO: Cuando no meto nada en los campos tiene que saltar un error  */
 public class PatientLoginActivity extends AppCompatActivity {
 
     private LoginValidator validator;

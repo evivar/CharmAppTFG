@@ -82,7 +82,11 @@ public class PatientIndexFragment extends Fragment {
                             Diary lastDiary = readDiaryResponse.getDiario();
                             Date date = new Date(System.currentTimeMillis());
                             /* TODO: Revisar que si no hay ningun diary en la BBDD salta un NullPointerException */
-                            if ((!lastDiary.getDate().equals(date.toString()))) {
+                            if(lastDiary.getPatientId() == null){
+                                System.out.println("Primer diario del paciente " +  patient.getPatientId());
+                            }
+                            System.out.println(lastDiary + "\n" + date);
+                            if ((lastDiary.getPatientId() == null) || (!lastDiary.getDate().equals(date.toString()))) {
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                                         .addToBackStack(null)

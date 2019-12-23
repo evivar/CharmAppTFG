@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ABABAB"
-    tools:context="com.ernesto.charmapp.presentation.activities.MainActivity">
-    <!-- TODO: Cambiar el tools.:context por la actividad o el fragment correspondiente -->
+    tools:context=".presentation.fragments.patientFragments.HistoryFragment">
 
     <com.skyhope.eventcalenderlibrary.CalenderEvent
         android:id="@+id/calender_event"
