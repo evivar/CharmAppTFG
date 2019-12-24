@@ -28,10 +28,14 @@ import com.skyhope.eventcalenderlibrary.listener.CalenderDayClickListener;
 import com.skyhope.eventcalenderlibrary.model.DayContainerModel;
 import com.skyhope.eventcalenderlibrary.model.Event;
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +49,8 @@ public class HistoryFragment extends Fragment {
     private Date date;
 
     private String dateString;
+
+    private String dateLbl;
 
     private String maxDateBack;
 
@@ -76,13 +82,14 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onGetDay(DayContainerModel dayContainerModel) {
                 dateString = dayContainerModel.getYear() + "-" + (dayContainerModel.getMonthNumber() + 1) + "-" + dayContainerModel.getDay();
-                System.out.println(dateString);
+                dateLbl = dayContainerModel.getDay() + "-" + (dayContainerModel.getMonthNumber() + 1) + "-" + dayContainerModel.getYear();
+                //isValidDate(dateString);
                 /* TODO: Restringir el acceso de eventos hasta un máximo de 30 días atras */
                 // No hace falta comprobar que el calendario tenga eventos, ya que siempre tiene que tener diarios y puede tener crisis
                 // Cuando hace click en un dia -> Lo lleva al fragment donde estan los expandables layouts
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
-                        .replace(R.id.fragmentContainer_patient, HistoryCrisisAndDiaryFragment.create(patient, dateString), "HISTORY_CRISIS_AND_DIARY_FRAGMENT")
+                        .replace(R.id.fragmentContainer_patient, HistoryCrisisAndDiaryFragment.create(patient, dateString, dateLbl), "HISTORY_CRISIS_AND_DIARY_FRAGMENT")
                         .addToBackStack(null)
                         .commit();
             }
@@ -96,6 +103,22 @@ public class HistoryFragment extends Fragment {
     public void showErrorDialog() {
         ErrorDialog errorDialog = new ErrorDialog("Error", "Solo puedes consultar los últimos 30 días");
         errorDialog.show(getActivity().getSupportFragmentManager(), "ERROR_DIALOG");
+    }
+
+    /* TODO: Tengo que coger la fecha del dia, la fecha que selecciona el usuario y si al restarlas la diferencia es mayor de 30 salta el error, sino sigue al siguiente fragmento */
+    private void isValidDate(String selectedDate){
+        boolean ok = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date selected = sdf.parse(selectedDate);
+            //long diffInMillies = Math.abs(selected.getTime() - todayString.getTime());
+            //long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            //System.out.println(diff);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //return ok;
     }
 
 }

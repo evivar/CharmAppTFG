@@ -89,10 +89,8 @@ public class PatientLoginActivity extends AppCompatActivity {
             loginPatient.enqueue(new Callback<PatientLoginResponse>() {
                 @Override
                 public void onResponse(Call<PatientLoginResponse> call, Response<PatientLoginResponse> response) {
-                    System.out.println("Entro en el request");
                     PatientLoginResponse patientLoginResponse = response.body();
                     if (!patientLoginResponse.getEstadoDelError()) {
-                        System.out.println("CAMBIA DE PANTALLA CARAPENE");
                         SharedPreferencesManager.getInstance(PatientLoginActivity.this).savePatient(patientLoginResponse.getPaciente());
                         Intent intent = new Intent(PatientLoginActivity.this, PatientMainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
