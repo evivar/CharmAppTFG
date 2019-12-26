@@ -17,6 +17,7 @@ import com.ernesto.charmapp.interactors.responses.ReadPasswordByEmailResponse;
 import com.ernesto.charmapp.interactors.responses.ReadPatientActiveCrisisResponse;
 import com.ernesto.charmapp.interactors.responses.ReadPatientByEmailResponse;
 import com.ernesto.charmapp.interactors.responses.UpdateCrisisResponse;
+import com.ernesto.charmapp.interactors.responses.UpdateDiaryResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -41,6 +42,16 @@ public interface APICalls {
      */
 
     /********** PATIENT **********/
+    /**
+     * TODO:
+     *      createPatient: Con/sin patient_id y Con/sin password
+     *      patientLogin
+     *      readAllPatients
+     *      readPatientByEmail
+     *      readPasswordByEmail
+     *      updatePatientPassword
+     *      deletePatient
+     */
 
     // Terminar bien el createPatient
     @FormUrlEncoded
@@ -117,6 +128,18 @@ public interface APICalls {
     Call<ReadDiaryResponse> readDiaryByDate(
             @Field("patient_id") String patient_id,
             @Field("date") String date
+    );
+
+    @FormUrlEncoded
+    @POST("updateDiary")
+    Call<UpdateDiaryResponse> updateDiary(
+            @Field("patient_id") String patient_id,
+            @Field("date") String date,
+            @Field("sleep_time") String sleep_time,
+            @Field("sport_time") String sport_time,
+            @Field("alcohol") String alcohol,
+            @Field("smoke") String smoke,
+            @Field("feeling") String feeling
     );
 
     /********** HEADACHE **********/

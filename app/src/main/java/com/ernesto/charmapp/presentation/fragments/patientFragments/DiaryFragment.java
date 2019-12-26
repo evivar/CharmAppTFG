@@ -1,13 +1,7 @@
 package com.ernesto.charmapp.presentation.fragments.patientFragments;
 
-import android.content.Context;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +10,30 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.ernesto.charmapp.R;
 import com.ernesto.charmapp.data.RetrofitClient;
-import com.ernesto.charmapp.data.SharedPreferencesManager;
 import com.ernesto.charmapp.domain.Diary;
 import com.ernesto.charmapp.domain.Patient;
 import com.ernesto.charmapp.interactors.responses.CreateDiaryResponse;
 import com.ernesto.charmapp.interactors.validators.DiaryValidator;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
+import com.skyhope.eventcalenderlibrary.CalenderEvent;
+import com.skyhope.eventcalenderlibrary.model.Event;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * TODO: Falta meter el evento en el calendario
+ */
 public class DiaryFragment extends Fragment {
 
     private DiaryValidator validator;
@@ -61,7 +64,9 @@ public class DiaryFragment extends Fragment {
 
     private Button saveBtn;
 
-    public static DiaryFragment create(Patient patient, Diary diary){
+    private CalenderEvent calenderEvent;
+
+    public static DiaryFragment create(Patient patient, Diary diary) {
         Bundle args = new Bundle();
         args.putSerializable("patient", patient);
         args.putSerializable("diary", diary);
@@ -90,14 +95,15 @@ public class DiaryFragment extends Fragment {
         this.smokeSpinner = v.findViewById(R.id.smokeSpinner_diary);
         this.feelingTxt = v.findViewById(R.id.feelingTxt_diary);
         this.feelingTxt.setText(diary.getFeeling());
+        this.calenderEvent = v.findViewById(R.id.calender_event);
 
         this.saveBtn = v.findViewById(R.id.saveBtn_diary);
         this.saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 saveFields();
                 validator = new DiaryValidator();
-                if(validator.validate(sleepTime, sportTime, alcohol, smoke, feeling)){
+                if (validator.validate(sleepTime, sportTime, alcohol, smoke, feeling)) {
                     Call<CreateDiaryResponse> createDiary = RetrofitClient
                             .getInstance()
                             .getAPI()
@@ -106,18 +112,19 @@ public class DiaryFragment extends Fragment {
                         @Override
                         public void onResponse(Call<CreateDiaryResponse> call, Response<CreateDiaryResponse> response) {
                             CreateDiaryResponse createDiaryResponse = response.body();
-                            if(!createDiaryResponse.getEstadoDelError()){
+                            if (!createDiaryResponse.getEstadoDelError()) {
+                                Calendar calendar = Calendar.getInstance();
+                                Event event = new Event(calendar.getTimeInMillis(), "Diario", Color.BLUE);
+                                calenderEvent.addEvent(event);
                                 Toast.makeText(getActivity(), "Datos guardados correctamente", Toast.LENGTH_LONG).show();
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                                         .addToBackStack(null)
                                         .replace(R.id.fragmentContainer_patient, PatientIndexFragment.create(patient), "PATIENT_INDEX_FRAGMENT")
                                         .commit();
-                            }
-                            else if ((createDiaryResponse.getEstadoDelError()) && (createDiaryResponse.getMensaje().equals("Ya ha rellenado el formulario para el dia de hoy"))){
+                            } else if ((createDiaryResponse.getEstadoDelError()) && (createDiaryResponse.getMensaje().equals("Ya ha rellenado el formulario para el dia de hoy"))) {
                                 Toast.makeText(getActivity(), createDiaryResponse.getMensaje(), Toast.LENGTH_LONG).show();
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(getActivity(), createDiaryResponse.getMensaje(), Toast.LENGTH_LONG).show();
                             }
                         }
@@ -127,8 +134,7 @@ public class DiaryFragment extends Fragment {
 
                         }
                     });
-                }
-                else{
+                } else {
                     showErrorDialog();
                 }
             }
@@ -137,7 +143,7 @@ public class DiaryFragment extends Fragment {
         return v;
     }
 
-    public void saveFields(){
+    public void saveFields() {
         sleepTime = sleepTimeTxt.getText().toString();
         sportTime = sportTimeSpinner.getSelectedItem().toString();
         alcohol = alcoholSpinner.getSelectedItem().toString();
