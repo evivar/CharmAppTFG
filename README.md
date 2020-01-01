@@ -12,17 +12,17 @@ Repositorio del TFG - CharmApp para Android
 
 ## Como desplegar el API en un servidor
 
-    [SimplifiedCoding Video](https://youtu.be/cC8I9YN1elQ)
+  [SimplifiedCoding Video](https://youtu.be/cC8I9YN1elQ)
 
-    ### Instrucciones
+   ### Instrucciones
 
-        1. En el panel de control crear una base de datos nueva con los datos de cluster_devel
+     1. En el panel de control crear una base de datos nueva con los datos de cluster_devel
 
-        2. (Opcional) Añadir usuarios a la base de datos con permisos a elegir
+     2. (Opcional) Añadir usuarios a la base de datos con permisos a elegir
 
-        3. Cambiar las constantes del API
+     3. Cambiar las constantes del API
 
-        4. Subir los archivos al servidor
+     4. Subir los archivos al servidor
 
             ..* Hacer un .zip del API
             ..* Subir los archivos en el panel de control o con un cliente FTP
