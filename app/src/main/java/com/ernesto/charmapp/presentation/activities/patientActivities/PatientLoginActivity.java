@@ -75,20 +75,6 @@ public class PatientLoginActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * public void onResponse(Call<PatientLoginResponse> call, Response<PatientLoginResponse> response) {
-     *                     PatientLoginResponse patientLoginResponse = response.body();
-     *                     if (!patientLoginResponse.getEstadoDelError()) {
-     *                         SharedPreferencesManager.getInstance(PatientLoginActivity.this).savePatient(patientLoginResponse.getPaciente());
-     *                         Intent intent = new Intent(PatientLoginActivity.this, PatientMainActivity.class);
-     *                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-     *                         startActivity(intent);
-     *                     } else {
-     *                         Toast.makeText(PatientLoginActivity.this, patientLoginResponse.getMensaje(), Toast.LENGTH_LONG).show();
-     *                     }
-     *                 }
-     */
-
     public void login() throws NoSuchAlgorithmException {
         // Ver como hacer una interfaz para todos los validadores
         email = emailTxt.getText().toString();
@@ -101,14 +87,14 @@ public class PatientLoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<PatientResponse> call, Response<PatientResponse> response) {
                     PatientResponse patientResponse = response.body();
-                         if (!patientResponse.getError()) {
-                             SharedPreferencesManager.getInstance(PatientLoginActivity.this).savePatient(patientResponse.getPaciente());
-                              Intent intent = new Intent(PatientLoginActivity.this, PatientMainActivity.class);
-                              intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                              startActivity(intent);
-                          } else {
-                              Toast.makeText(PatientLoginActivity.this, patientResponse.getMensaje(), Toast.LENGTH_LONG).show();
-                          }
+                    if (!patientResponse.getError()) {
+                        SharedPreferencesManager.getInstance(PatientLoginActivity.this).savePatient(patientResponse.getPaciente());
+                        Intent intent = new Intent(PatientLoginActivity.this, PatientMainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(PatientLoginActivity.this, patientResponse.getMensaje(), Toast.LENGTH_LONG).show();
+                    }
                 }
 
                 @Override

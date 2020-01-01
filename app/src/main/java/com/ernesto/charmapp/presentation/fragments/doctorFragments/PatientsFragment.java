@@ -18,6 +18,7 @@ import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.domain.Doctor;
 import com.ernesto.charmapp.domain.Patient;
 import com.ernesto.charmapp.interactors.adaptors.PatientListAdapter;
+import com.ernesto.charmapp.interactors.responses.patientResponses.ReadAllPatientsResponse;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
 
 import java.util.List;
@@ -59,7 +60,7 @@ public class PatientsFragment extends Fragment {
             public void onResponse(Call<ReadAllPatientsResponse> call, Response<ReadAllPatientsResponse> response) {
 
                 if(!response.body().getError()) {
-                    patientList = response.body().getPacientes();
+                    patientList = response.body().getPatientList();
                     patientListAdapter = new PatientListAdapter(getActivity(), patientList);
                     reciclerView.setAdapter(patientListAdapter);
                 }

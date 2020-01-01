@@ -13,6 +13,7 @@ import com.ernesto.charmapp.interactors.responses.ReadDiaryResponse;
 import com.ernesto.charmapp.interactors.responses.ReadPatientActiveCrisisResponse;
 import com.ernesto.charmapp.interactors.responses.UpdateCrisisResponse;
 import com.ernesto.charmapp.interactors.responses.UpdateDiaryResponse;
+import com.ernesto.charmapp.interactors.responses.UpdateResponse;
 import com.ernesto.charmapp.interactors.responses.patientResponses.PatientResponse;
 import com.ernesto.charmapp.interactors.responses.patientResponses.ReadAllPatientsResponse;
 import com.ernesto.charmapp.interactors.responses.patientResponses.ReadPasswordResponse;
@@ -96,7 +97,7 @@ public interface APICalls {
 
     @FormUrlEncoded
     @POST("updatePatientPassword")
-    Call<PatientResponse> changePassword(
+    Call<UpdateResponse> changePassword(
             @Field("email") String email,
             @Field("old_password") String old_password,
             @Field("new_password") String new_password

@@ -17,7 +17,9 @@ import android.widget.Toast;
 import com.ernesto.charmapp.R;
 import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.domain.Doctor;
+import com.ernesto.charmapp.interactors.responses.UpdateResponse;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
+import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientIndexFragment;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -108,23 +110,30 @@ public class DoctorProfileFragment extends Fragment {
             public void onClick(View v) {
                 saveFields();
                 if ((oldPassword != null) && (newPassword != null)) {
-                    final Call<ChangePasswordResponse> changePassword = RetrofitClient
+                    final Call<UpdateResponse> changePassword = RetrofitClient
                             .getInstance()
                             .getAPI()
                             .changePassword(email, oldPassword, newPassword);
-                    changePassword.enqueue(new Callback<ChangePasswordResponse>() {
+                    changePassword.enqueue(new Callback<UpdateResponse>() {
                         @Override
-                        public void onResponse(Call<ChangePasswordResponse> call, Response<ChangePasswordResponse> response) {
-                            ChangePasswordResponse changePasswordResponse = response.body();
+                        public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {
+                            UpdateResponse changePasswordResponse = response.body();
                             Toast.makeText(getActivity(), changePasswordResponse.getMensaje(), Toast.LENGTH_LONG).show();
                             if (changePasswordResponse.getMensaje().equals("La contraseña actual no es correcta")) {
                                 oldPasswordTxt.setError("La contraseña actual no es correcta");
                                 oldPasswordTxt.requestFocus();
                             }
+                            if(!changePasswordResponse.getError()){
+                                getActivity().getSupportFragmentManager().beginTransaction()
+                                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+                                        .addToBackStack(null)
+                                        .replace(R.id.fragmentContainer_patient, new PatientsFragment(), "PATIENT_INDEX_FRAGMENT")
+                                        .commit();
+                            }
                         }
 
                         @Override
-                        public void onFailure(Call<ChangePasswordResponse> call, Throwable t) {
+                        public void onFailure(Call<UpdateResponse> call, Throwable t) {
 
                         }
                     });

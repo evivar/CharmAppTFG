@@ -164,21 +164,4 @@ public class PatientIndexFragment extends Fragment {
         return v;
     }
 
-    public void showDatePickerDialog() {
-        DateDialog newFragment = DateDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                // +1 porque Enero es el 0
-                final String selectedDate = twoDigits(month + 1) + "/" + twoDigits(day) + "/" + year;
-                dateString = selectedDate;
-            }
-        });
-
-        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-    }
-
-    private String twoDigits(int n) {
-        return (n <= 9) ? ("0" + n) : String.valueOf(n);
-    }
-
 }
