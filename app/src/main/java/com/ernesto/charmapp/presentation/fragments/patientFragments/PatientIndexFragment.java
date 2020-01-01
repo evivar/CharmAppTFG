@@ -18,6 +18,7 @@ import com.ernesto.charmapp.domain.Headache;
 import com.ernesto.charmapp.domain.Patient;
 import com.ernesto.charmapp.interactors.responses.ReadDiaryResponse;
 import com.ernesto.charmapp.interactors.responses.ReadPatientActiveCrisisResponse;
+import com.ernesto.charmapp.interactors.responses.diaryResponses.DiaryResponse;
 import com.ernesto.charmapp.presentation.dialogs.InfoDialog;
 
 import java.sql.Date;
@@ -66,35 +67,39 @@ public class PatientIndexFragment extends Fragment {
         diaryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<ReadDiaryResponse> readLastDiary = RetrofitClient
+                Call<DiaryResponse> readLastDiary = RetrofitClient
                         .getInstance()
                         .getAPI()
                         .readLastDiary(patient.getPatientId());
-                readLastDiary.enqueue(new Callback<ReadDiaryResponse>() {
+                readLastDiary.enqueue(new Callback<DiaryResponse>() {
                     @Override
-                    public void onResponse(Call<ReadDiaryResponse> call, Response<ReadDiaryResponse> response) {
-                        ReadDiaryResponse readDiaryResponse = response.body();
-                        if (!readDiaryResponse.getError()) {
-                            Diary lastDiary = readDiaryResponse.getDiario();
+                    public void onResponse(Call<DiaryResponse> call, Response<DiaryResponse> response) {
+                        DiaryResponse diaryResponse = response.body();
+                        if (!diaryResponse.getError()) {
+                            Diary lastDiary = diaryResponse.getDiary();
                             Date date = new Date(System.currentTimeMillis());
-                            /* TODO: Revisar que si no hay ningun diary en la BBDD salta un NullPointerException */
-                            if ((lastDiary.getPatientId() == null) || (!lastDiary.getDate().equals(date.toString()))) {
+                            if (!lastDiary.getDate().equals(date.toString())) {
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                                         .addToBackStack(null)
-                                        .replace(R.id.fragmentContainer_patient, DiaryFragment.create(patient, new Diary()), "DIARY_FRAGMENT")
+                                        .replace(R.id.fragmentContainer_patient, DiaryFragment.create(patient, lastDiary), "DIARY_FRAGMENT")
                                         .commit();
                             } else {
                                 InfoDialog dialog = new InfoDialog("Ya ha rellenado el diario de hoy");
                                 dialog.show(getFragmentManager(), "tagAlerta");
                             }
                         } else {
-                            Toast.makeText(getActivity(), "Error con la base de datos", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Primer diario del paciente", Toast.LENGTH_LONG).show();
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+                                    .addToBackStack(null)
+                                    .replace(R.id.fragmentContainer_patient, DiaryFragment.create(patient, new Diary()), "DIARY_FRAGMENT")
+                                    .commit();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<ReadDiaryResponse> call, Throwable t) {
+                    public void onFailure(Call<DiaryResponse> call, Throwable t) {
 
                     }
                 });

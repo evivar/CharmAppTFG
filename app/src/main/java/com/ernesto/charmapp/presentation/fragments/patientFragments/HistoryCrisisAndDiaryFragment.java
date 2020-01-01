@@ -23,6 +23,8 @@ import com.ernesto.charmapp.domain.Patient;
 import com.ernesto.charmapp.interactors.responses.CreateDiaryResponse;
 import com.ernesto.charmapp.interactors.responses.ReadDiaryResponse;
 import com.ernesto.charmapp.interactors.responses.UpdateDiaryResponse;
+import com.ernesto.charmapp.interactors.responses.UpdateResponse;
+import com.ernesto.charmapp.interactors.responses.diaryResponses.DiaryResponse;
 import com.ernesto.charmapp.interactors.validators.DiaryValidator;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
 import com.skyhope.eventcalenderlibrary.model.Event;
@@ -102,17 +104,17 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
 
         // Leemos el diario y la crisis del dia seleccionado
 
-        final Call<ReadDiaryResponse> readDiaryByDate = RetrofitClient
+        final Call<DiaryResponse> readDiaryByDate = RetrofitClient
                 .getInstance()
                 .getAPI()
                 .readDiaryByDate(patient.getPatientId(), dateString);
-        readDiaryByDate.enqueue(new Callback<ReadDiaryResponse>() {
+        readDiaryByDate.enqueue(new Callback<DiaryResponse>() {
             @Override
-            public void onResponse(Call<ReadDiaryResponse> call, Response<ReadDiaryResponse> response) {
-                ReadDiaryResponse readDiaryResponse = response.body();
-                if (!readDiaryResponse.getError()) {
-                    if (readDiaryResponse.getDiario().getDate() != null) {
-                        diary = readDiaryResponse.getDiario();
+            public void onResponse(Call<DiaryResponse> call, Response<DiaryResponse> response) {
+                DiaryResponse diaryResponse = response.body();
+                if (!diaryResponse.getError()) {
+                    if (diaryResponse.getDiary().getDate() != null) {
+                        diary = diaryResponse.getDiary();
                         fillDiary();
                     } else {
                         diary = null;
@@ -123,7 +125,7 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ReadDiaryResponse> call, Throwable t) {
+            public void onFailure(Call<DiaryResponse> call, Throwable t) {
 
             }
         });
@@ -155,25 +157,25 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
                 saveFields();
                 diaryValidator = new DiaryValidator();
                 if (diaryValidator.validate(sleepTime, sportTime, alcohol, smoke, feeling)) {
-                    Call<UpdateDiaryResponse> updateDiary = RetrofitClient
+                    final Call<UpdateResponse> updateDiary = RetrofitClient
                             .getInstance()
                             .getAPI()
                             .updateDiary(patient.getPatientId(), date, sleepTime, sportTime, alcohol, smoke, feeling);
-                    updateDiary.enqueue(new Callback<UpdateDiaryResponse>() {
+                    updateDiary.enqueue(new Callback<UpdateResponse>() {
                         @Override
-                        public void onResponse(Call<UpdateDiaryResponse> call, Response<UpdateDiaryResponse> response) {
-                            UpdateDiaryResponse updateDiaryResponse = response.body();
-                            if (!updateDiaryResponse.getEstadoDelError()) {
+                        public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {
+                            UpdateResponse updateResponse = response.body();
+                            if (!updateResponse.getError()) {
                                 Toast.makeText(getActivity(), "Datos guardados correctamente", Toast.LENGTH_LONG).show();
-                            } else if ((updateDiaryResponse.getEstadoDelError())) {
-                                Toast.makeText(getActivity(), updateDiaryResponse.getMensaje(), Toast.LENGTH_LONG).show();
+                            } else if ((updateResponse.getError())) {
+                                Toast.makeText(getActivity(), updateResponse.getMensaje(), Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(getActivity(), updateDiaryResponse.getMensaje(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), updateResponse.getMensaje(), Toast.LENGTH_LONG).show();
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<UpdateDiaryResponse> call, Throwable t) {
+                        public void onFailure(Call<UpdateResponse> call, Throwable t) {
 
                         }
                     });
