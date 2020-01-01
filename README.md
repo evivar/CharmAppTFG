@@ -23,11 +23,10 @@ Repositorio del TFG - CharmApp para Android
      3. Cambiar las constantes del API
 
      4. Subir los archivos al servidor
-
-            ..* Hacer un .zip del API
-            ..* Subir los archivos en el panel de control o con un cliente FTP
-            ..* Extraer el .zip
-            ..* Entramos en una ruta para testear que funciona, suele pedir autenticación
-            ..* Finalmente cambiar los endpoints en el proyecto de Android Studio
+       ..* Hacer un .zip del API
+       ..* Subir los archivos en el panel de control o con un cliente FTP
+       ..* Extraer el .zip
+       ..* Entramos en una ruta para testear que funciona, suele pedir autenticación
+       ..* Finalmente cambiar los endpoints en el proyecto de Android Studio
 
 
