@@ -1,23 +1,21 @@
 package com.ernesto.charmapp.data;
 
 import com.ernesto.charmapp.interactors.responses.ActiveCrisisResponse;
-import com.ernesto.charmapp.interactors.responses.ChangePasswordResponse;
 import com.ernesto.charmapp.interactors.responses.CreateCrisisResponse;
 import com.ernesto.charmapp.interactors.responses.CreateDiaryResponse;
 import com.ernesto.charmapp.interactors.responses.DoctorLoginResponse;
-import com.ernesto.charmapp.interactors.responses.PatientLoginResponse;
 import com.ernesto.charmapp.interactors.responses.ReadAllCrisisResponse;
 import com.ernesto.charmapp.interactors.responses.ReadAllDiariesResponse;
 import com.ernesto.charmapp.interactors.responses.ReadAllPatientActiveCrisisResponse;
 import com.ernesto.charmapp.interactors.responses.ReadAllPatientCrisisByDateResponse;
 import com.ernesto.charmapp.interactors.responses.ReadAllPatientCrisisResponse;
-import com.ernesto.charmapp.interactors.responses.ReadAllPatientsResponse;
 import com.ernesto.charmapp.interactors.responses.ReadDiaryResponse;
-import com.ernesto.charmapp.interactors.responses.ReadPasswordByEmailResponse;
 import com.ernesto.charmapp.interactors.responses.ReadPatientActiveCrisisResponse;
-import com.ernesto.charmapp.interactors.responses.ReadPatientByEmailResponse;
 import com.ernesto.charmapp.interactors.responses.UpdateCrisisResponse;
 import com.ernesto.charmapp.interactors.responses.UpdateDiaryResponse;
+import com.ernesto.charmapp.interactors.responses.patientResponses.PatientResponse;
+import com.ernesto.charmapp.interactors.responses.patientResponses.ReadAllPatientsResponse;
+import com.ernesto.charmapp.interactors.responses.patientResponses.ReadPasswordResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -44,29 +42,35 @@ public interface APICalls {
     /********** PATIENT **********/
     /**
      * TODO:
-     *      createPatient: Con/sin patient_id y Con/sin password
-     *      patientLogin
-     *      readAllPatients
-     *      readPatientByEmail
-     *      readPasswordByEmail
-     *      updatePatientPassword
-     *      deletePatient
+     *      deletePatient -> Aun no, porque falta revisar la URL paramétrica
      */
 
-    // Terminar bien el createPatient
+
     @FormUrlEncoded
-    @POST("patientLogin")
-    Call<PatientLoginResponse> patientLogin(
+    @POST("createPatient_login")
+    Call<PatientResponse> createPatient_login(
+            @Field("patient_id") String patient_id,
             @Field("email") String email,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("name") String name,
+            @Field("surname1") String surname1,
+            @Field("surname2") String surname2,
+            @Field("init_date") String init_date,
+            @Field("end_date") String end_date,
+            @Field("phone") int phone
     );
 
     @FormUrlEncoded
-    @POST("updatePatientPassword")
-    Call<ChangePasswordResponse> changePassword(
+    @POST("createPatient")
+    Call<PatientResponse> createPatient(
             @Field("email") String email,
-            @Field("old_password") String old_password,
-            @Field("new_password") String new_password
+            @Field("password") String password,
+            @Field("name") String name,
+            @Field("surname1") String surname1,
+            @Field("surname2") String surname2,
+            @Field("init_date") String init_date,
+            @Field("end_date") String end_date,
+            @Field("phone") int phone
     );
 
     @GET("readAllPatients")
@@ -74,15 +78,37 @@ public interface APICalls {
 
     @FormUrlEncoded
     @POST("readPatientByEmail")
-    Call<ReadPatientByEmailResponse> readPatientByEmail(
+    Call<PatientResponse> readPatientByEmail(
             @Field("email") String email
     );
 
     @FormUrlEncoded
+    @POST("readPatientById")
+    Call<PatientResponse> readPatientById(
+            @Field("patient_id") String patient_id
+    );
+
+    @FormUrlEncoded
     @POST("readPasswordByEmail")
-    Call<ReadPasswordByEmailResponse> readPasswordByEmail(
+    Call<ReadPasswordResponse> readPasswordByEmail(
             @Field("email") String email
     );
+
+    @FormUrlEncoded
+    @POST("updatePatientPassword")
+    Call<PatientResponse> changePassword(
+            @Field("email") String email,
+            @Field("old_password") String old_password,
+            @Field("new_password") String new_password
+    );
+
+    @FormUrlEncoded
+    @POST("patientLogin")
+    Call<PatientResponse> patientLogin(
+            @Field("email") String email,
+            @Field("password") String password
+    );
+
 
     /********** DOCTOR **********/
 

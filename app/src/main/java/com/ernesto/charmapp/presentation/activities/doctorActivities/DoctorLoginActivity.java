@@ -14,10 +14,7 @@ import com.ernesto.charmapp.R;
 import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.data.SharedPreferencesManager;
 import com.ernesto.charmapp.interactors.responses.DoctorLoginResponse;
-import com.ernesto.charmapp.interactors.responses.PatientLoginResponse;
 import com.ernesto.charmapp.interactors.validators.LoginValidator;
-import com.ernesto.charmapp.presentation.activities.patientActivities.PatientLoginActivity;
-import com.ernesto.charmapp.presentation.activities.patientActivities.PatientMainActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;

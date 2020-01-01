@@ -1,7 +1,5 @@
 package com.ernesto.charmapp.presentation.fragments.doctorFragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ernesto.charmapp.R;
@@ -23,12 +18,7 @@ import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.domain.Doctor;
 import com.ernesto.charmapp.domain.Patient;
 import com.ernesto.charmapp.interactors.adaptors.PatientListAdapter;
-import com.ernesto.charmapp.interactors.responses.ChangePasswordResponse;
-import com.ernesto.charmapp.interactors.responses.ReadAllPatientsResponse;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
-import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientProfileFragment;
-
-import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.List;
 

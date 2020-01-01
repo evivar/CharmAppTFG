@@ -1,27 +1,27 @@
-package com.ernesto.charmapp.interactors.responses;
+package com.ernesto.charmapp.interactors.responses.patientResponses;
 
 import com.ernesto.charmapp.domain.Patient;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PatientLoginResponse {
+public class PatientResponse {
 
-    @SerializedName("Estado del error")
+    @SerializedName("Error")
     @Expose
-    private Boolean estadoDelError;
+    private Boolean error;
     @SerializedName("Mensaje")
     @Expose
     private String mensaje;
-    @SerializedName("Paciente")
+    @SerializedName("Resultado")
     @Expose
     private Patient paciente;
 
-    public Boolean getEstadoDelError() {
-        return estadoDelError;
+    public Boolean getError() {
+        return error;
     }
 
-    public void setEstadoDelError(Boolean estadoDelError) {
-        this.estadoDelError = estadoDelError;
+    public void setError(Boolean error) {
+        this.error = error;
     }
 
     public String getMensaje() {
@@ -39,4 +39,5 @@ public class PatientLoginResponse {
     public void setPaciente(Patient paciente) {
         this.paciente = paciente;
     }
+
 }
