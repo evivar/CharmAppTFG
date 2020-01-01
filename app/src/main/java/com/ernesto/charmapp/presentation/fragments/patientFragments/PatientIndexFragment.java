@@ -1,12 +1,10 @@
 package com.ernesto.charmapp.presentation.fragments.patientFragments;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,10 +16,8 @@ import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.domain.Diary;
 import com.ernesto.charmapp.domain.Headache;
 import com.ernesto.charmapp.domain.Patient;
-import com.ernesto.charmapp.interactors.responses.ActiveCrisisResponse;
 import com.ernesto.charmapp.interactors.responses.ReadDiaryResponse;
 import com.ernesto.charmapp.interactors.responses.ReadPatientActiveCrisisResponse;
-import com.ernesto.charmapp.presentation.dialogs.DateDialog;
 import com.ernesto.charmapp.presentation.dialogs.InfoDialog;
 
 import java.sql.Date;
@@ -116,16 +112,15 @@ public class PatientIndexFragment extends Fragment {
                     @Override
                     public void onResponse(Call<ReadPatientActiveCrisisResponse> call, Response<ReadPatientActiveCrisisResponse> response) {
                         ReadPatientActiveCrisisResponse readPatientActiveCrisisResponse = response.body();
-                        if(!readPatientActiveCrisisResponse.getError()){
-                            if(readPatientActiveCrisisResponse.getCrisis().getPatientId() == null){
+                        if (!readPatientActiveCrisisResponse.getError()) {
+                            if (readPatientActiveCrisisResponse.getCrisis().getPatientId() == null) {
                                 System.out.println("Nueva crisis");
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                                         .addToBackStack(null)
                                         .replace(R.id.fragmentContainer_patient, HeadacheFragment.create(new Headache(), patient, false), "HEADACHE_FRAGMENT")
                                         .commit();
-                            }
-                            else{
+                            } else {
                                 System.out.println("Editar crisis");
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
@@ -133,8 +128,7 @@ public class PatientIndexFragment extends Fragment {
                                         .replace(R.id.fragmentContainer_patient, HeadacheFragment.create(readPatientActiveCrisisResponse.getCrisis(), patient, true), "HEADACHE_FRAGMENT")
                                         .commit();
                             }
-                        }
-                        else{
+                        } else {
                             // Falla la lectura
                             Toast.makeText(getContext(), "ERROR EN LA LECTURA DEL HEADACHE", Toast.LENGTH_LONG).show();
                         }

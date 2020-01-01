@@ -5,7 +5,6 @@ import com.ernesto.charmapp.interactors.responses.CreateCrisisResponse;
 import com.ernesto.charmapp.interactors.responses.CreateDiaryResponse;
 import com.ernesto.charmapp.interactors.responses.DoctorLoginResponse;
 import com.ernesto.charmapp.interactors.responses.ReadAllCrisisResponse;
-import com.ernesto.charmapp.interactors.responses.ReadAllDiariesResponse;
 import com.ernesto.charmapp.interactors.responses.ReadAllPatientActiveCrisisResponse;
 import com.ernesto.charmapp.interactors.responses.ReadAllPatientCrisisByDateResponse;
 import com.ernesto.charmapp.interactors.responses.ReadAllPatientCrisisResponse;
@@ -14,6 +13,8 @@ import com.ernesto.charmapp.interactors.responses.ReadPatientActiveCrisisRespons
 import com.ernesto.charmapp.interactors.responses.UpdateCrisisResponse;
 import com.ernesto.charmapp.interactors.responses.UpdateDiaryResponse;
 import com.ernesto.charmapp.interactors.responses.UpdateResponse;
+import com.ernesto.charmapp.interactors.responses.diaryResponses.DiaryResponse;
+import com.ernesto.charmapp.interactors.responses.diaryResponses.ReadAllDiariesResponse;
 import com.ernesto.charmapp.interactors.responses.patientResponses.PatientResponse;
 import com.ernesto.charmapp.interactors.responses.patientResponses.ReadAllPatientsResponse;
 import com.ernesto.charmapp.interactors.responses.patientResponses.ReadPasswordResponse;
@@ -124,7 +125,7 @@ public interface APICalls {
 
     @FormUrlEncoded
     @POST("createDiary")
-    Call<CreateDiaryResponse> createDiary(
+    Call<DiaryResponse> createDiary(
             @Field("patient_id") String patient_id,
             @Field("date") String date,
             @Field("sleep_time") String sleep_time,
@@ -139,27 +140,33 @@ public interface APICalls {
     Call<ReadAllDiariesResponse> readAllDiaries();
 
     @FormUrlEncoded
-    @POST("readAllPatientDiaries")
-    Call<ReadAllDiariesResponse> readAllPatientDiaries(
+    @POST("readAllDiariesByEmail")
+    Call<ReadAllDiariesResponse> readAllDiariesByEmail(
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("readAllDiariesById")
+    Call<ReadAllDiariesResponse> readAllDiariesById(
             @Field("patient_id") String patient_id
     );
 
     @FormUrlEncoded
     @POST("readLastDiary")
-    Call<ReadDiaryResponse> readLastDiary(
+    Call<DiaryResponse> readLastDiary(
             @Field("patient_id") String patient_id
     );
 
     @FormUrlEncoded
     @POST("readDiaryByDate")
-    Call<ReadDiaryResponse> readDiaryByDate(
+    Call<DiaryResponse> readDiaryByDate(
             @Field("patient_id") String patient_id,
             @Field("date") String date
     );
 
     @FormUrlEncoded
     @POST("updateDiary")
-    Call<UpdateDiaryResponse> updateDiary(
+    Call<UpdateResponse> updateDiary(
             @Field("patient_id") String patient_id,
             @Field("date") String date,
             @Field("sleep_time") String sleep_time,
