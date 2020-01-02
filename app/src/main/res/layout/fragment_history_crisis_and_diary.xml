@@ -187,7 +187,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:el_duration="1000"
-            app:el_expanded="false"
+            app:el_expanded="true"
             app:el_parallax="0.5">
 
             <ScrollView
@@ -215,7 +215,7 @@
                             android:text="Fecha de inicio" />
 
                         <EditText
-                            android:id="@+id/startDateTxt_history"
+                            android:id="@+id/startDateCrisisTxt_history"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:clickable="true"
@@ -231,7 +231,7 @@
                             android:text="Fecha de fin" />
 
                         <EditText
-                            android:id="@+id/endDateTxt_history"
+                            android:id="@+id/endDateCrisisTxt_history"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:clickable="true"
@@ -247,7 +247,7 @@
                             android:text="¿Ha hecho deporte antes del dolor?" />
 
                         <Spinner
-                            android:id="@+id/sportSpinner_history"
+                            android:id="@+id/sportCrisisSpinner_history"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:entries="@array/yes_no_spiner" />
@@ -259,7 +259,7 @@
                             android:text="¿Tomó alcohol antes del dolor?" />
 
                         <Spinner
-                            android:id="@+id/alcoholSpinner_history"
+                            android:id="@+id/alcoholCrisisSpinner_history"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:entries="@array/yes_no_spiner" />
@@ -271,7 +271,7 @@
                             android:text="¿Fumó antes del dolor?" />
 
                         <Spinner
-                            android:id="@+id/smokeSpinner_history"
+                            android:id="@+id/smokeCrisisSpinner_history"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:entries="@array/yes_no_spiner" />
@@ -283,7 +283,7 @@
                             android:text="¿Tomó alguna medicación antes del dolor?" />
 
                         <Spinner
-                            android:id="@+id/medicationSpinner_history"
+                            android:id="@+id/medicationCrisisSpinner_history"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:entries="@array/yes_no_spiner" />
@@ -295,7 +295,7 @@
                             android:text="¿Esto que poyas es?" />
 
                         <EditText
-                            android:id="@+id/feelingTxt_history"
+                            android:id="@+id/feelingCrisisTxt_history"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="10"
@@ -309,7 +309,7 @@
                             android:text="¿Cuán fuerte fue el dolor?" />
 
                         <Spinner
-                            android:id="@+id/painScaleSpinner_history"
+                            android:id="@+id/painScaleCrisisSpinner_history"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:entries="@array/painScale_spiner" />

@@ -1,7 +1,5 @@
 package com.ernesto.charmapp.presentation.fragments.patientFragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,35 +9,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.data.RetrofitClient;
-import com.ernesto.charmapp.domain.Diary;
 import com.ernesto.charmapp.domain.Patient;
-import com.ernesto.charmapp.interactors.responses.CreateDiaryResponse;
-import com.ernesto.charmapp.interactors.validators.DiaryValidator;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
 import com.skyhope.eventcalenderlibrary.CalenderEvent;
 import com.skyhope.eventcalenderlibrary.listener.CalenderDayClickListener;
 import com.skyhope.eventcalenderlibrary.model.DayContainerModel;
-import com.skyhope.eventcalenderlibrary.model.Event;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class HistoryFragment extends Fragment {

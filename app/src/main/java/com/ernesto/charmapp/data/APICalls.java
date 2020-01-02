@@ -1,18 +1,9 @@
 package com.ernesto.charmapp.data;
 
-import com.ernesto.charmapp.interactors.responses.ActiveCrisisResponse;
-import com.ernesto.charmapp.interactors.responses.CreateCrisisResponse;
-import com.ernesto.charmapp.interactors.responses.CreateDiaryResponse;
 import com.ernesto.charmapp.interactors.responses.DoctorLoginResponse;
-import com.ernesto.charmapp.interactors.responses.ReadAllCrisisResponse;
-import com.ernesto.charmapp.interactors.responses.ReadAllPatientActiveCrisisResponse;
-import com.ernesto.charmapp.interactors.responses.ReadAllPatientCrisisByDateResponse;
-import com.ernesto.charmapp.interactors.responses.ReadAllPatientCrisisResponse;
-import com.ernesto.charmapp.interactors.responses.ReadDiaryResponse;
-import com.ernesto.charmapp.interactors.responses.ReadPatientActiveCrisisResponse;
-import com.ernesto.charmapp.interactors.responses.UpdateCrisisResponse;
-import com.ernesto.charmapp.interactors.responses.UpdateDiaryResponse;
 import com.ernesto.charmapp.interactors.responses.UpdateResponse;
+import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse;
+import com.ernesto.charmapp.interactors.responses.crisisResponses.ReadAllCrisisResponse;
 import com.ernesto.charmapp.interactors.responses.diaryResponses.DiaryResponse;
 import com.ernesto.charmapp.interactors.responses.diaryResponses.ReadAllDiariesResponse;
 import com.ernesto.charmapp.interactors.responses.patientResponses.PatientResponse;
@@ -27,26 +18,7 @@ import retrofit2.http.POST;
 
 public interface APICalls {
 
-    /**
-     * POST REQUEST:
-     * @FormUrlEncoded <- Siempre que haya parametros
-     * @POST("endpoint")
-     * Call<ResponseBody>nombre(@Field("nombreCampo") Tipo nombre)
-     */
-
-    /**
-     * PUT REQUEST:
-     *
-     * @FormUrlEncoded <- Siempre que haya parametros
-     * @PUT("endpoint") Call<ResponseBody>nombre(@Field("nombreCampo") Tipo nombre)
-     */
-
     /********** PATIENT **********/
-    /**
-     * TODO:
-     *      deletePatient -> Aun no, porque falta revisar la URL paramétrica
-     */
-
 
     @FormUrlEncoded
     @POST("createPatient_login")
@@ -179,35 +151,8 @@ public interface APICalls {
     /********** HEADACHE **********/
 
     @FormUrlEncoded
-    @POST("createHeadache")
-    Call<CreateCrisisResponse> createCrisis(
-            @Field("patient_id") String patient_id,
-            @Field("ch_id") String ch_id, // TODO: Eliminar el ch_id
-            @Field("start_datetime") String start_datetime,
-            @Field("end_datetime") String end_datatime,
-            @Field("sport") String sport,
-            @Field("alcohol") String alcohol,
-            @Field("smoke") String smoke,
-            @Field("medication") String medication,
-            @Field("feeling") String feeling,
-            @Field("pain_scale") int pain_scale
-    );
-
-    @FormUrlEncoded
-    @POST("activeCrisis")
-    Call<ActiveCrisisResponse> activeCrisis(
-            @Field("patient_id") String patient_id
-    );
-
-    @FormUrlEncoded
-    @POST("readPatientActiveCrisis")
-    Call<ReadPatientActiveCrisisResponse> readPatientActiveCrisis(
-            @Field("patient_id") String patient_id
-    );
-
-    @FormUrlEncoded
-    @POST("updateCrisis")
-    Call<UpdateCrisisResponse> updateCrisis(
+    @POST("createCrisis")
+    Call<CrisisResponse> createCrisis(
             @Field("patient_id") String patient_id,
             @Field("start_datetime") String start_datetime,
             @Field("end_datetime") String end_datatime,
@@ -223,24 +168,53 @@ public interface APICalls {
     Call<ReadAllCrisisResponse> readAllCrisis();
 
     @FormUrlEncoded
-    @POST("readAllCrisisByPatientId")
-    Call<ReadAllPatientCrisisResponse> readAllPatientCrisis(
+    @POST("readAllCrisisByEmail")
+    Call<ReadAllCrisisResponse> readAllCrisisByEmail(
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("readAllCrisisById")
+    Call<ReadAllCrisisResponse> readAllCrisisById(
             @Field("patient_id") String patient_id
     );
 
     @FormUrlEncoded
-    @POST("readAllCrisisByDateAndPatientId")
-    Call<ReadAllPatientCrisisByDateResponse> readAllPatientCrisisByDate(
+    @POST("readCrisisByDate")
+    Call<CrisisResponse> readCrisisByDate(
             @Field("patient_id") String patient_id,
             @Field("date") String date
     );
 
+
+    @GET("readAllActiveCrisis")
+    Call<ReadAllCrisisResponse> readAllActiveCrisis();
+
     @FormUrlEncoded
-    @POST("readAllActiveCrisisByPatientId")
-    Call<ReadAllPatientActiveCrisisResponse> readAllPatientActiveCrisis(
+    @POST("readActiveCrisisByEmail")
+    Call<CrisisResponse> readActiveCrisisByEmail(
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("readActiveCrisisById")
+    Call<CrisisResponse> readActiveCrisisById(
             @Field("patient_id") String patient_id
     );
 
+    @FormUrlEncoded
+    @POST("updateCrisis")
+    Call<UpdateResponse> updateCrisis(
+            @Field("patient_id") String patient_id,
+            @Field("start_datetime") String start_datetime,
+            @Field("end_datetime") String end_datatime,
+            @Field("sport") String sport,
+            @Field("alcohol") String alcohol,
+            @Field("smoke") String smoke,
+            @Field("medication") String medication,
+            @Field("feeling") String feeling,
+            @Field("pain_scale") int pain_scale
+    );
 
 }
 

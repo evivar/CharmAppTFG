@@ -17,16 +17,11 @@ import com.ernesto.charmapp.R;
 import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.domain.Headache;
 import com.ernesto.charmapp.domain.Patient;
-import com.ernesto.charmapp.interactors.responses.CreateCrisisResponse;
-import com.ernesto.charmapp.interactors.responses.CreateDiaryResponse;
-import com.ernesto.charmapp.interactors.responses.UpdateCrisisResponse;
+import com.ernesto.charmapp.interactors.responses.UpdateResponse;
+import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse;
 import com.ernesto.charmapp.interactors.validators.HeadacheValidator;
-import com.ernesto.charmapp.interactors.validators.PersonalDataValidator;
 import com.ernesto.charmapp.presentation.dialogs.DateDialog;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
-import com.ernesto.charmapp.presentation.fragments.doctorFragments.GeneralQuestionsFragment;
-
-import java.sql.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -141,15 +136,15 @@ public class HeadacheFragment extends Fragment {
                     // Llama al api para meter el headache
                     if(editing){
                         // Solo se updatea
-                        Call<UpdateCrisisResponse> updateCrisis = RetrofitClient
+                        final Call<UpdateResponse> updateCrisis = RetrofitClient
                                 .getInstance()
                                 .getAPI()
                                 .updateCrisis(patient.getPatientId(), startDate, endDate, sport, alcohol, smoke, medication, feeling, painScale);
-                        updateCrisis.enqueue(new Callback<UpdateCrisisResponse>() {
+                        updateCrisis.enqueue(new Callback<UpdateResponse>() {
                             @Override
-                            public void onResponse(Call<UpdateCrisisResponse> call, Response<UpdateCrisisResponse> response) {
-                                UpdateCrisisResponse updateCrisisResponse = response.body();
-                                if(!updateCrisisResponse.getEstadoDelError()){
+                            public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {
+                                UpdateResponse updateResponse = response.body();
+                                if(!updateResponse.getError()){
                                     Toast.makeText(getActivity(), "Crisis actualizada correctamente", Toast.LENGTH_LONG).show();
                                     getActivity().getSupportFragmentManager().beginTransaction()
                                             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
@@ -158,26 +153,26 @@ public class HeadacheFragment extends Fragment {
                                             .commit();
                                 }
                                 else{
-                                    Toast.makeText(getActivity(), updateCrisisResponse.getMensaje(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), updateResponse.getMensaje(), Toast.LENGTH_LONG).show();
                                 }
                             }
 
                             @Override
-                            public void onFailure(Call<UpdateCrisisResponse> call, Throwable t) {
+                            public void onFailure(Call<UpdateResponse> call, Throwable t) {
 
                             }
                         });
                     }
                     if(!editing){
-                        Call<CreateCrisisResponse> createCrisis = RetrofitClient
+                        final Call<CrisisResponse> createCrisis = RetrofitClient
                                 .getInstance()
                                 .getAPI()
-                                .createCrisis(patient.getPatientId(), "12345678", startDate, endDate, sport, alcohol, smoke, medication, feeling, painScale);
-                        createCrisis.enqueue(new Callback<CreateCrisisResponse>() {
+                                .createCrisis(patient.getPatientId(), startDate, endDate, sport, alcohol, smoke, medication, feeling, painScale);
+                        createCrisis.enqueue(new Callback<CrisisResponse>() {
                             @Override
-                            public void onResponse(Call<CreateCrisisResponse> call, Response<CreateCrisisResponse> response) {
-                                CreateCrisisResponse createCrisisResponse = response.body();
-                                if(createCrisisResponse != null && !createCrisisResponse.getEstadoDelError()){
+                            public void onResponse(Call<CrisisResponse> call, Response<CrisisResponse> response) {
+                                CrisisResponse crisisResponse = response.body();
+                                if(crisisResponse != null && !crisisResponse.getError()){
                                     System.out.println("Crisis creada correctamente");
                                     Toast.makeText(getActivity(), "Crisis creada correctamente", Toast.LENGTH_LONG).show();
                                     getActivity().getSupportFragmentManager().beginTransaction()
@@ -192,7 +187,7 @@ public class HeadacheFragment extends Fragment {
                             }
 
                             @Override
-                            public void onFailure(Call<CreateCrisisResponse> call, Throwable t) {
+                            public void onFailure(Call<CrisisResponse> call, Throwable t) {
 
                             }
                         });

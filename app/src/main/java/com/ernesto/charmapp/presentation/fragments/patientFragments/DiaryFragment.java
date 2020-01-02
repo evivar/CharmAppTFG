@@ -18,7 +18,6 @@ import com.ernesto.charmapp.R;
 import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.domain.Diary;
 import com.ernesto.charmapp.domain.Patient;
-import com.ernesto.charmapp.interactors.responses.CreateDiaryResponse;
 import com.ernesto.charmapp.interactors.responses.diaryResponses.DiaryResponse;
 import com.ernesto.charmapp.interactors.validators.DiaryValidator;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
@@ -96,7 +95,9 @@ public class DiaryFragment extends Fragment {
         this.feelingTxt = v.findViewById(R.id.feelingTxt_diary);
         this.calenderEvent = v.findViewById(R.id.calender_event);
 
-        fillDiary();
+        if(diary.getSleepTime() != (null)){
+            fillDiary();
+        }
 
         this.saveBtn = v.findViewById(R.id.saveBtn_diary);
         this.saveBtn.setOnClickListener(new View.OnClickListener() {

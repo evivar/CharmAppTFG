@@ -1,6 +1,5 @@
 package com.ernesto.charmapp.presentation.fragments.patientFragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,19 +19,14 @@ import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.domain.Diary;
 import com.ernesto.charmapp.domain.Headache;
 import com.ernesto.charmapp.domain.Patient;
-import com.ernesto.charmapp.interactors.responses.CreateDiaryResponse;
-import com.ernesto.charmapp.interactors.responses.ReadDiaryResponse;
-import com.ernesto.charmapp.interactors.responses.UpdateDiaryResponse;
 import com.ernesto.charmapp.interactors.responses.UpdateResponse;
+import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse;
 import com.ernesto.charmapp.interactors.responses.diaryResponses.DiaryResponse;
 import com.ernesto.charmapp.interactors.validators.DiaryValidator;
+import com.ernesto.charmapp.interactors.validators.HeadacheValidator;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
-import com.skyhope.eventcalenderlibrary.model.Event;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
-
-import java.sql.Date;
-import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,10 +34,8 @@ import retrofit2.Response;
 
 /*
  * TODO:
- *   Leer el diario de la fecha
- *   Leer la crisis de la fecha
- *   Si existen meter los campos y activar los botones
- *   Si alguno no existe desactivar los botones
+ *      Quitar los comentarios que sobran
+ *
  * */
 public class HistoryCrisisAndDiaryFragment extends Fragment {
 
@@ -53,20 +45,57 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
     private Diary diary;
     private Button expandDiaryBtn;
     private ExpandableLayout diaryExpandableLayout;
-    private EditText sleepTimeTxt;
-    private Spinner sportTimeSpinner;
+    private EditText sleepTimeDiaryTxt;
+    private Spinner sportTimeDiarySpinner;
     private Spinner alcoholDiarySpinner;
     private Spinner smokeDiarySpinner;
     private EditText feelingDiaryTxt;
     private Button saveChangesDiaryBtn;
     private DiaryValidator diaryValidator;
-    private Headache headache;
     private TextView dateLbl;
-    private String sleepTime;
-    private String sportTime;
-    private String alcohol;
-    private String smoke;
-    private String feeling;
+    private String sleepTimeDiary;
+    private String sportTimeDiary;
+    private String alcoholDiary;
+    private String smokeDiary;
+    private String feelingDiary;
+
+    private Button expandCrisisBtn;
+    private ExpandableLayout crisisExpandableLayout;
+    private Headache headache;
+    private HeadacheValidator headacheValidator;
+
+    private EditText startDateCrisisTxt;
+
+    private String startDateCrisis;
+
+    private EditText endDateCrisisTxt;
+
+    private String endDateCrisis;
+
+    private Spinner sportCrisisSpinner;
+
+    private String sportCrisis;
+
+    private Spinner alcoholCrisisSpinner;
+
+    private String alcoholCrisis;
+
+    private Spinner smokeCrisisSpinner;
+
+    private String smokeCrisis;
+
+    private Spinner medicationCrisisSpinner;
+
+    private String medicationCrisis;
+
+    private EditText feelingCrisisTxt;
+
+    private String feelingCrisis;
+
+    private Spinner painScaleCrisisSpinner;
+
+    private int painScaleCrisis;
+    private Button saveChangesCrisisBtn;
 
     public static HistoryCrisisAndDiaryFragment create(Patient patient, String dateString, String date) {
         Bundle args = new Bundle();
@@ -95,8 +124,8 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
         this.dateLbl = v.findViewById(R.id.dateLbl_History);
         this.dateLbl.setText(date);
 
-        this.sleepTimeTxt = v.findViewById(R.id.sleepTimeTxt_history);
-        this.sportTimeSpinner = v.findViewById(R.id.sportTimeSpinner_history);
+        this.sleepTimeDiaryTxt = v.findViewById(R.id.sleepTimeTxt_history);
+        this.sportTimeDiarySpinner = v.findViewById(R.id.sportTimeSpinner_history);
         this.alcoholDiarySpinner = v.findViewById(R.id.alcoholDiarySpinner_history);
         this.smokeDiarySpinner = v.findViewById(R.id.smokeDiarySpinner_history);
         this.feelingDiaryTxt = v.findViewById(R.id.feelingDiaryTxt_history);
@@ -143,8 +172,7 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
                         expandDiaryBtn.setCompoundDrawablesWithIntrinsicBounds(null, null, getContext().getDrawable(R.drawable.ic_collapse), null);
                         diaryExpandableLayout.expand();
                     }
-                }
-                else{
+                } else {
                     showErrorDialog("No hay un diario disponible para esta fecha");
                 }
             }
@@ -154,13 +182,13 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
         saveChangesDiaryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                saveFields();
+                saveDiaryFields();
                 diaryValidator = new DiaryValidator();
-                if (diaryValidator.validate(sleepTime, sportTime, alcohol, smoke, feeling)) {
+                if (diaryValidator.validate(sleepTimeDiary, sportTimeDiary, alcoholDiary, smokeDiary, feelingDiary)) {
                     final Call<UpdateResponse> updateDiary = RetrofitClient
                             .getInstance()
                             .getAPI()
-                            .updateDiary(patient.getPatientId(), date, sleepTime, sportTime, alcohol, smoke, feeling);
+                            .updateDiary(patient.getPatientId(), date, sleepTimeDiary, sportTimeDiary, alcoholDiary, smokeDiary, feelingDiary);
                     updateDiary.enqueue(new Callback<UpdateResponse>() {
                         @Override
                         public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {
@@ -186,6 +214,101 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
         });
 
 
+        // pARTE DE LA CRISIS
+
+        this.startDateCrisisTxt = v.findViewById(R.id.startDateCrisisTxt_history);
+        this.endDateCrisisTxt = v.findViewById(R.id.endDateCrisisTxt_history);
+        this.sportCrisisSpinner = v.findViewById(R.id.sportCrisisSpinner_history);
+        this.alcoholCrisisSpinner = v.findViewById(R.id.alcoholCrisisSpinner_history);
+        this.smokeCrisisSpinner = v.findViewById(R.id.smokeCrisisSpinner_history);
+        this.medicationCrisisSpinner = v.findViewById(R.id.medicationCrisisSpinner_history);
+        this.feelingCrisisTxt = v.findViewById(R.id.feelingCrisisTxt_history);
+        this.painScaleCrisisSpinner = v.findViewById(R.id.painScaleCrisisSpinner_history);
+
+
+        final Call<CrisisResponse> readCrisisByDate = RetrofitClient
+                .getInstance()
+                .getAPI()
+                .readCrisisByDate(patient.getPatientId(), dateString);
+        readCrisisByDate.enqueue(new Callback<CrisisResponse>() {
+            @Override
+            public void onResponse(Call<CrisisResponse> call, Response<CrisisResponse> response) {
+                CrisisResponse crisisResponse = response.body();
+                if (!crisisResponse.getError()) {
+                    if (crisisResponse.getCrisis().getStartDatetime() != null) {
+                        headache = crisisResponse.getCrisis();
+                        fillCrisis();
+                    } else {
+                        headache = null;
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Error con la base de datos", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CrisisResponse> call, Throwable t) {
+
+            }
+        });
+
+        expandCrisisBtn = v.findViewById(R.id.expandCrisisBtn_history);
+        crisisExpandableLayout = v.findViewById(R.id.ExpandableLayoutCrisis);
+        expandCrisisBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (headache != null) {
+                    if (crisisExpandableLayout.isExpanded()) {
+                        expandCrisisBtn.setCompoundDrawablesWithIntrinsicBounds(null, null, getContext().getDrawable(R.drawable.ic_expand), null);
+                        crisisExpandableLayout.collapse();
+                    } else {
+                        expandCrisisBtn.setCompoundDrawablesWithIntrinsicBounds(null, null, getContext().getDrawable(R.drawable.ic_collapse), null);
+                        crisisExpandableLayout.expand();
+                    }
+                } else {
+                    showErrorDialog("No hay una crisis disponible para esta fecha");
+                }
+            }
+        });
+
+        saveChangesCrisisBtn = v.findViewById(R.id.editCrisisBtn_history);
+        saveChangesCrisisBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                saveCrisisFields();
+                headacheValidator = new HeadacheValidator();
+                if (headacheValidator.validate(startDateCrisis, endDateCrisis, sportCrisis, alcoholCrisis, smokeCrisis, medicationCrisis, feelingCrisis, painScaleCrisis)) {
+                    final Call<UpdateResponse> updateCrisis = RetrofitClient
+                            .getInstance()
+                            .getAPI()
+                            .updateCrisis(patient.getPatientId(), startDateCrisis, endDateCrisis, sportCrisis, alcoholCrisis, smokeCrisis, medicationCrisis, feelingCrisis, painScaleCrisis);
+                    updateCrisis.enqueue(new Callback<UpdateResponse>() {
+                        @Override
+                        public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {
+                            UpdateResponse updateResponse = response.body();
+                            if (!updateResponse.getError()) {
+                                Toast.makeText(getActivity(), "Datos guardados correctamente", Toast.LENGTH_LONG).show();
+                            } else if ((updateResponse.getError())) {
+                                Toast.makeText(getActivity(), updateResponse.getMensaje(), Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getActivity(), updateResponse.getMensaje(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<UpdateResponse> call, Throwable t) {
+
+                        }
+                    });
+                } else {
+                    showErrorDialog(headacheValidator.getWrongFields());
+                }
+            }
+        });
+
+
+
+
         return v;
     }
 
@@ -196,25 +319,25 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
     }
 
     private void fillDiary() {
-        sleepTimeTxt.setText(diary.getSleepTime());
+        sleepTimeDiaryTxt.setText(diary.getSleepTime());
         switch (diary.getSportTime()) {
             case "Nada":
-                sportTimeSpinner.setSelection(1);
+                sportTimeDiarySpinner.setSelection(1);
                 break;
             case "30 Minutos":
-                sportTimeSpinner.setSelection(2);
+                sportTimeDiarySpinner.setSelection(2);
                 break;
             case "1 hora":
-                sportTimeSpinner.setSelection(3);
+                sportTimeDiarySpinner.setSelection(3);
                 break;
             case "2 horas":
-                sportTimeSpinner.setSelection(4);
+                sportTimeDiarySpinner.setSelection(4);
                 break;
             case "Más de 2 horas":
-                sportTimeSpinner.setSelection(5);
+                sportTimeDiarySpinner.setSelection(5);
                 break;
             default:
-                sportTimeSpinner.setSelection(0);
+                sportTimeDiarySpinner.setSelection(0);
                 break;
         }
 
@@ -269,11 +392,56 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
         feelingDiaryTxt.setText(diary.getFeeling());
     }
 
-    public void saveFields() {
-        sleepTime = sleepTimeTxt.getText().toString();
-        sportTime = sportTimeSpinner.getSelectedItem().toString();
-        alcohol = alcoholDiarySpinner.getSelectedItem().toString();
-        smoke = smokeDiarySpinner.getSelectedItem().toString();
-        feeling = feelingDiaryTxt.getText().toString();
+    private void fillCrisis() {
+        this.startDateCrisisTxt.setText(headache.getStartDatetime().substring(0, 10));
+        if(headache.getSport().equals("Sí")){
+            this.sportCrisisSpinner.setSelection(1);
+        }
+        else{
+            this.sportCrisisSpinner.setSelection(2);
+        }
+
+        if(headache.getAlcohol().equals("Sí")){
+            this.alcoholCrisisSpinner.setSelection(1);
+        }
+        else{
+            this.alcoholCrisisSpinner.setSelection(2);
+        }
+
+        if(headache.getSmoke().equals("Sí")){
+            this.smokeCrisisSpinner.setSelection(1);
+        }
+        else{
+            this.smokeCrisisSpinner.setSelection(2);
+        }
+
+        if(headache.getMedication().equals("Sí")){
+            this.medicationCrisisSpinner.setSelection(1);
+        }
+        else{
+            this.medicationCrisisSpinner.setSelection(2);
+        }
+
+        this.feelingCrisisTxt.setText(headache.getFeeling());
+        this.painScaleCrisisSpinner.setSelection(headache.getPainScale());
+    }
+
+    public void saveDiaryFields() {
+        sleepTimeDiary = sleepTimeDiaryTxt.getText().toString();
+        sportTimeDiary = sportTimeDiarySpinner.getSelectedItem().toString();
+        alcoholDiary = alcoholDiarySpinner.getSelectedItem().toString();
+        smokeDiary = smokeDiarySpinner.getSelectedItem().toString();
+        feelingDiary = feelingDiaryTxt.getText().toString();
+    }
+
+    public void saveCrisisFields() {
+        startDateCrisis = startDateCrisisTxt.getText().toString();
+        endDateCrisis = endDateCrisisTxt.getText().toString();
+        sportCrisis = sportCrisisSpinner.getSelectedItem().toString();
+        alcoholCrisis = alcoholCrisisSpinner.getSelectedItem().toString();
+        smokeCrisis = smokeCrisisSpinner.getSelectedItem().toString();
+        medicationCrisis = medicationCrisisSpinner.getSelectedItem().toString();
+        feelingCrisis = feelingCrisisTxt.getText().toString();
+        painScaleCrisis = painScaleCrisisSpinner.getSelectedItemPosition();
     }
 }

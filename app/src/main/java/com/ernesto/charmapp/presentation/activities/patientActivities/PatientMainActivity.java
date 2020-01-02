@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +19,10 @@ import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.data.SharedPreferencesManager;
 import com.ernesto.charmapp.domain.Headache;
 import com.ernesto.charmapp.domain.Patient;
-import com.ernesto.charmapp.interactors.responses.ReadPatientActiveCrisisResponse;
-import com.ernesto.charmapp.presentation.activities.MainActivity;
+import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse;
 import com.ernesto.charmapp.presentation.dialogs.LogOutDialog;
 import com.ernesto.charmapp.presentation.fragments.patientFragments.HeadacheFragment;
+import com.ernesto.charmapp.presentation.fragments.patientFragments.HistoryFragment;
 import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientIndexFragment;
 import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientProfileFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -96,13 +95,13 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
                         .commit();
                 break;
             case R.id.nav_attack:
-                Call<ReadPatientActiveCrisisResponse> readPatientActiveCrisis = RetrofitClient.getInstance().getAPI().readPatientActiveCrisis(patient.getPatientId());
-                readPatientActiveCrisis.enqueue(new Callback<ReadPatientActiveCrisisResponse>() {
+                Call<CrisisResponse> readActiveCrisisById = RetrofitClient.getInstance().getAPI().readActiveCrisisById(patient.getPatientId());
+                readActiveCrisisById.enqueue(new Callback<CrisisResponse>() {
                     @Override
-                    public void onResponse(Call<ReadPatientActiveCrisisResponse> call, Response<ReadPatientActiveCrisisResponse> response) {
-                        ReadPatientActiveCrisisResponse readPatientActiveCrisisResponse = response.body();
-                        if(!readPatientActiveCrisisResponse.getError()){
-                            if(readPatientActiveCrisisResponse.getCrisis().getPatientId() == null){
+                    public void onResponse(Call<CrisisResponse> call, Response<CrisisResponse> response) {
+                        CrisisResponse crisisResponse = response.body();
+                        if(!crisisResponse.getError()){
+                            if(crisisResponse.getCrisis().getPatientId() == null){
                                 System.out.println("Nueva crisis");
                                 getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
@@ -115,7 +114,7 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
                                 getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                                         .addToBackStack(null)
-                                        .replace(R.id.fragmentContainer_patient, HeadacheFragment.create(readPatientActiveCrisisResponse.getCrisis(), patient, true), "HEADACHE_FRAGMENT")
+                                        .replace(R.id.fragmentContainer_patient, HeadacheFragment.create(crisisResponse.getCrisis(), patient, true), "HEADACHE_FRAGMENT")
                                         .commit();
                             }
                         }
@@ -126,17 +125,17 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
                     }
 
                     @Override
-                    public void onFailure(Call<ReadPatientActiveCrisisResponse> call, Throwable t) {
+                    public void onFailure(Call<CrisisResponse> call, Throwable t) {
 
                     }
                 });
                 break;
             case R.id.nav_calendar:
-                /*getSupportFragmentManager().beginTransaction()
+                getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                         .addToBackStack(null)
-                        .replace(R.id.fragmentContainer_attack, HistoryFragment.newInstance(), "HISTORY_FRAGMENT")
-                        .commit();*/
+                        .replace(R.id.fragmentContainer_patient, HistoryFragment.create(patient), "HISTORY_FRAGMENT")
+                        .commit();
                 break;
             case R.id.nav_weather:
                 /*getSupportFragmentManager().beginTransaction()

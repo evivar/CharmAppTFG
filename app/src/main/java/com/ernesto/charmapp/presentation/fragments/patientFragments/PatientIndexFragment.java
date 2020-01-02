@@ -16,8 +16,7 @@ import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.domain.Diary;
 import com.ernesto.charmapp.domain.Headache;
 import com.ernesto.charmapp.domain.Patient;
-import com.ernesto.charmapp.interactors.responses.ReadDiaryResponse;
-import com.ernesto.charmapp.interactors.responses.ReadPatientActiveCrisisResponse;
+import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse;
 import com.ernesto.charmapp.interactors.responses.diaryResponses.DiaryResponse;
 import com.ernesto.charmapp.presentation.dialogs.InfoDialog;
 
@@ -74,27 +73,33 @@ public class PatientIndexFragment extends Fragment {
                 readLastDiary.enqueue(new Callback<DiaryResponse>() {
                     @Override
                     public void onResponse(Call<DiaryResponse> call, Response<DiaryResponse> response) {
-                        DiaryResponse diaryResponse = response.body();
-                        if (!diaryResponse.getError()) {
-                            Diary lastDiary = diaryResponse.getDiary();
-                            Date date = new Date(System.currentTimeMillis());
-                            if (!lastDiary.getDate().equals(date.toString())) {
+                        try {
+                            DiaryResponse diaryResponse = response.body();
+                            System.out.println(response.body());
+                            if (diaryResponse != null && !diaryResponse.getError()) {
+                                Diary lastDiary = diaryResponse.getDiary();
+                                Date date = new Date(System.currentTimeMillis());
+                                if (!lastDiary.getDate().equals(date.toString())) {
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+                                            .addToBackStack(null)
+                                            .replace(R.id.fragmentContainer_patient, DiaryFragment.create(patient, lastDiary), "DIARY_FRAGMENT")
+                                            .commit();
+                                } else {
+                                    InfoDialog dialog = new InfoDialog("Ya ha rellenado el diario de hoy");
+                                    dialog.show(getFragmentManager(), "tagAlerta");
+                                }
+                            } else {
+                                Toast.makeText(getActivity(), "Primer diario del paciente", Toast.LENGTH_LONG).show();
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                                         .addToBackStack(null)
-                                        .replace(R.id.fragmentContainer_patient, DiaryFragment.create(patient, lastDiary), "DIARY_FRAGMENT")
+                                        .replace(R.id.fragmentContainer_patient, DiaryFragment.create(patient, new Diary()), "DIARY_FRAGMENT")
                                         .commit();
-                            } else {
-                                InfoDialog dialog = new InfoDialog("Ya ha rellenado el diario de hoy");
-                                dialog.show(getFragmentManager(), "tagAlerta");
                             }
-                        } else {
-                            Toast.makeText(getActivity(), "Primer diario del paciente", Toast.LENGTH_LONG).show();
-                            getActivity().getSupportFragmentManager().beginTransaction()
-                                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
-                                    .addToBackStack(null)
-                                    .replace(R.id.fragmentContainer_patient, DiaryFragment.create(patient, new Diary()), "DIARY_FRAGMENT")
-                                    .commit();
+                        }
+                        catch (Exception e){
+                            System.out.println(e.getMessage());
                         }
                     }
 
@@ -112,13 +117,13 @@ public class PatientIndexFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                Call<ReadPatientActiveCrisisResponse> readPatientActiveCrisis = RetrofitClient.getInstance().getAPI().readPatientActiveCrisis(patient.getPatientId());
-                readPatientActiveCrisis.enqueue(new Callback<ReadPatientActiveCrisisResponse>() {
+                Call<CrisisResponse> readActiveCrisisById = RetrofitClient.getInstance().getAPI().readActiveCrisisById(patient.getPatientId());
+                readActiveCrisisById.enqueue(new Callback<CrisisResponse>() {
                     @Override
-                    public void onResponse(Call<ReadPatientActiveCrisisResponse> call, Response<ReadPatientActiveCrisisResponse> response) {
-                        ReadPatientActiveCrisisResponse readPatientActiveCrisisResponse = response.body();
-                        if (!readPatientActiveCrisisResponse.getError()) {
-                            if (readPatientActiveCrisisResponse.getCrisis().getPatientId() == null) {
+                    public void onResponse(Call<CrisisResponse> call, Response<CrisisResponse> response) {
+                        CrisisResponse crisisResponse = response.body();
+                        if (!crisisResponse.getError()) {
+                            if (crisisResponse.getCrisis().getPatientId() == null) {
                                 System.out.println("Nueva crisis");
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
@@ -130,7 +135,7 @@ public class PatientIndexFragment extends Fragment {
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                                         .addToBackStack(null)
-                                        .replace(R.id.fragmentContainer_patient, HeadacheFragment.create(readPatientActiveCrisisResponse.getCrisis(), patient, true), "HEADACHE_FRAGMENT")
+                                        .replace(R.id.fragmentContainer_patient, HeadacheFragment.create(crisisResponse.getCrisis(), patient, true), "HEADACHE_FRAGMENT")
                                         .commit();
                             }
                         } else {
@@ -140,7 +145,7 @@ public class PatientIndexFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<ReadPatientActiveCrisisResponse> call, Throwable t) {
+                    public void onFailure(Call<CrisisResponse> call, Throwable t) {
 
                     }
                 });
