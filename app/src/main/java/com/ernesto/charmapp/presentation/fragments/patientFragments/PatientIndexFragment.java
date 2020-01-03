@@ -26,6 +26,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * TODO:
+ * Falta hacer lo de la temperatura, el estado del cielo y las precipitaciones
+ */
 public class PatientIndexFragment extends Fragment {
 
     // Falta lo del resumen
@@ -97,8 +101,7 @@ public class PatientIndexFragment extends Fragment {
                                         .replace(R.id.fragmentContainer_patient, DiaryFragment.create(patient, new Diary()), "DIARY_FRAGMENT")
                                         .commit();
                             }
-                        }
-                        catch (Exception e){
+                        } catch (Exception e){
                             System.out.println(e.getMessage());
                         }
                     }
@@ -123,7 +126,7 @@ public class PatientIndexFragment extends Fragment {
                     public void onResponse(Call<CrisisResponse> call, Response<CrisisResponse> response) {
                         CrisisResponse crisisResponse = response.body();
                         if (!crisisResponse.getError()) {
-                            if (crisisResponse.getCrisis().getPatientId() == null) {
+                            if (crisisResponse.getCrisis() == null) {
                                 System.out.println("Nueva crisis");
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)

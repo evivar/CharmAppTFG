@@ -35,6 +35,7 @@ import retrofit2.Response;
 /*
  * TODO:
  *      Quitar los comentarios que sobran
+ *      Cuando leo una crisis que no ha terminado por fecha, no se obtiene porque end_datetime es 0000-00-00
  *
  * */
 public class HistoryCrisisAndDiaryFragment extends Fragment {
@@ -148,9 +149,9 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
                     } else {
                         diary = null;
                     }
-                } else {
+                }/* else {
                     Toast.makeText(getActivity(), "Error con la base de datos", Toast.LENGTH_LONG).show();
-                }
+                }*/
             }
 
             @Override
@@ -241,9 +242,9 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
                     } else {
                         headache = null;
                     }
-                } else {
+                } /*else {
                     Toast.makeText(getActivity(), "Error con la base de datos", Toast.LENGTH_LONG).show();
-                }
+                }*/
             }
 
             @Override
@@ -393,6 +394,9 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
     }
 
     private void fillCrisis() {
+        if (!headache.getEndDatetime().equals(null)) {
+            this.endDateCrisisTxt.setText(headache.getEndDatetime().substring(0, 10));
+        }
         this.startDateCrisisTxt.setText(headache.getStartDatetime().substring(0, 10));
         if(headache.getSport().equals("Sí")){
             this.sportCrisisSpinner.setSelection(1);
@@ -443,5 +447,9 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
         medicationCrisis = medicationCrisisSpinner.getSelectedItem().toString();
         feelingCrisis = feelingCrisisTxt.getText().toString();
         painScaleCrisis = painScaleCrisisSpinner.getSelectedItemPosition();
+    }
+
+    private String twoDigits(int n) {
+        return (n <= 9) ? ("0" + n) : String.valueOf(n);
     }
 }

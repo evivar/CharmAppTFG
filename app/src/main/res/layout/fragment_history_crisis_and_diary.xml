@@ -187,7 +187,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:el_duration="1000"
-            app:el_expanded="true"
+            app:el_expanded="false"
             app:el_parallax="0.5">
 
             <ScrollView

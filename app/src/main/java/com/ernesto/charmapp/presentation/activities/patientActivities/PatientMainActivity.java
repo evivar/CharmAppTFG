@@ -1,18 +1,18 @@
 package com.ernesto.charmapp.presentation.activities.patientActivities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.ernesto.charmapp.R;
 import com.ernesto.charmapp.data.RetrofitClient;
@@ -101,7 +101,7 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
                     public void onResponse(Call<CrisisResponse> call, Response<CrisisResponse> response) {
                         CrisisResponse crisisResponse = response.body();
                         if(!crisisResponse.getError()){
-                            if(crisisResponse.getCrisis().getPatientId() == null){
+                            if (crisisResponse.getCrisis() == null) {
                                 System.out.println("Nueva crisis");
                                 getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
@@ -142,14 +142,6 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                         .addToBackStack(null)
                         .replace(R.id.fragmentContainer_attack, WeatherFragment.newInstance("param1", "param2"), "WEATHER_FRAGMENT")
-                        .commit();*/
-
-                break;
-            case R.id.nav_graphs:
-                /*getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
-                        .addToBackStack(null)
-                        .replace(R.id.fragmentContainer_attack, GraphsFragment.newInstance("param1", "param2"), "GRAPHS_FRAGMENT")
                         .commit();*/
 
                 break;
