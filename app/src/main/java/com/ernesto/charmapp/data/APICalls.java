@@ -186,6 +186,13 @@ public interface APICalls {
             @Field("date") String date
     );
 
+    @FormUrlEncoded
+    @POST("readCrisisByDateV2")
+    Call<CrisisResponse> readCrisisByDateV2(
+            @Field("patient_id") String patient_id,
+            @Field("date") String date
+    );
+
 
     @GET("readAllActiveCrisis")
     Call<ReadAllCrisisResponse> readAllActiveCrisis();

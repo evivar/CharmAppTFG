@@ -33,9 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /*
- * TODO:
- *      Quitar los comentarios que sobran
- *      Cuando leo una crisis que no ha terminado por fecha, no se obtiene porque end_datetime es 0000-00-00
+ * TODO: Cuando leo una crisis que no ha terminado por fecha, no se obtiene porque end_datetime es 0000-00-00 -> Parece estar solucionado
  *
  * */
 public class HistoryCrisisAndDiaryFragment extends Fragment {
@@ -227,11 +225,11 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
         this.painScaleCrisisSpinner = v.findViewById(R.id.painScaleCrisisSpinner_history);
 
 
-        final Call<CrisisResponse> readCrisisByDate = RetrofitClient
+        final Call<CrisisResponse> readCrisisByDateV2 = RetrofitClient
                 .getInstance()
                 .getAPI()
-                .readCrisisByDate(patient.getPatientId(), dateString);
-        readCrisisByDate.enqueue(new Callback<CrisisResponse>() {
+                .readCrisisByDateV2(patient.getPatientId(), dateString);
+        readCrisisByDateV2.enqueue(new Callback<CrisisResponse>() {
             @Override
             public void onResponse(Call<CrisisResponse> call, Response<CrisisResponse> response) {
                 CrisisResponse crisisResponse = response.body();

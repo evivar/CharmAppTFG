@@ -27,8 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * TODO:
- * Falta hacer lo de la temperatura, el estado del cielo y las precipitaciones
+ * TODO: Falta hacer lo de la temperatura, el estado del cielo y las precipitaciones
  */
 public class PatientIndexFragment extends Fragment {
 

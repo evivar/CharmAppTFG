@@ -5,8 +5,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    /* TODO: Preguntar a Juan porque no va ni en el portatil ni en el movil pero si en el fijo */
-
     private static final String BASE_URL = "http://147.96.127.212/CharmAppAPI/public/";
 
     private static final String BASE_URL_PC = "http://192.168.0.20/CharmAppAPI/public/";
