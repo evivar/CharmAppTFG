@@ -22,8 +22,6 @@ import com.ernesto.charmapp.presentation.dialogs.LogOutDialog;
 import com.ernesto.charmapp.presentation.fragments.doctorFragments.DoctorProfileFragment;
 import com.ernesto.charmapp.presentation.fragments.doctorFragments.PatientsFragment;
 import com.ernesto.charmapp.presentation.fragments.doctorFragments.PersonalDataFragment;
-import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientIndexFragment;
-import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class DoctorMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {

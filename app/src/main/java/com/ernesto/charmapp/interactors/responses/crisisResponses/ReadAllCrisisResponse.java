@@ -1,10 +1,10 @@
 package com.ernesto.charmapp.interactors.responses.crisisResponses;
 
-import java.util.List;
-
 import com.ernesto.charmapp.domain.Headache;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class ReadAllCrisisResponse {
 

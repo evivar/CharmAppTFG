@@ -1,7 +1,5 @@
 package com.ernesto.charmapp.interactors.validators;
 
-import android.util.Patterns;
-
 public class DiaryValidator {
 
     private String wrongFields;

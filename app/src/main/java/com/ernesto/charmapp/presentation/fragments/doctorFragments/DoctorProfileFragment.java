@@ -1,11 +1,6 @@
 package com.ernesto.charmapp.presentation.fragments.doctorFragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +9,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.ernesto.charmapp.R;
 import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.domain.Doctor;
 import com.ernesto.charmapp.interactors.responses.UpdateResponse;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
-import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientIndexFragment;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 

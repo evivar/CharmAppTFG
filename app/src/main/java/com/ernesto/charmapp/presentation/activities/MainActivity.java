@@ -1,19 +1,16 @@
 package com.ernesto.charmapp.presentation.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.ernesto.charmapp.R;
 import com.ernesto.charmapp.presentation.activities.doctorActivities.DoctorLoginActivity;
 import com.ernesto.charmapp.presentation.activities.patientActivities.PatientLoginActivity;
-import com.skyhope.eventcalenderlibrary.CalenderEvent;
-
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
