@@ -58,6 +58,7 @@ public class PatientIndexFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle arguments = getArguments();
         patient = (Patient) arguments.getSerializable("patient");
+        this.checkIfDiaryIsFilled();
     }
 
     @Nullable
@@ -168,6 +169,39 @@ public class PatientIndexFragment extends Fragment {
 
 
         return v;
+    }
+
+    private void checkIfDiaryIsFilled() {
+        Call<DiaryResponse> readLastDiary = RetrofitClient
+                .getInstance()
+                .getAPI()
+                .readLastDiary(patient.getPatientId());
+        readLastDiary.enqueue(new Callback<DiaryResponse>() {
+            @Override
+            public void onResponse(Call<DiaryResponse> call, Response<DiaryResponse> response) {
+                try {
+                    DiaryResponse diaryResponse = response.body();
+                    System.out.println(response.body());
+                    if (diaryResponse != null && !diaryResponse.getError()) {
+                        Diary lastDiary = diaryResponse.getDiary();
+                        Date date = new Date(System.currentTimeMillis());
+                        if (!lastDiary.getDate().equals(date.toString())) {
+                            Toast.makeText(getActivity(), "No se olvide de rellenar el diario", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "No se olvide de rellenar el diario", Toast.LENGTH_LONG).show();
+
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DiaryResponse> call, Throwable t) {
+
+            }
+        });
     }
 
 }

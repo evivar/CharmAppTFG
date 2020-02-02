@@ -1,6 +1,11 @@
 package com.ernesto.charmapp.presentation.activities.patientActivities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -15,6 +20,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.ernesto.charmapp.R;
+import com.ernesto.charmapp.data.NotificationReceiver;
 import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.data.SharedPreferencesManager;
 import com.ernesto.charmapp.domain.Headache;
@@ -26,6 +32,8 @@ import com.ernesto.charmapp.presentation.fragments.patientFragments.HistoryFragm
 import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientIndexFragment;
 import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientProfileFragment;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,7 +80,54 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
         }
         name.setText(patientName);
         email.setText(patientEmail);
+        createDiaryAlarm();
     }
+
+    private void createDiaryAlarm() {
+        int flag = 1;
+        int freq = 24;
+        int type = 1; // No estoy seguro de que es esto
+        int freqMillis = (int) (freq * 60 * 60 * 1000);
+
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 23); // Poner a la hora, en formato 24h, a la que lanzar la alarma -> 10
+        c.set(Calendar.MINUTE, 14);
+        c.set(Calendar.SECOND, 0);
+        // Esto lo pone en el codigo Notificaciones.java que pasaron por el mail
+        // c.add(Calendar.DAY_OF_YEAR, 1);
+
+        // Lo mostramos por el log
+        Log.d("Alarma de Diario creada", "setalarm freq(hours) = " + freq + " -> alarm @ " +
+                c.get(Calendar.DAY_OF_MONTH) + "/" + (c.get(Calendar.MONTH) + 1) + " " +
+                c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" +
+                c.get(Calendar.SECOND));
+
+        // Creamos el alarmManager
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        // Creamos el intent
+        Intent intent = new Intent(this, NotificationReceiver.class);
+        // Creamos el pending intent
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        // Configuramos que se repita la alarma cada freqMillis
+        // TODO: Algo falla al poner o el repeating o el c.add(Calendar.DAY_OF_YEAR, freq);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+                c.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
+
+    // TODO: Creo otra vez los metodos de la alarma en el fragment de las crisis, cuando se crea una crisis llamo al createAlarm y cuando se modifica para meter una fecha final llamo al cancelAlarm
+    private void cancelAlarm() {
+        // Creamos el alarmManager
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        // Creamos el intent
+        Intent intent = new Intent(this, NotificationReceiver.class);
+        // Creamos el pending intent
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        // Cancelamos el alarmManager
+        alarmManager.cancel(pendingIntent);
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -100,7 +155,7 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
                     @Override
                     public void onResponse(Call<CrisisResponse> call, Response<CrisisResponse> response) {
                         CrisisResponse crisisResponse = response.body();
-                        if(!crisisResponse.getError()){
+                        if (!crisisResponse.getError()) {
                             if (crisisResponse.getCrisis() == null) {
                                 System.out.println("Nueva crisis");
                                 getSupportFragmentManager().beginTransaction()
@@ -108,8 +163,7 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
                                         .addToBackStack(null)
                                         .replace(R.id.fragmentContainer_patient, HeadacheFragment.create(new Headache(), patient, false), "HEADACHE_FRAGMENT")
                                         .commit();
-                            }
-                            else{
+                            } else {
                                 System.out.println("Editar crisis");
                                 getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
@@ -117,8 +171,7 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
                                         .replace(R.id.fragmentContainer_patient, HeadacheFragment.create(crisisResponse.getCrisis(), patient, true), "HEADACHE_FRAGMENT")
                                         .commit();
                             }
-                        }
-                        else{
+                        } else {
                             // Falla la lectura TODO: Revisar esto
                             //Toast.makeText(getSupportFragmentManager().getFragment(), "ERROR EN LA LECTURA DEL HEADACHE", Toast.LENGTH_LONG).show();
                         }

@@ -117,7 +117,7 @@ public class DiaryFragment extends Fragment {
                             if (!diaryResponse.getError()) {
                                 Calendar calendar = Calendar.getInstance();
                                 Event event = new Event(calendar.getTimeInMillis(), "Diario", Color.BLUE);
-                                calenderEvent.addEvent(event);
+                                //calenderEvent.addEvent(event);
                                 Toast.makeText(getActivity(), "Datos guardados correctamente", Toast.LENGTH_LONG).show();
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
