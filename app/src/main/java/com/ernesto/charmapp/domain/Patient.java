@@ -36,8 +36,11 @@ public class Patient implements Serializable {
     @SerializedName("phone")
     @Expose
     private Integer phone;
+    @SerializedName("ch_duration")
+    @Expose
+    private Integer ch_duration;
 
-    public Patient(String id, String email, String password, String name, String surname1, String surname2, String initDate, String endDate, Integer phone) {
+    public Patient(String id, String email, String password, String name, String surname1, String surname2, String initDate, String endDate, Integer phone, Integer ch_duration) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -47,6 +50,7 @@ public class Patient implements Serializable {
         this.initDate = initDate;
         this.endDate = endDate;
         this.phone = phone;
+        this.ch_duration = ch_duration;
     }
 
     public String getPatientId() {
@@ -119,6 +123,14 @@ public class Patient implements Serializable {
 
     public void setPhone(Integer phone) {
         this.phone = phone;
+    }
+
+    public Integer getCh_duration() {
+        return ch_duration;
+    }
+
+    public void setCh_duration(Integer ch_duration) {
+        this.ch_duration = ch_duration;
     }
 
     @NonNull

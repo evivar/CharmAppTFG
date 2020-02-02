@@ -39,6 +39,18 @@ public class SharedPreferencesManager {
         editor.putString("init_date", patient.getInitDate());
         editor.putString("end_date", patient.getEndDate());
         editor.putInt("phone", patient.getPhone());
+        int duration = (patient.getCh_duration() == 365) ? 14 : patient.getCh_duration() / 2;
+        editor.putInt("ch_duration", duration);
+
+        editor.apply();
+    }
+
+    public void saveCrisisDuration(int crisisDuration) {
+        SharedPreferences sharedPreferencesManager = context.getSharedPreferences(SHARED_PREFFERENCES_NAME, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferencesManager.edit();
+        int duration = (crisisDuration == 365) ? 14 : crisisDuration / 2;
+        editor.putInt("crisisDuration", duration);
 
         editor.apply();
     }
@@ -76,7 +88,9 @@ public class SharedPreferencesManager {
                 sharedPreferencesManager.getString("surname2", null),
                 sharedPreferencesManager.getString("init_date", null),
                 sharedPreferencesManager.getString("end_date", null),
-                sharedPreferencesManager.getInt("phone", -1)
+                sharedPreferencesManager.getInt("phone", -1),
+                sharedPreferencesManager.getInt("cc_duration", -1)
+
         );
         return patient;
     }
