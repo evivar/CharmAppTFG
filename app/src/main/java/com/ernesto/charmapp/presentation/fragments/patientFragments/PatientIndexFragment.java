@@ -1,6 +1,7 @@
 package com.ernesto.charmapp.presentation.fragments.patientFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +80,7 @@ public class PatientIndexFragment extends Fragment {
                     public void onResponse(Call<DiaryResponse> call, Response<DiaryResponse> response) {
                         try {
                             DiaryResponse diaryResponse = response.body();
-                            System.out.println(response.body());
+                            Log.d("Rellenar diario", response.body().getMensaje());
                             if (diaryResponse != null && !diaryResponse.getError()) {
                                 Diary lastDiary = diaryResponse.getDiary();
                                 Date date = new Date(System.currentTimeMillis());
@@ -101,8 +102,8 @@ public class PatientIndexFragment extends Fragment {
                                         .replace(R.id.fragmentContainer_patient, DiaryFragment.create(patient, new Diary()), "DIARY_FRAGMENT")
                                         .commit();
                             }
-                        } catch (Exception e){
-                            System.out.println(e.getMessage());
+                        } catch (Exception e) {
+                            Log.e("Excepcion rellenar", e.getMessage());
                         }
                     }
 
@@ -127,14 +128,14 @@ public class PatientIndexFragment extends Fragment {
                         CrisisResponse crisisResponse = response.body();
                         if (!crisisResponse.getError()) {
                             if (crisisResponse.getCrisis() == null) {
-                                System.out.println("Nueva crisis");
+                                Log.i("Crear/Editar crisis", "Nueva crisis");
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                                         .addToBackStack(null)
                                         .replace(R.id.fragmentContainer_patient, HeadacheFragment.create(new Headache(), patient, false), "HEADACHE_FRAGMENT")
                                         .commit();
                             } else {
-                                System.out.println("Editar crisis");
+                                Log.i("Crear/Editar crisis", "Editar crisis");
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                                         .addToBackStack(null)
@@ -181,19 +182,19 @@ public class PatientIndexFragment extends Fragment {
             public void onResponse(Call<DiaryResponse> call, Response<DiaryResponse> response) {
                 try {
                     DiaryResponse diaryResponse = response.body();
-                    System.out.println(response.body());
+                    Log.d("Respuesta del diario", response.body().getMensaje());
                     if (diaryResponse != null && !diaryResponse.getError()) {
                         Diary lastDiary = diaryResponse.getDiary();
                         Date date = new Date(System.currentTimeMillis());
                         if (!lastDiary.getDate().equals(date.toString())) {
-                            Toast.makeText(getActivity(), "No se olvide de rellenar el diario", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "No te olvides de rellenar el diario", Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(getActivity(), "No se olvide de rellenar el diario", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "No te olvides de rellenar el diario", Toast.LENGTH_LONG).show();
 
                     }
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    Log.e("Excepción diario", e.getMessage());
                 }
             }
 

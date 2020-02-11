@@ -1,10 +1,14 @@
 package com.ernesto.charmapp.data;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
+
+import com.ernesto.charmapp.presentation.activities.MainActivity;
+import com.ernesto.charmapp.presentation.activities.patientActivities.PatientMainActivity;
 
 public class NotificationReceiver extends BroadcastReceiver {
 
@@ -17,8 +21,13 @@ public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        Intent broadcastIntent = new Intent(context, (SharedPreferencesManager.getInstance(context).getPatient().getPatientId() != null) ? PatientMainActivity.class : MainActivity.class);
+
+        PendingIntent actionIntent = PendingIntent.getBroadcast(context, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationHelper notificationHelper = new NotificationHelper(context, "DChannel");
         NotificationCompat.Builder notificationBuilder = notificationHelper.getChannelNotification();
+        notificationBuilder.setContentIntent(actionIntent);
         notificationHelper.getManager().notify(1, notificationBuilder.build());
 
     }

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -31,13 +32,20 @@ import com.ernesto.charmapp.presentation.activities.patientActivities.PatientMai
 import com.ernesto.charmapp.presentation.dialogs.DateDialog;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HeadacheFragment extends Fragment {
+
+    private static final String NUEVA_CRISIS = "Nueva crisis";
+
+    private static final String EDITAR_CRISIS = "Editar crisis";
 
     private Headache headache;
 
@@ -46,6 +54,8 @@ public class HeadacheFragment extends Fragment {
     private boolean editing;
 
     private HeadacheValidator validator;
+
+    private TextView header;
 
     private EditText startDateTxt;
 
@@ -106,6 +116,7 @@ public class HeadacheFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_headache, container, false);
         // Inizializar los campos
+        header = v.findViewById(R.id.headerTitleLbl_headache);
         startDateTxt = v.findViewById(R.id.startDateTxt_headache);
         endDateTxt = v.findViewById(R.id.endDateTxt_headache);
         sportSpinner = v.findViewById(R.id.sportSpinner_headache);
@@ -116,9 +127,11 @@ public class HeadacheFragment extends Fragment {
         painScaleSpinner = v.findViewById(R.id.painScaleSpinner_headache);
         saveBtn = v.findViewById(R.id.saveBtn_headache);
 
-        if(editing){
+        if (editing) {
+            header.setText(EDITAR_CRISIS);
             fillFields();
         } else {
+            header.setText(NUEVA_CRISIS);
             createCrisisAlarm();
         }
 
@@ -134,7 +147,6 @@ public class HeadacheFragment extends Fragment {
                 showDatePickerDialog(endDateTxt);
             }
         });
-        // FALLA ALGO CUANDO LA CRISIS ES NUEVA, SE GUARDA EN LA BBDD PERO NO REDIRIGE AL FRAGMENT ANTERIOR
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,11 +154,11 @@ public class HeadacheFragment extends Fragment {
                 validator = new HeadacheValidator();
                 // Valida los campos
                 if (validateFields()) {
-                    if ((endDate.isEmpty()) || (endDate.length() != 10) || (endDate == null)){
+                    if ((endDate.isEmpty()) || (endDate.length() != 10) || (endDate == null)) {
                         endDate = "0000-00-00";
                     }
                     // Llama al api para meter el headache
-                    if(editing){
+                    if (editing) {
                         // Solo se updatea
                         final Call<UpdateResponse> updateCrisis = RetrofitClient
                                 .getInstance()
@@ -156,7 +168,7 @@ public class HeadacheFragment extends Fragment {
                             @Override
                             public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {
                                 UpdateResponse updateResponse = response.body();
-                                if(!updateResponse.getError()){
+                                if (!updateResponse.getError()) {
                                     Toast.makeText(getActivity(), "Crisis actualizada correctamente", Toast.LENGTH_LONG).show();
                                     if (endDate != "0000-00-00") {
                                         cancelAlarm();
@@ -167,8 +179,7 @@ public class HeadacheFragment extends Fragment {
                                             .addToBackStack(null)
                                             .replace(R.id.fragmentContainer_patient, PatientIndexFragment.create(patient), "PATIENT_INDEX_FRAGMENT")
                                             .commit();
-                                }
-                                else{
+                                } else {
                                     Toast.makeText(getActivity(), updateResponse.getMensaje(), Toast.LENGTH_LONG).show();
                                 }
                             }
@@ -179,7 +190,7 @@ public class HeadacheFragment extends Fragment {
                             }
                         });
                     }
-                    if(!editing){
+                    if (!editing) {
                         final Call<CrisisResponse> createCrisis = RetrofitClient
                                 .getInstance()
                                 .getAPI()
@@ -188,16 +199,15 @@ public class HeadacheFragment extends Fragment {
                             @Override
                             public void onResponse(Call<CrisisResponse> call, Response<CrisisResponse> response) {
                                 CrisisResponse crisisResponse = response.body();
-                                if(crisisResponse != null && !crisisResponse.getError()){
-                                    System.out.println("Crisis creada correctamente");
+                                if (crisisResponse != null && !crisisResponse.getError()) {
+                                    Log.i("Crisis", "Crisis creada correctamente");
                                     Toast.makeText(getActivity(), "Crisis creada correctamente", Toast.LENGTH_LONG).show();
                                     getActivity().getSupportFragmentManager().beginTransaction()
                                             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                                             .replace(R.id.fragmentContainer_patient, PatientIndexFragment.create(patient), "PATIENT_INDEX_FRAGMENT")
                                             .addToBackStack(null)
                                             .commit();
-                                }
-                                else{
+                                } else {
                                     Toast.makeText(getActivity(), "ERROR: No se pudo crear la crisis", Toast.LENGTH_LONG).show();
                                 }
                             }
@@ -210,7 +220,7 @@ public class HeadacheFragment extends Fragment {
                     }
                 } else {
                     // Mostramos un dialogo de error con los campos a revisar y ademas los ponemos como error
-                    showErrorDialog();
+                    showErrorDialog("Error: Revise los siguientes campos antes de continuar", validator.getWrongFields());
                 }
             }
         });
@@ -225,7 +235,16 @@ public class HeadacheFragment extends Fragment {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 porque Enero es el 0
                 final String selectedDate = year + "-" + twoDigits(month + 1) + "-" + twoDigits(day);
-                dateTxt.setText(selectedDate);
+                try {
+                    Date datePickerDate = new SimpleDateFormat("dd-MM-yyyy").parse(selectedDate);
+                    if (datePickerDate.before(new Date())) {
+                        showErrorDialog("Error: La fecha no puede ser posterior a hoy", "Seleccione una fecha anterior");
+                    } else {
+                        dateTxt.setText(selectedDate);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -236,8 +255,8 @@ public class HeadacheFragment extends Fragment {
         return validator.validate(startDate, endDate, sport, alcohol, smoke, medication, feeling, painScale);
     }
 
-    public void showErrorDialog() {
-        ErrorDialog errorDialog = new ErrorDialog("Error: Revise los siguientes campos antes de continuar", validator.getWrongFields());
+    public void showErrorDialog(String title, String msg) {
+        ErrorDialog errorDialog = new ErrorDialog(title, msg);
         errorDialog.show(getActivity().getSupportFragmentManager(), "ERROR_DIALOG");
     }
 
@@ -271,7 +290,7 @@ public class HeadacheFragment extends Fragment {
         // Configuramos que se repita la alarma cada freqMillis
         // TODO: Algo falla al poner o el repeating o el c.add(Calendar.DAY_OF_YEAR, freq);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-                System.currentTimeMillis() + freqMillis, freqMillis, pendingIntent);
+                System.currentTimeMillis(), freqMillis, pendingIntent);
     }
 
     // TODO: Creo otra vez los metodos de la alarma en el fragment de las crisis, cuando se crea una crisis llamo al createAlarm y cuando se modifica para meter una fecha final llamo al cancelAlarm
@@ -286,37 +305,34 @@ public class HeadacheFragment extends Fragment {
         // Cancelamos el alarmManager
         alarmManager.cancel(pendingIntent);
     }
+
     private String twoDigits(int n) {
         return (n <= 9) ? ("0" + n) : String.valueOf(n);
     }
 
-    private void fillFields(){
+    private void fillFields() {
         this.startDateTxt.setText(headache.getStartDatetime().substring(0, 10));
-        if(headache.getSport().equals("Sí")){
+        if (headache.getSport().equals("Sí")) {
             this.sportSpinner.setSelection(1);
-        }
-        else{
+        } else {
             this.sportSpinner.setSelection(2);
         }
 
-        if(headache.getAlcohol().equals("Sí")){
+        if (headache.getAlcohol().equals("Sí")) {
             this.alcoholSpinner.setSelection(1);
-        }
-        else{
+        } else {
             this.alcoholSpinner.setSelection(2);
         }
 
-        if(headache.getSmoke().equals("Sí")){
+        if (headache.getSmoke().equals("Sí")) {
             this.smokeSpinner.setSelection(1);
-        }
-        else{
+        } else {
             this.smokeSpinner.setSelection(2);
         }
 
-        if(headache.getMedication().equals("Sí")){
+        if (headache.getMedication().equals("Sí")) {
             this.medicationSpinner.setSelection(1);
-        }
-        else{
+        } else {
             this.medicationSpinner.setSelection(2);
         }
 

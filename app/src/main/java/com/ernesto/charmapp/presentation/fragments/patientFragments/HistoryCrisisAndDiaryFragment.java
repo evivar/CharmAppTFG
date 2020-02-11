@@ -33,7 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /*
- * TODO: Cuando leo una crisis que no ha terminado por fecha, no se obtiene porque end_datetime es 0000-00-00 -> Parece estar solucionado
+ *  TODO: Cuando leo una crisis que no ha terminado por fecha, no se obtiene porque end_datetime es 0000-00-00 -> Parece estar solucionado
  *
  * */
 public class HistoryCrisisAndDiaryFragment extends Fragment {

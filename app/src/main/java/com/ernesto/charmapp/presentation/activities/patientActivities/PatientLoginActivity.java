@@ -2,6 +2,7 @@ package com.ernesto.charmapp.presentation.activities.patientActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -81,7 +82,7 @@ public class PatientLoginActivity extends AppCompatActivity {
         password = passwordTxt.getText().toString();
         if (validator.validate(email, password)) {
             /* TODO: Ya hashea la contraseña con SHA512, solo falta almacenarla así en la BBDD */
-            System.out.println(SHA512(password));
+            Log.d("Contraseña hasheada:", SHA512(password));
             Call<PatientResponse> patientLogin = RetrofitClient.getInstance().getAPI().patientLogin(email, password);
             patientLogin.enqueue(new Callback<PatientResponse>() {
                 @Override
@@ -113,8 +114,6 @@ public class PatientLoginActivity extends AppCompatActivity {
         messageDigest.update(password.getBytes(StandardCharsets.UTF_8));
         byte[] digest = messageDigest.digest();
         hashedPassword = String.format("%064x", new BigInteger(1, digest));
-        System.out.println(hashedPassword);
-
         return hashedPassword;
     }
 

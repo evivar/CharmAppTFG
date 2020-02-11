@@ -85,13 +85,13 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
 
     private void createDiaryAlarm() {
         int flag = 1;
-        int freq = 24;
+        double freq = 0.01;
         int type = 1; // No estoy seguro de que es esto
         int freqMillis = (int) (freq * 60 * 60 * 1000);
 
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, 23); // Poner a la hora, en formato 24h, a la que lanzar la alarma -> 10
-        c.set(Calendar.MINUTE, 14);
+        c.set(Calendar.HOUR_OF_DAY, 10); // Poner a la hora, en formato 24h, a la que lanzar la alarma -> 10
+        c.set(Calendar.MINUTE, 00);
         c.set(Calendar.SECOND, 0);
         // Esto lo pone en el codigo Notificaciones.java que pasaron por el mail
         // c.add(Calendar.DAY_OF_YEAR, 1);
@@ -157,14 +157,14 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
                         CrisisResponse crisisResponse = response.body();
                         if (!crisisResponse.getError()) {
                             if (crisisResponse.getCrisis() == null) {
-                                System.out.println("Nueva crisis");
+                                Log.i("Crisis:", "Nueva crisis");
                                 getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                                         .addToBackStack(null)
                                         .replace(R.id.fragmentContainer_patient, HeadacheFragment.create(new Headache(), patient, false), "HEADACHE_FRAGMENT")
                                         .commit();
                             } else {
-                                System.out.println("Editar crisis");
+                                Log.i("Crisis:", "Editar crisis");
                                 getSupportFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                                         .addToBackStack(null)
