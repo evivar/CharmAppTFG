@@ -20,7 +20,6 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.data.NotificationReceiver;
 import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.domain.Headache;
 import com.ernesto.charmapp.domain.Patient;
@@ -171,7 +170,7 @@ public class HeadacheFragment extends Fragment {
                                 if (!updateResponse.getError()) {
                                     Toast.makeText(getActivity(), "Crisis actualizada correctamente", Toast.LENGTH_LONG).show();
                                     if (endDate != "0000-00-00") {
-                                        cancelAlarm();
+                                        //cancelAlarm();
                                         Toast.makeText(getActivity(), "Notificaciones de crisis desactivadas", Toast.LENGTH_SHORT).show();
                                     }
                                     getActivity().getSupportFragmentManager().beginTransaction()
@@ -294,7 +293,7 @@ public class HeadacheFragment extends Fragment {
     }
 
     // TODO: Creo otra vez los metodos de la alarma en el fragment de las crisis, cuando se crea una crisis llamo al createAlarm y cuando se modifica para meter una fecha final llamo al cancelAlarm
-    private void cancelAlarm() {
+    /*private void cancelAlarm() {
         // Creamos el alarmManager
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
 
@@ -304,7 +303,7 @@ public class HeadacheFragment extends Fragment {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         // Cancelamos el alarmManager
         alarmManager.cancel(pendingIntent);
-    }
+    }*/
 
     private String twoDigits(int n) {
         return (n <= 9) ? ("0" + n) : String.valueOf(n);

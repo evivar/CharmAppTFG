@@ -1,9 +1,5 @@
 package com.ernesto.charmapp.presentation.activities.patientActivities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,7 +16,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.data.NotificationReceiver;
 import com.ernesto.charmapp.data.RetrofitClient;
 import com.ernesto.charmapp.data.SharedPreferencesManager;
 import com.ernesto.charmapp.domain.Headache;
@@ -29,11 +24,10 @@ import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse
 import com.ernesto.charmapp.presentation.dialogs.LogOutDialog;
 import com.ernesto.charmapp.presentation.fragments.patientFragments.HeadacheFragment;
 import com.ernesto.charmapp.presentation.fragments.patientFragments.HistoryFragment;
+import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientChartFragment;
 import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientIndexFragment;
 import com.ernesto.charmapp.presentation.fragments.patientFragments.PatientProfileFragment;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -80,54 +74,7 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
         }
         name.setText(patientName);
         email.setText(patientEmail);
-        createDiaryAlarm();
     }
-
-    private void createDiaryAlarm() {
-        int flag = 1;
-        double freq = 0.01;
-        int type = 1; // No estoy seguro de que es esto
-        int freqMillis = (int) (freq * 60 * 60 * 1000);
-
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, 10); // Poner a la hora, en formato 24h, a la que lanzar la alarma -> 10
-        c.set(Calendar.MINUTE, 00);
-        c.set(Calendar.SECOND, 0);
-        // Esto lo pone en el codigo Notificaciones.java que pasaron por el mail
-        // c.add(Calendar.DAY_OF_YEAR, 1);
-
-        // Lo mostramos por el log
-        Log.d("Alarma de Diario creada", "setalarm freq(hours) = " + freq + " -> alarm @ " +
-                c.get(Calendar.DAY_OF_MONTH) + "/" + (c.get(Calendar.MONTH) + 1) + " " +
-                c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" +
-                c.get(Calendar.SECOND));
-
-        // Creamos el alarmManager
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        // Creamos el intent
-        Intent intent = new Intent(this, NotificationReceiver.class);
-        // Creamos el pending intent
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        // Configuramos que se repita la alarma cada freqMillis
-        // TODO: Algo falla al poner o el repeating o el c.add(Calendar.DAY_OF_YEAR, freq);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                c.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-    }
-
-    // TODO: Creo otra vez los metodos de la alarma en el fragment de las crisis, cuando se crea una crisis llamo al createAlarm y cuando se modifica para meter una fecha final llamo al cancelAlarm
-    private void cancelAlarm() {
-        // Creamos el alarmManager
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        // Creamos el intent
-        Intent intent = new Intent(this, NotificationReceiver.class);
-        // Creamos el pending intent
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        // Cancelamos el alarmManager
-        alarmManager.cancel(pendingIntent);
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -191,11 +138,11 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
                         .commit();
                 break;
             case R.id.nav_weather:
-                /*getSupportFragmentManager().beginTransaction()
+                getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                         .addToBackStack(null)
-                        .replace(R.id.fragmentContainer_attack, WeatherFragment.newInstance("param1", "param2"), "WEATHER_FRAGMENT")
-                        .commit();*/
+                        .replace(R.id.fragmentContainer_patient, PatientChartFragment.create(), "CHART_FRAGMENT")
+                        .commit();
 
                 break;
             case R.id.nav_profile:

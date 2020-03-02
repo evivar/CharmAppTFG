@@ -38,4 +38,6 @@ dependencies {
     implementation 'com.github.florent37:diagonallayout:1.0.9'
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
     implementation 'com.github.mahimrocky:EventCalender:v1.0.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.deepakbaliga:BeautifulGraphSample:f9b6217362'
 }

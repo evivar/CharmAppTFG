@@ -23,7 +23,6 @@
             </intent-filter>
         </activity>
         <!-- Vamos a añadir un receiver cada vez que tenga un broadcastReceiver para que se ejecute y lance la notificacion cuando la app esta en segundo plano -->
-        <receiver android:name=".data.NotificationReceiver" />
 
     </application>
 

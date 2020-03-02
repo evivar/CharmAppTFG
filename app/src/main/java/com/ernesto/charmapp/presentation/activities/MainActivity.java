@@ -9,6 +9,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ernesto.charmapp.R;
+import com.ernesto.charmapp.data.services.LocationService;
 import com.ernesto.charmapp.presentation.activities.doctorActivities.DoctorLoginActivity;
 import com.ernesto.charmapp.presentation.activities.patientActivities.PatientLoginActivity;
 
@@ -48,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void startService(View v) {
+        Intent serviceIntent = new Intent(this, LocationService.class);
+        startService(serviceIntent);
+    }
+
+    public void stopService(View v) {
+        Intent serviceIntent = new Intent(this, LocationService.class);
+        stopService(serviceIntent);
+    }
 
 }
 
