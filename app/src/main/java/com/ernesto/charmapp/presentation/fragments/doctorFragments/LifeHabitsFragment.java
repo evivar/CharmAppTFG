@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.domain.RegisterForm;
+import com.ernesto.charmapp.domain.retrofitEntities.RegisterForm;
 import com.ernesto.charmapp.interactors.validators.LifeHabitsValidator;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
 

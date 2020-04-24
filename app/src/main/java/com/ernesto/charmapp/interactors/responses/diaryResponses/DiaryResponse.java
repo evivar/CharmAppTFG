@@ -1,6 +1,6 @@
 package com.ernesto.charmapp.interactors.responses.diaryResponses;
 
-import com.ernesto.charmapp.domain.Diary;
+import com.ernesto.charmapp.domain.retrofitEntities.Diary;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

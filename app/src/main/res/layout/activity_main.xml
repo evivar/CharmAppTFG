@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/roundedbutton_negative"
-            android:text="Paciente"
+            android:text="@string/activity_main_patientBtn_main_text"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
 
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/roundedbutton_negative"
-            android:text="Médico"
+            android:text="@string/activity_main_doctorBtn_main_text"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
 

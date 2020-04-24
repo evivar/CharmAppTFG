@@ -1,179 +1,191 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".presentation.fragments.patientFragments.HeadacheFragment">
 
-    <com.github.florent37.diagonallayout.DiagonalLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="#00000000"
-        android:elevation="30dp"
-        app:diagonal_angle="10"
-        app:diagonal_direction="left"
-        app:diagonal_position="bottom">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <com.github.florent37.diagonallayout.DiagonalLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/background"
-            android:clipChildren="false"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="15dp">
-
-            <TextView
-                android:id="@+id/headerTitleLbl_headache"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nueva crisis"
-                android:textColor="#ffffff"
-                android:textSize="48sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-    </com.github.florent37.diagonallayout.DiagonalLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="150dp"
+            android:background="#00000000"
+            android:elevation="30dp"
+            app:diagonal_angle="10"
+            app:diagonal_direction="left"
+            app:diagonal_position="bottom">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:background="@drawable/background"
+                android:clipChildren="false"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="15dp">
 
                 <TextView
-                    android:id="@+id/startDateLbl_headache"
-                    android:layout_width="match_parent"
+                    android:id="@+id/headerTitleLbl_headache"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fecha de inicio" />
+                    android:fontFamily="@font/muli"
+                    android:text="@string/fragment_headache_headerTitleLbl_headache_text"
+                    android:textColor="#ffffff"
+                    android:textSize="48sp"
+                    android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/startDateTxt_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:inputType="date"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/endDateLbl_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Fecha de fin" />
-
-                <EditText
-                    android:id="@+id/endDateTxt_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:inputType="date"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/sportLbl_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="¿Ha hecho deporte antes del dolor?" />
-
-                <Spinner
-                    android:id="@+id/sportSpinner_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:entries="@array/yes_no_spiner" />
-
-                <TextView
-                    android:id="@+id/alcoholLbl_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="¿Tomó alcohol antes del dolor?" />
-
-                <Spinner
-                    android:id="@+id/alcoholSpinner_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:entries="@array/yes_no_spiner" />
-
-                <TextView
-                    android:id="@+id/smokeLbl_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="¿Fumó antes del dolor?" />
-
-                <Spinner
-                    android:id="@+id/smokeSpinner_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:entries="@array/yes_no_spiner" />
-
-                <TextView
-                    android:id="@+id/medicationLbl_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="¿Tomó alguna medicación antes del dolor?" />
-
-                <Spinner
-                    android:id="@+id/medicationSpinner_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:entries="@array/yes_no_spiner" />
-
-                <TextView
-                    android:id="@+id/feelingLbl_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="¿Esto que poyas es?" />
-
-                <EditText
-                    android:id="@+id/feelingTxt_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/painScaleLbl_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="¿Cuán fuerte fue el dolor?" />
-
-                <Spinner
-                    android:id="@+id/painScaleSpinner_headache"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:entries="@array/painScale_spiner" />
             </LinearLayout>
+
+        </com.github.florent37.diagonallayout.DiagonalLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/saveBtn_headache"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/roundedbutton"
-                    android:text="Guardar" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/startDateLbl_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_headache_startDateLbl_headache_text" />
+
+                    <EditText
+                        android:id="@+id/startDateTxt_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:inputType="date"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/endDateLbl_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_headache_endDateLbl_headache_text" />
+
+                    <EditText
+                        android:id="@+id/endDateTxt_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:inputType="date"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/sportLbl_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_headache_sportLbl_headache_text" />
+
+                    <Spinner
+                        android:id="@+id/sportSpinner_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:entries="@array/yes_no_spiner" />
+
+                    <TextView
+                        android:id="@+id/alcoholLbl_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_headache_alcoholLbl_headache_text" />
+
+                    <Spinner
+                        android:id="@+id/alcoholSpinner_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:entries="@array/yes_no_spiner" />
+
+                    <TextView
+                        android:id="@+id/smokeLbl_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_headache_smokeLbl_headache_text" />
+
+                    <Spinner
+                        android:id="@+id/smokeSpinner_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:entries="@array/yes_no_spiner" />
+
+                    <TextView
+                        android:id="@+id/medicationLbl_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_headache_medicationLbl_headache_text" />
+
+                    <Spinner
+                        android:id="@+id/medicationSpinner_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:entries="@array/yes_no_spiner" />
+
+                    <TextView
+                        android:id="@+id/feelingLbl_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_headache_feelingLbl_headache_text" />
+
+                    <EditText
+                        android:id="@+id/feelingTxt_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/painScaleLbl_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_headache_painScaleLbl_headache_text" />
+
+                    <Spinner
+                        android:id="@+id/painScaleSpinner_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:entries="@array/painScale_spiner" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/saveBtn_headache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/roundedbutton"
+                        android:text="@string/fragment_headache_saveBtn_headache_text" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
 
 
-</LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

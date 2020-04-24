@@ -46,7 +46,7 @@ public class HeadacheValidator {
             wrongFields += "Medicación\n";
         }
 
-        if ((feeling.isEmpty()) || (feeling.length() != 3) || (feeling == null)) {
+        if ((feeling.isEmpty()) || (feeling == null)) {
             valid = false;
             wrongFields += "Sensación\n";
         }

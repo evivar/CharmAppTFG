@@ -29,6 +29,10 @@
     <item android:title="Opciones">
         <menu>
             <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_help"
+                android:title="Ayuda" />
+            <item
                 android:id="@+id/nav_logOut"
                 android:icon="@drawable/ic_logout"
                 android:title="Cerrar sesión" />

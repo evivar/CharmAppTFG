@@ -10,31 +10,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Cartesian;
+import com.anychart.core.cartesian.series.Line;
+import com.anychart.data.Mapping;
+import com.anychart.data.Set;
+import com.anychart.enums.Anchor;
+import com.anychart.enums.MarkerType;
+import com.anychart.enums.TooltipPositionMode;
+import com.anychart.graphics.vector.Stroke;
 import com.ernesto.charmapp.R;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class PatientChartFragment extends Fragment {
 
-    private ArrayList<BarEntry> datosPrueba;
-    private ArrayList<Entry> datosPrueba2;
-
-    private BarDataSet dataset;
-
-    private BarChart chartPrueba;
-
-    private LineChart chartPrueba2;
-
-    private LineDataSet dataSet2;
+    private AnyChartView xyPlot;
 
     public static PatientChartFragment create() {
         PatientChartFragment f = new PatientChartFragment();
@@ -50,47 +46,85 @@ public class PatientChartFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_patient_chart, container, false);
-
-        chartPrueba = v.findViewById(R.id.temperatureChart_Chart);
-        chartPrueba2 = v.findViewById(R.id.lineChart_Chart);
-
-        chartPrueba2.setDrawGridBackground(false);
-
-        datosPrueba = new ArrayList<>();
-
-        datosPrueba.add(new BarEntry(15, 0));
-        datosPrueba.add(new BarEntry(10, 1));
-        datosPrueba.add(new BarEntry(2, 2));
-        datosPrueba.add(new BarEntry(5, 3));
-        datosPrueba.add(new BarEntry(25, 4));
-        datosPrueba.add(new BarEntry(10, 5));
-        datosPrueba.add(new BarEntry(1, 6));
-        datosPrueba.add(new BarEntry(24, 7));
-
-        datosPrueba2 = new ArrayList<>();
-
-        datosPrueba2.add(new Entry(0, 15));
-        datosPrueba2.add(new Entry(1, 10));
-        datosPrueba2.add(new Entry(2, 2));
-        datosPrueba2.add(new Entry(3, 5));
-        datosPrueba2.add(new Entry(4, 25));
-        datosPrueba2.add(new Entry(5, 10));
-        datosPrueba2.add(new Entry(6, 1));
-        datosPrueba2.add(new Entry(7, 24));
-
-        dataSet2 = new LineDataSet(datosPrueba2, "Datos de prueba 2");
-        dataSet2.setDrawFilled(true);
-        dataSet2.setFillColor(Color.CYAN);
-        dataset = new BarDataSet(datosPrueba, "Datos de prueba");
-
-        BarData datos = new BarData(dataset);
-
-        LineData datos2 = new LineData(dataSet2);
-
-        chartPrueba.setData(datos);
-
-        chartPrueba2.setData(datos2);
-
+        xyPlot = v.findViewById(R.id.elgrafico);
+        plotTemperatureData();
         return v;
     }
+
+    private void plotTemperatureData() {
+        Cartesian cartesian = AnyChart.line();
+        cartesian.animation(true);
+        cartesian.padding(10d, 20d, 5d, 20d);
+        cartesian.crosshair().enabled(true);
+        cartesian.crosshair()
+                .yLabel(true)
+                // TODO ystroke
+                .yStroke((Stroke) null, 1, null, (String) null, (String) null);
+
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+
+        cartesian.title("Temperatura");
+
+        cartesian.yAxis(0).title("Temperatura °C");
+        cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
+
+        List<DataEntry> seriesData = new ArrayList<>();
+        seriesData.add(new CustomDataEntry("1986", 3.6, 2.3, 2.8));
+        seriesData.add(new CustomDataEntry("1987", 7.1, 4.0, 4.1));
+        seriesData.add(new CustomDataEntry("1988", 8.5, 6.2, 5.1));
+        seriesData.add(new CustomDataEntry("1989", 9.2, 11.8, 6.5));
+        seriesData.add(new CustomDataEntry("1990", 10.1, 13.0, 12.5));
+        seriesData.add(new CustomDataEntry("1991", 11.6, 13.9, 18.0));
+        seriesData.add(new CustomDataEntry("1992", 16.4, 18.0, 21.0));
+        seriesData.add(new CustomDataEntry("1993", 18.0, 23.3, 20.3));
+        seriesData.add(new CustomDataEntry("1994", 13.2, 24.7, 19.2));
+        seriesData.add(new CustomDataEntry("1995", 12.0, 18.0, 14.4));
+        seriesData.add(new CustomDataEntry("1996", 3.2, 15.1, 9.2));
+        seriesData.add(new CustomDataEntry("1997", 4.1, 11.3, 5.9));
+        seriesData.add(new CustomDataEntry("1998", 6.3, 14.2, 5.2));
+        seriesData.add(new CustomDataEntry("1999", 9.4, 13.7, 4.7));
+        seriesData.add(new CustomDataEntry("2000", 11.5, 9.9, 4.2));
+        seriesData.add(new CustomDataEntry("2001", 13.5, 12.1, 1.2));
+        seriesData.add(new CustomDataEntry("2002", 14.8, 13.5, 5.4));
+        seriesData.add(new CustomDataEntry("2003", 16.6, 15.1, 6.3));
+        seriesData.add(new CustomDataEntry("2004", 18.1, 17.9, 8.9));
+        seriesData.add(new CustomDataEntry("2005", 17.0, 18.9, 10.1));
+        seriesData.add(new CustomDataEntry("2006", 16.6, 20.3, 11.5));
+        seriesData.add(new CustomDataEntry("2007", 14.1, 20.7, 12.2));
+        seriesData.add(new CustomDataEntry("2008", 15.7, 21.6, 10));
+        seriesData.add(new CustomDataEntry("2009", 12.0, 22.5, 8.9));
+
+        Set set = Set.instantiate();
+        set.data(seriesData);
+        Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
+
+        Line series1 = cartesian.line(series1Mapping);
+        series1.name("Temperatura");
+        series1.hovered().markers().enabled(true);
+        series1.hovered().markers()
+                .type(MarkerType.CIRCLE)
+                .size(4d);
+        series1.tooltip()
+                .position("right")
+                .anchor(Anchor.LEFT_CENTER)
+                .offsetX(5d)
+                .offsetY(5d);
+
+        cartesian.legend().enabled(true);
+        cartesian.legend().fontSize(13d);
+        cartesian.legend().padding(0d, 0d, 10d, 0d);
+        xyPlot.setBackgroundColor(Color.TRANSPARENT);
+        xyPlot.setChart(cartesian);
+    }
+
+    private class CustomDataEntry extends ValueDataEntry {
+
+        CustomDataEntry(String x, Number value, Number value2, Number value3) {
+            super(x, value);
+            setValue("value2", value2);
+            setValue("value3", value3);
+        }
+
+    }
+
 }

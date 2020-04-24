@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout4"
@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Cualidad del dolor"
+                android:text="@string/fragment_pain_quality_cualidadDelDolorLbl_painQuality_text"
                 android:textColor="#000000"
                 android:textSize="20sp" />
 
@@ -42,7 +42,7 @@
                     android:id="@+id/locationLbl_painQuality"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Localización del dolor" />
+                    android:text="@string/fragment_pain_quality_locationLbl_painQuality_text" />
 
                 <RadioGroup
                     android:id="@+id/locationRGroup_painQuality"
@@ -53,22 +53,22 @@
                         android:id="@+id/locationRightRButton_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Hemicraneal derecho"
-                        android:tag="hemicraneal-derecho"/>
+                        android:tag="hemicraneal-derecho"
+                        android:text="@string/fragment_pain_quality_locationRightRButton_painQuality_text" />
 
                     <RadioButton
                         android:id="@+id/locationRLeftRButton_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Hemicraneal izquierdo"
-                        android:tag="hemicraneal-izquierdo"/>
+                        android:tag="hemicraneal-izquierdo"
+                        android:text="@string/fragment_pain_quality_locationRLeftRButton_painQuality_text" />
 
                     <RadioButton
                         android:id="@+id/locationBothRButton_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ambos"
-                        android:tag="ambas"/>
+                        android:tag="ambas"
+                        android:text="@string/fragment_pain_quality_locationBothRButton_painQuality_text" />
 
                 </RadioGroup>
 
@@ -76,7 +76,7 @@
                     android:id="@+id/kindLbl_painQuality"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tipo de dolor" />
+                    android:text="@string/fragment_pain_quality_kindLbl_painQuality_text" />
 
                 <RadioGroup
                     android:id="@+id/kindRGroup_painQuality"
@@ -87,36 +87,36 @@
                         android:id="@+id/kindOppresiveRButton_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Opresivo"
-                        android:tag="Opresivo"/>
+                        android:tag="Opresivo"
+                        android:text="@string/fragment_pain_quality_kindOppresiveRButton_painQuality_text" />
 
                     <RadioButton
                         android:id="@+id/kindPulsatileRButton_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Pulsátil"
-                        android:tag="Pulsatil"/>
+                        android:tag="Pulsatil"
+                        android:text="@string/fragment_pain_quality_kindPulsatileRButton_painQuality_text" />
 
                     <RadioButton
                         android:id="@+id/kindStingingeRButton_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Punzante"
-                        android:tag="Punzante"/>
+                        android:tag="Punzante"
+                        android:text="@string/fragment_pain_quality_kindStingingeRButton_painQuality_text" />
 
                     <RadioButton
                         android:id="@+id/kindBurnerRButton_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Quemante"
-                        android:tag="Quemante"/>
+                        android:tag="Quemante"
+                        android:text="@string/fragment_pain_quality_kindBurnerRButton_painQuality_text" />
 
                     <RadioButton
                         android:id="@+id/kindElectricRButton_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Eléctrico"
-                        android:tag="Eléctrico"/>
+                        android:tag="Eléctrico"
+                        android:text="@string/fragment_pain_quality_kindElectricRButton_painQuality_text" />
 
                 </RadioGroup>
 
@@ -124,7 +124,7 @@
                     android:id="@+id/symptomsLbl_painQuality"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Síntomas asociados" />
+                    android:text="@string/fragment_pain_quality_symptomsLbl_painQuality_text" />
 
                 <LinearLayout
                     android:id="@+id/symptomsCBoxes_painQuality"
@@ -137,57 +137,57 @@
                         android:id="@+id/symptomsEyeRednessCBox_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Enrojecimiento ocular"
-                        android:tag="Enrojecimiento-Ocular"/>
+                        android:tag="Enrojecimiento-Ocular"
+                        android:text="@string/fragment_pain_quality_symptomsEyeRednessCBox_painQuality_text" />
 
                     <CheckBox
                         android:id="@+id/symptomsDropCBox_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Caida del párpado"
-                        android:tag="Caída-Párpado"/>
+                        android:tag="Caída-Párpado"
+                        android:text="@string/fragment_pain_quality_symptomsDropCBox_painQuality_text" />
 
                     <CheckBox
                         android:id="@+id/symptomsTearingCBox_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Lagrimeo"
-                        android:tag="Lagrimeo"/>
+                        android:tag="Lagrimeo"
+                        android:text="@string/fragment_pain_quality_symptomsTearingCBox_painQuality_text" />
 
                     <CheckBox
                         android:id="@+id/symptomsCongestionCBox_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Congestión nasal"
-                        android:tag="Congestión nasal"/>
+                        android:tag="Congestión nasal"
+                        android:text="@string/fragment_pain_quality_symptomsCongestionCBox_painQuality_text" />
 
                     <CheckBox
                         android:id="@+id/symptomsRhinorrheaCBox_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Rinorrea"
-                        android:tag="Rinorrea"/>
+                        android:tag="Rinorrea"
+                        android:text="@string/fragment_pain_quality_symptomsRhinorrheaCBox_painQuality_text" />
 
                     <CheckBox
                         android:id="@+id/symptomsPlugginCBox_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Taponamiento ótico"
-                        android:tag="Taponamiento ótico"/>
+                        android:tag="Taponamiento ótico"
+                        android:text="@string/fragment_pain_quality_symptomsPlugginCBox_painQuality_text" />
 
                     <CheckBox
                         android:id="@+id/symptomsFacialRednessCBox_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Enrojecimiento facial"
-                        android:tag="Enrojecimiento facial"/>
+                        android:tag="Enrojecimiento facial"
+                        android:text="@string/fragment_pain_quality_symptomsFacialRednessCBox_painQuality_text" />
 
                     <CheckBox
                         android:id="@+id/symptomsSweatingCBox_painQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sudoración facial"
-                        android:tag="Sudoración facial"/>
+                        android:tag="Sudoración facial"
+                        android:text="@string/fragment_pain_quality_symptomsSweatingCBox_painQuality_text" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -203,7 +203,7 @@
                         android:background="@drawable/roundedbutton"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
-                        android:text="SIGUIENTE"
+                        android:text="@string/fragment_pain_quality_nextBtn_painQuality_text"
                         android:textStyle="bold" />
 
                     <Button
@@ -214,7 +214,7 @@
                         android:background="@drawable/roundedbutton"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
-                        android:text="ATRAS"
+                        android:text="@string/fragment_pain_quality_backBtn_painQuality_text"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>

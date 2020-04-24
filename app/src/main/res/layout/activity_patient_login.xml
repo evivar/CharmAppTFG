@@ -1,45 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:gravity="top"
-    android:orientation="vertical">
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/titleLbl"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="182dp"
-        android:layout_gravity="bottom|center"
+        android:layout_gravity="center"
         android:background="@drawable/bottomroundedcard"
-        android:fontFamily="@font/pacifico1"
+        android:fontFamily="@font/muli"
         android:paddingTop="0dp"
         android:paddingBottom="0dp"
         android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="70sp"
-        tools:text="CharmApp" />
+        android:textSize="80sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="CHARM" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="420dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="-20dp"
-        android:layout_marginRight="10dp"
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="57dp"
         android:background="@drawable/background"
-        android:paddingTop="20dp"
+        android:paddingTop="0dp"
         android:textAlignment="center"
         app:cardBackgroundColor="#ffffff"
         app:cardCornerRadius="40dp"
         app:cardElevation="8dp"
-        app:cardPreventCornerOverlap="false">
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/titleLbl">
 
 
         <LinearLayout
@@ -61,11 +65,10 @@
                 android:drawableStart="@drawable/usericon"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Usuario"
+                android:hint="@string/activity_patient_login_emailTxt_patientLogin_hint"
                 android:importantForAutofill="no"
                 android:inputType="textEmailAddress"
                 android:maxHeight="24dp"
-                android:onClick="editEmail"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:textColor="#000000"
@@ -87,11 +90,10 @@
                 android:drawableStart="@drawable/passicon"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Contraseña"
+                android:hint="@string/activity_patient_login_passwordTxt_patientLogin_hint"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
                 android:maxHeight="24dp"
-                android:onClick="editPassword"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textColor="#000000"
@@ -109,9 +111,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/roundedbutton"
+                android:fontFamily="@font/muli"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="INICIAR SESIÓN" />
+                android:text="@string/activity_patient_login_logInBtn_patientLogin_text"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/registerBtn_patientLogin"
@@ -119,12 +123,14 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/roundedbutton"
+                android:fontFamily="@font/muli"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="REGISTRARSE" />
+                android:text="@string/activity_patient_login_registerBtn_patientLogin_text"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

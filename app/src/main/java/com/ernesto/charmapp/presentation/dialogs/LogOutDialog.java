@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
-import com.ernesto.charmapp.data.SharedPreferencesManager;
-import com.ernesto.charmapp.presentation.activities.MainActivity;
+import com.ernesto.charmapp.data.sharedPreferences.SharedPreferencesManager;
+import com.ernesto.charmapp.presentation.activities.patientActivities.PatientLoginActivity;
 
 public class LogOutDialog extends DialogFragment {
 
@@ -29,7 +29,7 @@ public class LogOutDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         SharedPreferencesManager.getInstance(getActivity()).logOut();
 
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        Intent intent = new Intent(getActivity(), PatientLoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         Toast.makeText(getActivity(), "Cerrando sesión...", Toast.LENGTH_LONG).show();

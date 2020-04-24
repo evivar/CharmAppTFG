@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/patientIndexFragment">
+
+    <fragment
+        android:id="@+id/patientIndexFragment"
+        android:name="com.ernesto.charmapp.presentation.fragments.patientFragments.PatientIndexFragment"
+        android:label="fragment_patient_index"
+        tools:layout="@layout/fragment_patient_index">
+        <action
+            android:id="@+id/action_patientIndexFragment_to_headacheFragment"
+            app:destination="@id/headacheFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/patientIndexFragment" />
+        <action
+            android:id="@+id/action_patientIndexFragment_to_historyFragment"
+            app:destination="@id/historyFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/patientIndexFragment" />
+        <action
+            android:id="@+id/action_patientIndexFragment_to_patientChartFragment"
+            app:destination="@id/patientChartFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/patientIndexFragment" />
+        <action
+            android:id="@+id/action_patientIndexFragment_to_patientProfileFragment"
+            app:destination="@id/patientProfileFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/patientIndexFragment" />
+        <action
+            android:id="@+id/action_patientIndexFragment_to_diaryFragment2"
+            app:destination="@id/diaryFragment2"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/patientIndexFragment" />
+        <action
+            android:id="@+id/action_patientIndexFragment_to_onBoardingActivity"
+            app:destination="@id/navigation"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/headacheFragment"
+        android:name="com.ernesto.charmapp.presentation.fragments.patientFragments.HeadacheFragment"
+        android:label="fragment_headache"
+        tools:layout="@layout/fragment_headache">
+        <action
+            android:id="@+id/action_headacheFragment_to_patientIndexFragment"
+            app:destination="@id/patientIndexFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.ernesto.charmapp.presentation.fragments.patientFragments.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_historyFragment_to_historyCrisisAndDiaryFragment"
+            app:destination="@id/historyCrisisAndDiaryFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/historyFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_patientIndexFragment"
+            app:destination="@id/patientIndexFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientChartFragment"
+        android:name="com.ernesto.charmapp.presentation.fragments.patientFragments.PatientChartFragment"
+        android:label="fragment_patient_chart"
+        tools:layout="@layout/fragment_patient_chart">
+        <action
+            android:id="@+id/action_patientChartFragment_to_patientIndexFragment"
+            app:destination="@id/patientIndexFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientProfileFragment"
+        android:name="com.ernesto.charmapp.presentation.fragments.patientFragments.PatientProfileFragment"
+        android:label="fragment_patient_profile"
+        tools:layout="@layout/fragment_patient_profile">
+        <action
+            android:id="@+id/action_patientProfileFragment_to_patientIndexFragment"
+            app:destination="@id/patientIndexFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyCrisisAndDiaryFragment"
+        android:name="com.ernesto.charmapp.presentation.fragments.patientFragments.HistoryCrisisAndDiaryFragment"
+        android:label="fragment_history_crisis_and_diary"
+        tools:layout="@layout/fragment_history_crisis_and_diary">
+        <action
+            android:id="@+id/action_historyCrisisAndDiaryFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/diaryFragment2"
+        android:name="com.ernesto.charmapp.presentation.fragments.patientFragments.DiaryFragment"
+        android:label="fragment_diary"
+        tools:layout="@layout/fragment_diary">
+        <action
+            android:id="@+id/action_diaryFragment2_to_patientIndexFragment"
+            app:destination="@id/patientIndexFragment" />
+    </fragment>
+    <navigation
+        android:id="@+id/navigation"
+        app:startDestination="@id/onBoardingActivity">
+        <fragment
+            android:id="@+id/onBoardingChartsFragment"
+            android:name="com.ernesto.charmapp.presentation.fragments.onBoardingFragments.OnBoardingChartsFragment"
+            android:label="fragment_on_boarding_charts"
+            tools:layout="@layout/fragment_on_boarding_charts">
+            <action
+                android:id="@+id/action_onBoardingChartsFragment_to_onBoardingProfileFragment"
+                app:destination="@id/onBoardingProfileFragment"
+                app:popUpTo="@id/onBoardingChartsFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/onBoardingProfileFragment"
+            android:name="com.ernesto.charmapp.presentation.fragments.onBoardingFragments.OnBoardingProfileFragment"
+            android:label="fragment_on_boarding_profile"
+            tools:layout="@layout/fragment_on_boarding_profile">
+            <action
+                android:id="@+id/action_onBoardingProfileFragment_to_patientIndexFragment"
+                app:destination="@id/patientIndexFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/onBoardingWelcomeFragment"
+            android:name="com.ernesto.charmapp.presentation.fragments.onBoardingFragments.OnBoardingWelcomeFragment"
+            android:label="fragment_on_boarding_welcome"
+            tools:layout="@layout/fragment_on_boarding_welcome">
+            <action
+                android:id="@+id/action_onBoardingWelcomeFragment_to_onBoardingIndexFragment"
+                app:destination="@id/onBoardingIndexFragment"
+                app:popUpTo="@id/onBoardingWelcomeFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/onBoardingEditFragment"
+            android:name="com.ernesto.charmapp.presentation.fragments.onBoardingFragments.OnBoardingEditFragment"
+            android:label="fragment_on_boarding_edit"
+            tools:layout="@layout/fragment_on_boarding_edit">
+            <action
+                android:id="@+id/action_onBoardingEditFragment_to_onBoardingChartsFragment"
+                app:destination="@id/onBoardingChartsFragment"
+                app:popUpTo="@id/onBoardingEditFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/onBoardingIndexFragment"
+            android:name="com.ernesto.charmapp.presentation.fragments.onBoardingFragments.OnBoardingIndexFragment"
+            android:label="fragment_on_boarding_index"
+            tools:layout="@layout/fragment_on_boarding_index">
+            <action
+                android:id="@+id/action_onBoardingIndexFragment_to_onBoardingDiaryFragment"
+                app:destination="@id/onBoardingDiaryFragment"
+                app:popUpTo="@id/onBoardingIndexFragment" />
+        </fragment>
+        <activity
+            android:id="@+id/onBoardingActivity"
+            android:name="com.ernesto.charmapp.presentation.activities.onBoardingActivities.OnBoardingActivity"
+            android:label="activity_on_boarding"
+            tools:layout="@layout/activity_on_boarding" />
+        <fragment
+            android:id="@+id/onBoardingCalendarFragment"
+            android:name="com.ernesto.charmapp.presentation.fragments.onBoardingFragments.OnBoardingCalendarFragment"
+            android:label="fragment_on_boarding_calendar"
+            tools:layout="@layout/fragment_on_boarding_calendar">
+            <action
+                android:id="@+id/action_onBoardingCalendarFragment_to_onBoardingEditFragment"
+                app:destination="@id/onBoardingEditFragment"
+                app:popUpTo="@id/onBoardingCalendarFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/onBoardingDiaryFragment"
+            android:name="com.ernesto.charmapp.presentation.fragments.onBoardingFragments.OnBoardingDiaryFragment"
+            android:label="fragment_on_boarding_diary"
+            tools:layout="@layout/fragment_on_boarding_diary">
+            <action
+                android:id="@+id/action_onBoardingDiaryFragment_to_onBoardingHeadacheFragment"
+                app:destination="@id/onBoardingHeadacheFragment"
+                app:popUpTo="@id/onBoardingDiaryFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/onBoardingHeadacheFragment"
+            android:name="com.ernesto.charmapp.presentation.fragments.onBoardingFragments.OnBoardingHeadacheFragment"
+            android:label="fragment_on_boarding_headache"
+            tools:layout="@layout/fragment_on_boarding_headache">
+            <action
+                android:id="@+id/action_onBoardingHeadacheFragment_to_onBoardingCalendarFragment"
+                app:destination="@id/onBoardingCalendarFragment"
+                app:popUpTo="@id/onBoardingHeadacheFragment" />
+        </fragment>
+    </navigation>
+</navigation>

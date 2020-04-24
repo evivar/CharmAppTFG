@@ -20,14 +20,13 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.data.RetrofitClient;
-import com.ernesto.charmapp.domain.Headache;
-import com.ernesto.charmapp.domain.Patient;
+import com.ernesto.charmapp.data.notifications.CrisisAlertReceiver;
+import com.ernesto.charmapp.data.retrofit.RetrofitClient;
+import com.ernesto.charmapp.domain.retrofitEntities.Headache;
+import com.ernesto.charmapp.domain.retrofitEntities.Patient;
 import com.ernesto.charmapp.interactors.responses.UpdateResponse;
 import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse;
 import com.ernesto.charmapp.interactors.validators.HeadacheValidator;
-import com.ernesto.charmapp.presentation.activities.MainActivity;
-import com.ernesto.charmapp.presentation.activities.patientActivities.PatientMainActivity;
 import com.ernesto.charmapp.presentation.dialogs.DateDialog;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
 
@@ -131,7 +130,6 @@ public class HeadacheFragment extends Fragment {
             fillFields();
         } else {
             header.setText(NUEVA_CRISIS);
-            createCrisisAlarm();
         }
 
         startDateTxt.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +168,7 @@ public class HeadacheFragment extends Fragment {
                                 if (!updateResponse.getError()) {
                                     Toast.makeText(getActivity(), "Crisis actualizada correctamente", Toast.LENGTH_LONG).show();
                                     if (endDate != "0000-00-00") {
-                                        //cancelAlarm();
+                                        cancelCrisisAlarm();
                                         Toast.makeText(getActivity(), "Notificaciones de crisis desactivadas", Toast.LENGTH_SHORT).show();
                                     }
                                     getActivity().getSupportFragmentManager().beginTransaction()
@@ -190,6 +188,7 @@ public class HeadacheFragment extends Fragment {
                         });
                     }
                     if (!editing) {
+                        createCrisisAlarm();
                         final Call<CrisisResponse> createCrisis = RetrofitClient
                                 .getInstance()
                                 .getAPI()
@@ -200,6 +199,7 @@ public class HeadacheFragment extends Fragment {
                                 CrisisResponse crisisResponse = response.body();
                                 if (crisisResponse != null && !crisisResponse.getError()) {
                                     Log.i("Crisis", "Crisis creada correctamente");
+                                    createCrisisAlarm();
                                     Toast.makeText(getActivity(), "Crisis creada correctamente", Toast.LENGTH_LONG).show();
                                     getActivity().getSupportFragmentManager().beginTransaction()
                                             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
@@ -233,10 +233,11 @@ public class HeadacheFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 porque Enero es el 0
+                datePicker.setMaxDate(Calendar.getInstance().getTimeInMillis());
                 final String selectedDate = year + "-" + twoDigits(month + 1) + "-" + twoDigits(day);
                 try {
                     Date datePickerDate = new SimpleDateFormat("dd-MM-yyyy").parse(selectedDate);
-                    if (datePickerDate.before(new Date())) {
+                    if (!isValidDate(datePickerDate.toString())) {
                         showErrorDialog("Error: La fecha no puede ser posterior a hoy", "Seleccione una fecha anterior");
                     } else {
                         dateTxt.setText(selectedDate);
@@ -250,6 +251,19 @@ public class HeadacheFragment extends Fragment {
         newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
 
+    private boolean isValidDate(String selectedDate) {
+        boolean ok = false;
+        try {
+            Date today = new Date();
+            Date userDate = new SimpleDateFormat("yyyy-MM-dd").parse(selectedDate);
+
+            ok = today.before(new Date((userDate.getTime()))) && today.after(userDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return ok;
+    }
+
     public boolean validateFields() {
         return validator.validate(startDate, endDate, sport, alcohol, smoke, medication, feeling, painScale);
     }
@@ -259,51 +273,28 @@ public class HeadacheFragment extends Fragment {
         errorDialog.show(getActivity().getSupportFragmentManager(), "ERROR_DIALOG");
     }
 
-
-    private void createCrisisAlarm() {
-        int flag = 1;
-        int freq = patient.getCh_duration();
-        int type = 1; // No estoy seguro de que es esto
-        int freqMillis = (int) (freq * 60 * 60 * 1000);
-
+    public void createCrisisAlarm() {
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, 22); // Poner a la hora, en formato 24h, a la que lanzar la alarma -> 10
-        c.set(Calendar.MINUTE, 39);
+        c.set(Calendar.HOUR_OF_DAY, 10);
+        c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
-        // Esto lo pone en el codigo Notificaciones.java que pasaron por el mail
-        c.add(Calendar.DAY_OF_YEAR, freq);
 
-        // Lo mostramos por el log
-        Log.d("Alarma de Crisis creada", "setalarm freq(hours) = " + freq + " -> alarm @ " +
-                c.get(Calendar.DAY_OF_MONTH) + "/" + (c.get(Calendar.MONTH) + 1) + " " +
-                c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" +
-                c.get(Calendar.SECOND));
-
-        // Creamos el alarmManager
-        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-
-        // Creamos el intent
-        Intent intent = new Intent(getContext(), (this.patient.getPatientId() != null) ? PatientMainActivity.class : MainActivity.class);
-        // Creamos el pending intent
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        // Configuramos que se repita la alarma cada freqMillis
-        // TODO: Algo falla al poner o el repeating o el c.add(Calendar.DAY_OF_YEAR, freq);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-                System.currentTimeMillis(), freqMillis, pendingIntent);
+        AlarmManager alarmManager = (AlarmManager) this.getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this.getContext(), CrisisAlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getContext(), 2, intent, 0);
+        long alarmFrequence = patient.getCh_duration();
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 1000 * 60 * 60 * 24 * alarmFrequence, pendingIntent);
     }
 
-    // TODO: Creo otra vez los metodos de la alarma en el fragment de las crisis, cuando se crea una crisis llamo al createAlarm y cuando se modifica para meter una fecha final llamo al cancelAlarm
-    /*private void cancelAlarm() {
-        // Creamos el alarmManager
-        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
 
-        // Creamos el intent
-        Intent intent = new Intent(getActivity(), NotificationReceiver.class);
-        // Creamos el pending intent
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        // Cancelamos el alarmManager
-        alarmManager.cancel(pendingIntent);
-    }*/
+    public void cancelCrisisAlarm() {
+        AlarmManager alarmManager = (AlarmManager) this.getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this.getContext(), CrisisAlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getContext(), 2, intent, 0);
+        if (alarmManager != null) {
+            alarmManager.cancel(pendingIntent);
+        }
+    }
 
     private String twoDigits(int n) {
         return (n <= 9) ? ("0" + n) : String.valueOf(n);
@@ -348,6 +339,7 @@ public class HeadacheFragment extends Fragment {
         smoke = smokeSpinner.getSelectedItem().toString();
         medication = medicationSpinner.getSelectedItem().toString();
         feeling = feelingTxt.getText().toString();
+        System.out.println(feeling + "\n" + feelingTxt.getText().toString());
         painScale = painScaleSpinner.getSelectedItemPosition();
     }
 

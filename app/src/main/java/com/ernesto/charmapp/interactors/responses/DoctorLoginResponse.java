@@ -1,6 +1,6 @@
 package com.ernesto.charmapp.interactors.responses;
 
-import com.ernesto.charmapp.domain.Doctor;
+import com.ernesto.charmapp.domain.retrofitEntities.Doctor;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

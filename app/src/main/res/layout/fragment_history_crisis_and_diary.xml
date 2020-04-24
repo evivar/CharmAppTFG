@@ -1,337 +1,350 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     tools:context=".presentation.fragments.patientFragments.HistoryCrisisAndDiaryFragment">
 
-    <TextView
-        android:id="@+id/dateLbl_History"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="dd-mm-AAAA"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        android:layout_height="match_parent">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@android:color/darker_gray" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="22dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/expandDiaryBtn_history"
-            android:layout_width="381dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:drawableRight="@drawable/ic_expand"
-            android:text="Diario"
-            android:textAllCaps="false" />
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@android:color/darker_gray" />
-
-        <net.cachapa.expandablelayout.ExpandableLayout
-            android:id="@+id/ExpandableLayoutDiary"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:el_duration="1000"
-            app:el_expanded="false"
-            app:el_parallax="0.5">
-
-            <ScrollView
+            <TextView
+                android:id="@+id/dateLbl_History"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="25dp"
-                android:paddingTop="10dp"
-                android:paddingRight="25dp"
-                android:paddingBottom="10dp">
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_history_crisis_and_diary_dateLbl_History_text"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-                <LinearLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/darker_gray" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="22dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/expandDiaryBtn_history"
+                    android:layout_width="381dp"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_expand"
+                    android:text="@string/fragment_history_crisis_and_diary_expandDiaryBtn_history_text"
+                    android:textAllCaps="false" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@android:color/darker_gray" />
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/ExpandableLayoutDiary"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    app:el_duration="1000"
+                    app:el_expanded="false"
+                    app:el_parallax="0.5">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/sleepTimeLbl_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Tiempo de sueño" />
-
-                        <EditText
-                            android:id="@+id/sleepTimeTxt_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="number"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/sportTimeLbl_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="¿Cúanto tiempo de deporte hizo ayer?" />
-
-                        <Spinner
-                            android:id="@+id/sportTimeSpinner_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:entries="@array/sportTime_spinner" />
-
-                        <TextView
-                            android:id="@+id/alcoholDiaryLbl_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="¿Cuánto alcohol tomó ayer?" />
-
-                        <Spinner
-                            android:id="@+id/alcoholDiarySpinner_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:entries="@array/alcohol_spinner" />
-
-                        <TextView
-                            android:id="@+id/smokeDiaryLbl_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="¿Cuánto fumó ayer?" />
-
-                        <Spinner
-                            android:id="@+id/smokeDiarySpinner_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:entries="@array/smoking_spinner" />
-
-                        <TextView
-                            android:id="@+id/feelingDiaryLbl_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="¿Cómo se sintió ayer?" />
-
-                        <EditText
-                            android:id="@+id/feelingDiaryTxt_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:paddingLeft="25dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="25dp"
+                        android:paddingBottom="10dp">
 
-                        <Button
-                            android:id="@+id/editDiaryBtn_history"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/roundedbutton"
-                            android:text="Guardar cambios" />
-                    </LinearLayout>
-                </LinearLayout>
-            </ScrollView>
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-        </net.cachapa.expandablelayout.ExpandableLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
-    </LinearLayout>
+                                <TextView
+                                    android:id="@+id/sleepTimeLbl_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fragment_history_crisis_and_diary_sleepTimeLbl_history_text" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="22dp" />
+                                <EditText
+                                    android:id="@+id/sleepTimeTxt_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ems="10"
+                                    android:inputType="number"
+                                    android:textSize="14sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+                                <TextView
+                                    android:id="@+id/sportTimeLbl_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fragment_history_crisis_and_diary_sportTimeLbl_history_text" />
 
-        <Button
-            android:id="@+id/expandCrisisBtn_history"
-            android:layout_width="381dp"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:drawableRight="@drawable/ic_expand"
-            android:text="Crisis"
-            android:textAllCaps="false" />
+                                <Spinner
+                                    android:id="@+id/sportTimeSpinner_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:entries="@array/sportTime_spinner" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@android:color/darker_gray" />
+                                <TextView
+                                    android:id="@+id/alcoholDiaryLbl_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fragment_history_crisis_and_diary_alcoholDiaryLbl_history_text" />
 
-        <net.cachapa.expandablelayout.ExpandableLayout
-            android:id="@+id/ExpandableLayoutCrisis"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:el_duration="1000"
-            app:el_expanded="false"
-            app:el_parallax="0.5">
+                                <Spinner
+                                    android:id="@+id/alcoholDiarySpinner_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:entries="@array/alcohol_spinner" />
 
-            <ScrollView
+                                <TextView
+                                    android:id="@+id/smokeDiaryLbl_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fragment_history_crisis_and_diary_smokeDiaryLbl_history_text" />
+
+                                <Spinner
+                                    android:id="@+id/smokeDiarySpinner_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:entries="@array/smoking_spinner" />
+
+                                <TextView
+                                    android:id="@+id/feelingDiaryLbl_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fragment_history_crisis_and_diary_feelingDiaryLbl_history_text" />
+
+                                <EditText
+                                    android:id="@+id/feelingDiaryTxt_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ems="10"
+                                    android:inputType="textPersonName"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <Button
+                                    android:id="@+id/editDiaryBtn_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:background="@drawable/roundedbutton"
+                                    android:text="@string/fragment_history_crisis_and_diary_editDiaryBtn_history_text" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </ScrollView>
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+            </LinearLayout>
+
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="25dp"
-                android:paddingTop="10dp"
-                android:paddingRight="25dp"
-                android:paddingBottom="10dp">
+                android:layout_height="22dp" />
 
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/expandCrisisBtn_history"
+                    android:layout_width="381dp"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_expand"
+                    android:text="@string/fragment_history_crisis_and_diary_expandCrisisBtn_history_text"
+                    android:textAllCaps="false" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@android:color/darker_gray" />
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/ExpandableLayoutCrisis"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    app:el_duration="1000"
+                    app:el_expanded="false"
+                    app:el_parallax="0.5">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/startDateLbl_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Fecha de inicio" />
-
-                        <EditText
-                            android:id="@+id/startDateCrisisTxt_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true"
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="date"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/endDateLbl_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Fecha de fin" />
-
-                        <EditText
-                            android:id="@+id/endDateCrisisTxt_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true"
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="date"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/sportLbl_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="¿Ha hecho deporte antes del dolor?" />
-
-                        <Spinner
-                            android:id="@+id/sportCrisisSpinner_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:entries="@array/yes_no_spiner" />
-
-                        <TextView
-                            android:id="@+id/alcoholLbl_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="¿Tomó alcohol antes del dolor?" />
-
-                        <Spinner
-                            android:id="@+id/alcoholCrisisSpinner_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:entries="@array/yes_no_spiner" />
-
-                        <TextView
-                            android:id="@+id/smokeLbl_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="¿Fumó antes del dolor?" />
-
-                        <Spinner
-                            android:id="@+id/smokeCrisisSpinner_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:entries="@array/yes_no_spiner" />
-
-                        <TextView
-                            android:id="@+id/medicationLbl_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="¿Tomó alguna medicación antes del dolor?" />
-
-                        <Spinner
-                            android:id="@+id/medicationCrisisSpinner_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:entries="@array/yes_no_spiner" />
-
-                        <TextView
-                            android:id="@+id/feelingLbl_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="¿Esto que poyas es?" />
-
-                        <EditText
-                            android:id="@+id/feelingCrisisTxt_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="text"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/painScaleLbl_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="¿Cuán fuerte fue el dolor?" />
-
-                        <Spinner
-                            android:id="@+id/painScaleCrisisSpinner_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:entries="@array/painScale_spiner" />
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:paddingLeft="25dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="25dp"
+                        android:paddingBottom="10dp">
 
-                        <Button
-                            android:id="@+id/editCrisisBtn_history"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/roundedbutton"
-                            android:text="Guardar Cambios" />
-                    </LinearLayout>
-                </LinearLayout>
-            </ScrollView>
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-        </net.cachapa.expandablelayout.ExpandableLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
-    </LinearLayout>
+                                <TextView
+                                    android:id="@+id/startDateLbl_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fragment_history_crisis_and_diary_startDateLbl_history_text" />
 
-</LinearLayout>
+                                <EditText
+                                    android:id="@+id/startDateCrisisTxt_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:clickable="true"
+                                    android:ems="10"
+                                    android:focusable="false"
+                                    android:inputType="date"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/endDateLbl_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fragment_history_crisis_and_diary_endDateLbl_history_text" />
+
+                                <EditText
+                                    android:id="@+id/endDateCrisisTxt_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:clickable="true"
+                                    android:ems="10"
+                                    android:focusable="false"
+                                    android:inputType="date"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/sportLbl_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fragment_history_crisis_and_diary_sportLbl_history_text" />
+
+                                <Spinner
+                                    android:id="@+id/sportCrisisSpinner_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:entries="@array/yes_no_spiner" />
+
+                                <TextView
+                                    android:id="@+id/alcoholLbl_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fragment_history_crisis_and_diary_alcoholLbl_history_text" />
+
+                                <Spinner
+                                    android:id="@+id/alcoholCrisisSpinner_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:entries="@array/yes_no_spiner" />
+
+                                <TextView
+                                    android:id="@+id/smokeLbl_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fragment_history_crisis_and_diary_smokeLbl_history_text" />
+
+                                <Spinner
+                                    android:id="@+id/smokeCrisisSpinner_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:entries="@array/yes_no_spiner" />
+
+                                <TextView
+                                    android:id="@+id/medicationLbl_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fragment_history_crisis_and_diary_medicationLbl_history_text" />
+
+                                <Spinner
+                                    android:id="@+id/medicationCrisisSpinner_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:entries="@array/yes_no_spiner" />
+
+                                <TextView
+                                    android:id="@+id/feelingLbl_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fragment_history_crisis_and_diary_feelingLbl_history_text" />
+
+                                <EditText
+                                    android:id="@+id/feelingCrisisTxt_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ems="10"
+                                    android:inputType="text"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/painScaleLbl_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fragment_history_crisis_and_diary_painScaleLbl_history_text" />
+
+                                <Spinner
+                                    android:id="@+id/painScaleCrisisSpinner_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:entries="@array/painScale_spiner" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <Button
+                                    android:id="@+id/editCrisisBtn_history"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:background="@drawable/roundedbutton"
+                                    android:text="@string/fragment_history_crisis_and_diary_editCrisisBtn_history_text" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </ScrollView>
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

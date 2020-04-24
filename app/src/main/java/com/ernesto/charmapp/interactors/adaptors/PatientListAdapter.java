@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.domain.Patient;
+import com.ernesto.charmapp.domain.retrofitEntities.Patient;
 
 import java.util.List;
 

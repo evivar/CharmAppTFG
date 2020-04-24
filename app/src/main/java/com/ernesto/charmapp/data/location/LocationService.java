@@ -1,29 +1,28 @@
-package com.ernesto.charmapp.data.services;
+package com.ernesto.charmapp.data.location;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 public class LocationService extends Service {
 
-    @Override
+    private LocationAlertReceiver locationAlertReceiver;
+
     public void onCreate() {
         super.onCreate();
+        if (locationAlertReceiver == null) {
+            locationAlertReceiver = new LocationAlertReceiver();
+        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("Location service", "Servicio creado y empieza a correr");
-        return START_NOT_STICKY;
+        locationAlertReceiver.setAlarm(LocationService.this);
+        return START_STICKY;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 
     @Nullable
     @Override

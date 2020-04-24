@@ -14,8 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.data.RetrofitClient;
-import com.ernesto.charmapp.domain.Patient;
+import com.ernesto.charmapp.data.retrofit.RetrofitClient;
+import com.ernesto.charmapp.domain.retrofitEntities.Patient;
 import com.ernesto.charmapp.interactors.responses.UpdateResponse;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
 
@@ -108,11 +108,11 @@ public class PatientProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saveFields();
-                if ((oldPassword != null) && (newPassword != null)) {
+                if (!oldPassword.equals("") && !newPassword.equals("")) {
                     final Call<UpdateResponse> changePassword = RetrofitClient
                             .getInstance()
                             .getAPI()
-                            .changePassword(email, oldPassword, newPassword);
+                            .updatePatientPassword(email, oldPassword, newPassword);
                     changePassword.enqueue(new Callback<UpdateResponse>() {
                         @Override
                         public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {

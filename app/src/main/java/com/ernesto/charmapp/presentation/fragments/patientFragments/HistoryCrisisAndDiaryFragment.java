@@ -1,10 +1,13 @@
 package com.ernesto.charmapp.presentation.fragments.patientFragments;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -15,18 +18,24 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.data.RetrofitClient;
-import com.ernesto.charmapp.domain.Diary;
-import com.ernesto.charmapp.domain.Headache;
-import com.ernesto.charmapp.domain.Patient;
+import com.ernesto.charmapp.data.retrofit.RetrofitClient;
+import com.ernesto.charmapp.domain.retrofitEntities.Diary;
+import com.ernesto.charmapp.domain.retrofitEntities.Headache;
+import com.ernesto.charmapp.domain.retrofitEntities.Patient;
 import com.ernesto.charmapp.interactors.responses.UpdateResponse;
 import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse;
 import com.ernesto.charmapp.interactors.responses.diaryResponses.DiaryResponse;
 import com.ernesto.charmapp.interactors.validators.DiaryValidator;
 import com.ernesto.charmapp.interactors.validators.HeadacheValidator;
+import com.ernesto.charmapp.presentation.dialogs.DateDialog;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -147,9 +156,7 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
                     } else {
                         diary = null;
                     }
-                }/* else {
-                    Toast.makeText(getActivity(), "Error con la base de datos", Toast.LENGTH_LONG).show();
-                }*/
+                }
             }
 
             @Override
@@ -182,18 +189,26 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
             @Override
             public void onClick(final View view) {
                 saveDiaryFields();
+                String diaryDate = "";
+                try {
+                    diaryDate = parseDiaryDate();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 diaryValidator = new DiaryValidator();
                 if (diaryValidator.validate(sleepTimeDiary, sportTimeDiary, alcoholDiary, smokeDiary, feelingDiary)) {
+
                     final Call<UpdateResponse> updateDiary = RetrofitClient
                             .getInstance()
                             .getAPI()
-                            .updateDiary(patient.getPatientId(), date, sleepTimeDiary, sportTimeDiary, alcoholDiary, smokeDiary, feelingDiary);
+                            .updateDiary(patient.getPatientId(), diaryDate, sleepTimeDiary, "123", sportTimeDiary, alcoholDiary, smokeDiary, feelingDiary);
                     updateDiary.enqueue(new Callback<UpdateResponse>() {
                         @Override
                         public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {
                             UpdateResponse updateResponse = response.body();
                             if (!updateResponse.getError()) {
-                                Toast.makeText(getActivity(), "Datos guardados correctamente", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "Diario actualizado correctamente", Toast.LENGTH_LONG).show();
+                                diaryExpandableLayout.setExpanded(false);
                             } else if ((updateResponse.getError())) {
                                 Toast.makeText(getActivity(), updateResponse.getMensaje(), Toast.LENGTH_LONG).show();
                             } else {
@@ -216,7 +231,19 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
         // pARTE DE LA CRISIS
 
         this.startDateCrisisTxt = v.findViewById(R.id.startDateCrisisTxt_history);
+        startDateCrisisTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickerDialog(startDateCrisisTxt);
+            }
+        });
         this.endDateCrisisTxt = v.findViewById(R.id.endDateCrisisTxt_history);
+        endDateCrisisTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickerDialog(endDateCrisisTxt);
+            }
+        });
         this.sportCrisisSpinner = v.findViewById(R.id.sportCrisisSpinner_history);
         this.alcoholCrisisSpinner = v.findViewById(R.id.alcoholCrisisSpinner_history);
         this.smokeCrisisSpinner = v.findViewById(R.id.smokeCrisisSpinner_history);
@@ -228,7 +255,7 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
         final Call<CrisisResponse> readCrisisByDateV2 = RetrofitClient
                 .getInstance()
                 .getAPI()
-                .readCrisisByDateV2(patient.getPatientId(), dateString);
+                .readCrisisByDate(patient.getPatientId(), dateString);
         readCrisisByDateV2.enqueue(new Callback<CrisisResponse>() {
             @Override
             public void onResponse(Call<CrisisResponse> call, Response<CrisisResponse> response) {
@@ -240,9 +267,7 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
                     } else {
                         headache = null;
                     }
-                } /*else {
-                    Toast.makeText(getActivity(), "Error con la base de datos", Toast.LENGTH_LONG).show();
-                }*/
+                }
             }
 
             @Override
@@ -286,7 +311,8 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
                         public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {
                             UpdateResponse updateResponse = response.body();
                             if (!updateResponse.getError()) {
-                                Toast.makeText(getActivity(), "Datos guardados correctamente", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "Crisis actualizada correctamente", Toast.LENGTH_LONG).show();
+                                crisisExpandableLayout.setExpanded(false);
                             } else if ((updateResponse.getError())) {
                                 Toast.makeText(getActivity(), updateResponse.getMensaje(), Toast.LENGTH_LONG).show();
                             } else {
@@ -306,9 +332,29 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
         });
 
 
-
-
         return v;
+    }
+
+    public void showDatePickerDialog(final EditText dateTxt) {
+        DateDialog newFragment = DateDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 porque Enero es el 0
+                final String selectedDate = year + "-" + twoDigits(month + 1) + "-" + twoDigits(day);
+                try {
+                    Date datePickerDate = new SimpleDateFormat("dd-MM-yyyy").parse(selectedDate);
+                    if (Calendar.getInstance().after(datePickerDate)) {
+                        showErrorDialog("Error: La fecha no puede ser posterior a hoy. \n Seleccione una fecha anterior");
+                    } else {
+                        dateTxt.setText(selectedDate);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
 
     public void showErrorDialog(String msg) {
@@ -317,13 +363,15 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
         errorDialog.show(getActivity().getSupportFragmentManager(), "ERROR_DIALOG");
     }
 
+
     private void fillDiary() {
         sleepTimeDiaryTxt.setText(diary.getSleepTime());
+        Log.d("Tiempo de deporte: ", diary.getSportTime());
         switch (diary.getSportTime()) {
             case "Nada":
                 sportTimeDiarySpinner.setSelection(1);
                 break;
-            case "30 Minutos":
+            case "30 minutos":
                 sportTimeDiarySpinner.setSelection(2);
                 break;
             case "1 hora":
@@ -394,33 +442,31 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
     private void fillCrisis() {
         if (!headache.getEndDatetime().equals(null)) {
             this.endDateCrisisTxt.setText(headache.getEndDatetime().substring(0, 10));
+        } else {
+            this.endDateCrisisTxt.setText("");
         }
         this.startDateCrisisTxt.setText(headache.getStartDatetime().substring(0, 10));
-        if(headache.getSport().equals("Sí")){
+        if (headache.getSport().equals("Sí")) {
             this.sportCrisisSpinner.setSelection(1);
-        }
-        else{
+        } else {
             this.sportCrisisSpinner.setSelection(2);
         }
 
-        if(headache.getAlcohol().equals("Sí")){
+        if (headache.getAlcohol().equals("Sí")) {
             this.alcoholCrisisSpinner.setSelection(1);
-        }
-        else{
+        } else {
             this.alcoholCrisisSpinner.setSelection(2);
         }
 
-        if(headache.getSmoke().equals("Sí")){
+        if (headache.getSmoke().equals("Sí")) {
             this.smokeCrisisSpinner.setSelection(1);
-        }
-        else{
+        } else {
             this.smokeCrisisSpinner.setSelection(2);
         }
 
-        if(headache.getMedication().equals("Sí")){
+        if (headache.getMedication().equals("Sí")) {
             this.medicationCrisisSpinner.setSelection(1);
-        }
-        else{
+        } else {
             this.medicationCrisisSpinner.setSelection(2);
         }
 
@@ -449,5 +495,12 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
 
     private String twoDigits(int n) {
         return (n <= 9) ? ("0" + n) : String.valueOf(n);
+    }
+
+    private String parseDiaryDate() throws ParseException {
+        Date diaryDate = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        diaryDate = formatter.parse(this.date);
+        return new SimpleDateFormat("yyyy-MM-dd").format(diaryDate);
     }
 }

@@ -1,24 +1,14 @@
 package com.ernesto.charmapp.presentation.activities.doctorActivities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.data.RetrofitClient;
-import com.ernesto.charmapp.data.SharedPreferencesManager;
-import com.ernesto.charmapp.interactors.responses.DoctorLoginResponse;
 import com.ernesto.charmapp.interactors.validators.LoginValidator;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DoctorLoginActivity extends AppCompatActivity {
 
@@ -46,17 +36,17 @@ public class DoctorLoginActivity extends AppCompatActivity {
         this.validator = new LoginValidator();
 
         loginBtn = findViewById(R.id.logInBtn_doctorLogin);
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        /*loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 login();
             }
         });
-
+*/
 
     }
 
-    public void login() {
+    /*public void login() {
         // Ver como hacer una interfaz para todos los validadores
         email = emailTxt.getText().toString();
         password = passwordTxt.getText().toString();
@@ -85,6 +75,6 @@ public class DoctorLoginActivity extends AppCompatActivity {
                 }
             });
         }
-    }
+    }*/
 
 }

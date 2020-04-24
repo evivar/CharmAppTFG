@@ -14,8 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.data.RetrofitClient;
-import com.ernesto.charmapp.domain.Doctor;
+import com.ernesto.charmapp.data.retrofit.RetrofitClient;
+import com.ernesto.charmapp.domain.retrofitEntities.Doctor;
 import com.ernesto.charmapp.interactors.responses.UpdateResponse;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
 
@@ -111,7 +111,7 @@ public class DoctorProfileFragment extends Fragment {
                     final Call<UpdateResponse> changePassword = RetrofitClient
                             .getInstance()
                             .getAPI()
-                            .changePassword(email, oldPassword, newPassword);
+                            .updatePatientPassword(email, oldPassword, newPassword);
                     changePassword.enqueue(new Callback<UpdateResponse>() {
                         @Override
                         public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {

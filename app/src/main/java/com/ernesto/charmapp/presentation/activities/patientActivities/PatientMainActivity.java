@@ -1,5 +1,6 @@
 package com.ernesto.charmapp.presentation.activities.patientActivities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,11 +17,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.data.RetrofitClient;
-import com.ernesto.charmapp.data.SharedPreferencesManager;
-import com.ernesto.charmapp.domain.Headache;
-import com.ernesto.charmapp.domain.Patient;
+import com.ernesto.charmapp.data.retrofit.RetrofitClient;
+import com.ernesto.charmapp.data.sharedPreferences.SharedPreferencesManager;
+import com.ernesto.charmapp.domain.retrofitEntities.Headache;
+import com.ernesto.charmapp.domain.retrofitEntities.Patient;
 import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse;
+import com.ernesto.charmapp.presentation.activities.onBoardingActivities.OnBoardingActivity;
 import com.ernesto.charmapp.presentation.dialogs.LogOutDialog;
 import com.ernesto.charmapp.presentation.fragments.patientFragments.HeadacheFragment;
 import com.ernesto.charmapp.presentation.fragments.patientFragments.HistoryFragment;
@@ -151,6 +153,11 @@ public class PatientMainActivity extends AppCompatActivity implements Navigation
                         .addToBackStack(null)
                         .replace(R.id.fragmentContainer_patient, PatientProfileFragment.create(patient), "PROFILE_FRAGMENT")
                         .commit();
+                break;
+            case R.id.nav_help:
+                Intent intent = new Intent(this, OnBoardingActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.nav_logOut:
                 logOut();

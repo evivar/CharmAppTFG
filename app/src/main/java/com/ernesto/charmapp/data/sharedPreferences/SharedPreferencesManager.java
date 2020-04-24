@@ -1,31 +1,68 @@
-package com.ernesto.charmapp.data;
+package com.ernesto.charmapp.data.sharedPreferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.ernesto.charmapp.domain.Doctor;
-import com.ernesto.charmapp.domain.Patient;
+import com.ernesto.charmapp.domain.retrofitEntities.Doctor;
+import com.ernesto.charmapp.domain.retrofitEntities.Patient;
 
+import java.util.Map;
+
+/**
+ * Clase SharedPreferencesManager
+ * <p>
+ * Clase donde se almacena la informacion de varias entidades para agilizar la aplicación reduciendo las llamadas a la API
+ *
+ * @author Ernesto Vivar Laviña evivar@ucm.es
+ * @see <a href="https://developer.android.com/reference/android/content/SharedPreferences"> Documentación de SharedPreferences en la pagina oficial de Android </a>
+ */
 public class SharedPreferencesManager {
 
+    /**
+     * Nombre de las preferencias
+     */
     private static final String SHARED_PREFFERENCES_NAME = "my_shared_prefferences";
 
+    /**
+     * Instancia de la clase SharedPreferencesManager
+     */
     private static SharedPreferencesManager instance;
 
+    /**
+     * Contexto de la aplicación
+     *
+     * @see Context
+     */
     private Context context;
 
-    private SharedPreferencesManager(Context context){
+    /**
+     * Constructor por defecto
+     *
+     * @param context Contexto de la aplicación
+     */
+    private SharedPreferencesManager(Context context) {
         this.context = context;
     }
 
-    public static synchronized SharedPreferencesManager getInstance(Context context){
-        if(instance == null){
+    /**
+     * Método que devuelve y crea en caso de que no exista, una instancia de la clase SharedPreferencesManager
+     *
+     * @param context Contexto de la aplicación
+     * @return Instancia SharedPreferencesManager
+     */
+    public static synchronized SharedPreferencesManager getInstance(Context context) {
+        if (instance == null) {
             instance = new SharedPreferencesManager(context);
         }
-        return  instance;
+        return instance;
     }
 
-    public void savePatient(Patient patient){
+    /**
+     * Método que dado un objeto Patient guarda sus atributos en el editor
+     *
+     * @param patient Paciente
+     */
+    public void savePatient(Patient patient) {
         SharedPreferences sharedPreferencesManager = context.getSharedPreferences(SHARED_PREFFERENCES_NAME, Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = sharedPreferencesManager.edit();
@@ -45,6 +82,12 @@ public class SharedPreferencesManager {
         editor.apply();
     }
 
+    /**
+     * Método que dado un entero con la duracion en días de las crisis de un paciente guarda la media en días de la duración en el editor.
+     * En caso de que durase 365 días se guarda como media de la duración 14 días
+     *
+     * @param crisisDuration Duración de las crisis del paciente
+     */
     public void saveCrisisDuration(int crisisDuration) {
         SharedPreferences sharedPreferencesManager = context.getSharedPreferences(SHARED_PREFFERENCES_NAME, Context.MODE_PRIVATE);
 
@@ -55,7 +98,7 @@ public class SharedPreferencesManager {
         editor.apply();
     }
 
-    public void saveDoctor(Doctor doctor){
+    public void saveDoctor(Doctor doctor) {
         SharedPreferences sharedPreferencesManager = context.getSharedPreferences(SHARED_PREFFERENCES_NAME, Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = sharedPreferencesManager.edit();
@@ -71,13 +114,38 @@ public class SharedPreferencesManager {
         editor.apply();
     }
 
-    public boolean userLoggedIn(){
+    /**
+     * Método que guarda un booleano cuando se completa el tutorial OnBoarding
+     *
+     * @param completed
+     */
+    public void completeOnBoarding(boolean completed) {
         SharedPreferences sharedPreferencesManager = context.getSharedPreferences(SHARED_PREFFERENCES_NAME, Context.MODE_PRIVATE);
-
-        return sharedPreferencesManager.getString("id", null ) != null;
+        SharedPreferences.Editor editor = sharedPreferencesManager.edit();
+        editor.putBoolean("OnBoardingCompleted", completed);
+        editor.apply();
     }
 
-    public Patient getPatient(){
+    /**
+     * Método que comprueba si el usuario esta logeado o no
+     *
+     * @return <ul>
+     * <li> True si el usuario esta logeado</li>
+     * <li> False en caso contrario</li>
+     * </ul>
+     */
+    public boolean userLoggedIn() {
+        SharedPreferences sharedPreferencesManager = context.getSharedPreferences(SHARED_PREFFERENCES_NAME, Context.MODE_PRIVATE);
+
+        return sharedPreferencesManager.getString("id", null) != null;
+    }
+
+    /**
+     * Método que devuleve un objeto Patient con los atributos guardados en el editor
+     *
+     * @return Paciente del editor
+     */
+    public Patient getPatient() {
         SharedPreferences sharedPreferencesManager = context.getSharedPreferences(SHARED_PREFFERENCES_NAME, Context.MODE_PRIVATE);
         Patient patient = new Patient(
                 sharedPreferencesManager.getString("id", null),
@@ -95,7 +163,7 @@ public class SharedPreferencesManager {
         return patient;
     }
 
-    public Doctor getDoctor(){
+    public Doctor getDoctor() {
         SharedPreferences sharedPreferencesManager = context.getSharedPreferences(SHARED_PREFFERENCES_NAME, Context.MODE_PRIVATE);
         Doctor doctor = new Doctor(
                 sharedPreferencesManager.getString("id", null),
@@ -109,11 +177,25 @@ public class SharedPreferencesManager {
         return doctor;
     }
 
-    public void logOut(){
+    public boolean isOnBoardingCompleted() {
+        SharedPreferences sharedPreferencesManager = context.getSharedPreferences(SHARED_PREFFERENCES_NAME, Context.MODE_PRIVATE);
+        return sharedPreferencesManager.getBoolean("OnBoardingCompleted", false);
+    }
+
+    /**
+     * Método que limpia el editor de SharedPreferences cuando se cierra la sesión, excepto el campo 'OnBoardingCompleted' que indica si se ha finalizado el tutorial OnBoarding de la aplicación
+     */
+    public void logOut() {
         SharedPreferences sharedPreferencesManager = context.getSharedPreferences(SHARED_PREFFERENCES_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferencesManager.edit();
-        editor.clear();
+        Map<String, ?> preferences = sharedPreferencesManager.getAll();
+        for (Map.Entry<String, ?> preference : preferences.entrySet()) {
+            if (!preference.getKey().equals("OnBoardingCompleted")) {
+                editor.remove(preference.getKey());
+            }
+        }
         editor.apply();
     }
+
 
 }

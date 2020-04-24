@@ -15,9 +15,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.data.SharedPreferencesManager;
-import com.ernesto.charmapp.domain.Doctor;
-import com.ernesto.charmapp.domain.RegisterForm;
+import com.ernesto.charmapp.data.sharedPreferences.SharedPreferencesManager;
+import com.ernesto.charmapp.domain.retrofitEntities.Doctor;
+import com.ernesto.charmapp.domain.retrofitEntities.RegisterForm;
 import com.ernesto.charmapp.presentation.dialogs.LogOutDialog;
 import com.ernesto.charmapp.presentation.fragments.doctorFragments.DoctorProfileFragment;
 import com.ernesto.charmapp.presentation.fragments.doctorFragments.PatientsFragment;

@@ -24,7 +24,6 @@ public class ErrorDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         builder.setTitle(errorTitle)
                 .setMessage(errorDetails)
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {

@@ -1,248 +1,273 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
     android:focusableInTouchMode="true"
-    android:orientation="vertical">
+    tools:context=".presentation.fragments.patientFragments.PatientProfileFragment">
 
-    <com.github.florent37.diagonallayout.DiagonalLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="#00000000"
-        android:elevation="30dp"
-        app:diagonal_angle="10"
-        app:diagonal_direction="left"
-        app:diagonal_position="bottom">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.github.florent37.diagonallayout.DiagonalLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="#00000000"
+            android:elevation="30dp"
+            app:diagonal_angle="10"
+            app:diagonal_direction="left"
+            app:diagonal_position="bottom">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background"
+                android:clipChildren="false"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/nameLbl_DiagonalLayout_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_patient_profile_nameLbl_DiagonalLayout_profile_text"
+                    android:textColor="#ffffff"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/emailLbl_DiagonalLayout_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_patient_profile_emailLbl_DiagonalLayout_profile_text"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+        </com.github.florent37.diagonallayout.DiagonalLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background"
+            android:layout_marginTop="20dp"
             android:clipChildren="false"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="15dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/nameLbl_DiagonalLayout_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nombre"
-                android:textColor="#ffffff"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/emailLbl_DiagonalLayout_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-    </com.github.florent37.diagonallayout.DiagonalLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:clipChildren="false"
-        android:orientation="vertical">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp">
 
-                    <TextView
-                        android:layout_width="89dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Nombre"
-                        android:textSize="18sp"
-                        app:autoSizeMaxTextSize="112sp"
-                        app:autoSizeMinTextSize="12sp"
-                        app:autoSizeStepGranularity="1px"
-                        app:autoSizeTextType="uniform" />
-
-                    <TextView
-                        android:id="@+id/nameLbl_profile"
-                        android:layout_width="212dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        app:autoSizeTextType="uniform" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingTop="10dp">
-
-                    <TextView
-                        android:layout_width="89dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="E-mail"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/emailLbl_profile"
-                        android:layout_width="212dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        app:autoSizeTextType="uniform" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingTop="10dp">
-
-                    <TextView
-                        android:layout_width="89dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Teléfono"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/phoneLbl_profile"
-                        android:layout_width="212dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        app:autoSizeTextType="uniform" />
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="22dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:id="@+id/expandBtn_profile"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:drawableRight="@drawable/ic_expand"
-                        android:text="Cambiar contraseña"
-                        android:textAllCaps="false" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@android:color/darker_gray" />
-
-                    <net.cachapa.expandablelayout.ExpandableLayout
-                        android:id="@+id/ExpandableLayout"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:el_duration="1000"
-                        app:el_expanded="false"
-                        app:el_parallax="0.5">
+                        android:orientation="horizontal">
 
-                        <ScrollView
+                        <TextView
+                            android:layout_width="89dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Nombre"
+                            android:textSize="18sp"
+                            app:autoSizeMaxTextSize="112sp"
+                            app:autoSizeMinTextSize="12sp"
+                            app:autoSizeStepGranularity="1px"
+                            app:autoSizeTextType="uniform" />
+
+                        <TextView
+                            android:id="@+id/nameLbl_profile"
+                            android:layout_width="212dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            app:autoSizeTextType="uniform" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:layout_width="89dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="E-mail"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/emailLbl_profile"
+                            android:layout_width="212dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            app:autoSizeTextType="uniform" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:layout_width="89dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Teléfono"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/phoneLbl_profile"
+                            android:layout_width="212dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            app:autoSizeTextType="uniform" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="22dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/expandBtn_profile"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:drawableRight="@drawable/ic_expand"
+                            android:text="@string/fragment_patient_profile_expandBtn_profile_text"
+                            android:textAllCaps="false" />
 
-                            <LinearLayout
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@android:color/darker_gray" />
+
+                        <net.cachapa.expandablelayout.ExpandableLayout
+                            android:id="@+id/ExpandableLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:el_duration="1000"
+                            app:el_expanded="true"
+                            app:el_parallax="0.5">
+
+                            <ScrollView
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
+                                android:layout_height="match_parent">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_gravity="center_vertical"
-                                    android:orientation="horizontal">
+                                    android:orientation="vertical">
 
-                                    <TextView
-                                        android:layout_width="188dp"
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="188dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="bottom"
+                                            android:layout_weight="1"
+                                            android:text="Contraseña actual"
+                                            android:textSize="18sp"
+                                            app:autoSizeTextType="uniform" />
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            app:passwordToggleEnabled="true">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/oldPasswordTxt_profile"
+                                                android:layout_width="200dp"
+                                                android:layout_height="wrap_content" />
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="188dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="bottom"
+                                            android:layout_weight="1"
+                                            android:text="Contraseña nueva"
+                                            android:textSize="18sp"
+                                            app:autoSizeTextType="uniform" />
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            app:passwordToggleEnabled="true">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/newPasswordTxt_profile"
+                                                android:layout_width="200dp"
+                                                android:layout_height="wrap_content"
+                                                android:inputType="textPassword" />
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                                    </LinearLayout>
+
+
+                                    <Space
+                                        android:layout_width="match_parent"
+                                        android:layout_height="22dp" />
+
+                                    <Button
+                                        android:id="@+id/changePasswordBtn_profile"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_gravity="bottom"
-                                        android:layout_weight="1"
-                                        android:text="Contraseña actual"
-                                        android:textSize="18sp"
-                                        app:autoSizeTextType="uniform" />
-
-                                    <EditText
-                                        android:id="@+id/oldPasswordTxt_profile"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:ems="10"
-                                        android:inputType="textPassword" />
-
+                                        android:layout_marginBottom="8dp"
+                                        android:background="@drawable/roundedbutton"
+                                        android:fontFamily="@font/muli"
+                                        android:text="@string/fragment_patient_profile_changePasswordBtn_profile_text"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
+                            </ScrollView>
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center_vertical"
-                                    android:orientation="horizontal">
+                        </net.cachapa.expandablelayout.ExpandableLayout>
 
-                                    <TextView
-                                        android:layout_width="188dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="bottom"
-                                        android:layout_weight="1"
-                                        android:text="Contraseña nueva"
-                                        android:textSize="18sp"
-                                        app:autoSizeTextType="uniform" />
+                    </LinearLayout>
 
-                                    <EditText
-                                        android:id="@+id/newPasswordTxt_profile"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:ems="10"
-                                        android:inputType="textPassword" />
-
-                                </LinearLayout>
-
-                                <Space
-                                    android:layout_width="match_parent"
-                                    android:layout_height="22dp" />
-
-                                <Button
-                                    android:id="@+id/changePasswordBtn_profile"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/roundedbutton"
-                                    android:text="Cambiar contraseña" />
-                            </LinearLayout>
-                        </ScrollView>
-
-                    </net.cachapa.expandablelayout.ExpandableLayout>
 
                 </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
 
-            </LinearLayout>
-        </ScrollView>
+
     </LinearLayout>
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -7,35 +7,35 @@
         android:id="@+id/patientCard_cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="3dp"
-        android:layout_margin="3dp">
+        android:layout_margin="3dp"
+        android:padding="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:background="@drawable/bordercardview"
+            android:orientation="vertical"
             android:padding="4dp">
 
             <TextView
                 android:id="@+id/nameLbl_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre y Apellidos"
+                android:text="@string/card_view_patient_nameLbl_cardView_text"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline" />
 
             <TextView
                 android:id="@+id/emailLbl_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Email"
+                android:text="@string/card_view_patient_emailLbl_cardView_text"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
             <TextView
                 android:id="@+id/phoneLbl_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Teléfono"
+                android:text="@string/card_view_patient_phoneLbl_cardView_text"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
 

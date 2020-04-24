@@ -1,74 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".presentation.fragments.patientFragments.PatientChartFragment">
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.github.florent37.diagonallayout.DiagonalLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="#00000000"
-        android:elevation="30dp"
-        app:diagonal_angle="10"
-        app:diagonal_direction="left"
-        app:diagonal_position="bottom">
 
-        <LinearLayout
+        <com.github.florent37.diagonallayout.DiagonalLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/background"
-            android:clipChildren="false"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="15dp">
+            android:layout_height="150dp"
+            android:background="#00000000"
+            android:elevation="30dp"
+            app:diagonal_angle="10"
+            app:diagonal_direction="left"
+            app:diagonal_position="bottom">
 
-            <TextView
-                android:id="@+id/chartLbl_Chart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gráficas"
-                android:textColor="#ffffff"
-                android:textSize="48sp"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background"
+                android:clipChildren="false"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="15dp">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/chartLbl_Chart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli"
+                    android:text="@string/fragment_patient_chart_chartLbl_Chart_text"
+                    android:textColor="#ffffff"
+                    android:textSize="48sp"
+                    android:textStyle="bold" />
 
-    </com.github.florent37.diagonallayout.DiagonalLayout>
+            </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        </com.github.florent37.diagonallayout.DiagonalLayout>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/temperatureChart_Chart"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.anychart.AnyChartView
+                    android:id="@+id/elgrafico"
+                    android:layout_width="match_parent"
+                    android:layout_height="218dp" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
 
 
-            </com.github.mikephil.charting.charts.BarChart>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/lineChart_Chart"
-                android:layout_width="match_parent"
-                android:layout_height="300dp">
-
-            </com.github.mikephil.charting.charts.LineChart>
-
-        </LinearLayout>
-    </ScrollView>
+            </LinearLayout>
+        </ScrollView>
 
 
-</LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

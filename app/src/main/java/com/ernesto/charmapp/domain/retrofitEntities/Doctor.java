@@ -1,4 +1,4 @@
-package com.ernesto.charmapp.domain;
+package com.ernesto.charmapp.domain.retrofitEntities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

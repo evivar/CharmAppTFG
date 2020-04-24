@@ -1,7 +1,9 @@
 package com.ernesto.charmapp.presentation.fragments.patientFragments;
 
 import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,15 +15,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.data.RetrofitClient;
-import com.ernesto.charmapp.domain.Diary;
-import com.ernesto.charmapp.domain.Headache;
-import com.ernesto.charmapp.domain.Patient;
+import com.ernesto.charmapp.data.location.LocationAlertReceiver;
+import com.ernesto.charmapp.data.notifications.DiaryAlertReceiver;
+import com.ernesto.charmapp.data.notifications.DiaryNotificationHelper;
+import com.ernesto.charmapp.data.retrofit.RetrofitClient;
+import com.ernesto.charmapp.domain.retrofitEntities.Diary;
+import com.ernesto.charmapp.domain.retrofitEntities.Headache;
+import com.ernesto.charmapp.domain.retrofitEntities.Patient;
 import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse;
 import com.ernesto.charmapp.interactors.responses.diaryResponses.DiaryResponse;
 import com.ernesto.charmapp.presentation.dialogs.InfoDialog;
+import com.ernesto.charmapp.presentation.viewModel.StationViewModel;
 
 import java.sql.Date;
 import java.util.Calendar;
@@ -45,11 +52,7 @@ public class PatientIndexFragment extends Fragment {
 
     private Button historyBtn;
 
-    private boolean activeCrisis;
-
-    private boolean isDiaryFilled;
-
-    private String dateString;
+    private boolean isDiaryFilled = true;
 
     public static PatientIndexFragment create(Patient patient) {
         Bundle args = new Bundle();
@@ -66,6 +69,7 @@ public class PatientIndexFragment extends Fragment {
         patient = (Patient) arguments.getSerializable("patient");
         this.checkIfDiaryIsFilled();
         this.createDiaryAlarm();
+        this.startLocationService();
     }
 
     @Nullable
@@ -87,7 +91,7 @@ public class PatientIndexFragment extends Fragment {
                         try {
                             DiaryResponse diaryResponse = response.body();
                             Log.d("Rellenar diario", response.body().getMensaje());
-                            if (diaryResponse != null && !diaryResponse.getError()) {
+                            if (diaryResponse.getDiary() != null && !diaryResponse.getError()) {
                                 Diary lastDiary = diaryResponse.getDiary();
                                 Date date = new Date(System.currentTimeMillis());
                                 if (!lastDiary.getDate().equals(date.toString())) {
@@ -188,9 +192,7 @@ public class PatientIndexFragment extends Fragment {
             public void onResponse(Call<DiaryResponse> call, Response<DiaryResponse> response) {
                 try {
                     DiaryResponse diaryResponse = response.body();
-                    Log.d("Respuesta del diario", response.body().getMensaje());
-                    if (diaryResponse != null && !diaryResponse.getError()) {
-                        isDiaryFilled = true;
+                    if (diaryResponse.getDiary() != null && !diaryResponse.getError()) {
                         Diary lastDiary = diaryResponse.getDiary();
                         Date date = new Date(System.currentTimeMillis());
                         if (!lastDiary.getDate().equals(date.toString())) {
@@ -200,10 +202,9 @@ public class PatientIndexFragment extends Fragment {
                     } else {
                         isDiaryFilled = false;
                         Toast.makeText(getActivity(), "No te olvides de rellenar el diario", Toast.LENGTH_LONG).show();
-
                     }
                 } catch (Exception e) {
-                    Log.e("Excepción diario", e.getMessage());
+                    Log.e("Excepción diario2  ", e.getMessage());
                 }
             }
 
@@ -215,67 +216,30 @@ public class PatientIndexFragment extends Fragment {
     }
 
     private void createDiaryAlarm() {
-        if (!isDiaryFilled) {
-            int flag = 1;
-            double freq = 0.0;
-            int type = 1;
-            int freqMillis = (int) (freq * 60 * 60 * 1000);
-
-            Calendar c = Calendar.getInstance();
-            c.set(Calendar.HOUR_OF_DAY, 10);
-            c.set(Calendar.MINUTE, 00);
-            c.set(Calendar.SECOND, 0);
-
-            Log.d("Alarma de Diario creada", "setalarm freq(hours) = " + freq + " -> alarm @ " +
-                    c.get(Calendar.DAY_OF_MONTH) + "/" + (c.get(Calendar.MONTH) + 1) + " " +
-                    c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" +
-                    c.get(Calendar.SECOND));
-
-
-            AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-
-            if (c.before(Calendar.getInstance())) {
-                c.add(Calendar.DATE, 1);
-            }
-
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 10);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        if (isDiaryFilled) {
+            c.add(Calendar.DATE, 1);
         }
+        startDiaryAlarm(c);
+
     }
 
-    /*
-    Comprobar si hay una alarma activa
-        La hay -> No hago nada
-        No la hay -> Creo la alarma
-     */
-    /*private void createDiaryAlarm() {
-        int flag = 1;
-        double freq = 0.01;
-        int type = 1; // No estoy seguro de que es esto
-        int freqMillis = (int) (freq * 60 * 60 * 1000);
+    private void startDiaryAlarm(Calendar c) {
+        AlarmManager alarmManager = (AlarmManager) this.getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this.getContext(), DiaryAlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getContext(), 1, intent, 0);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        DiaryNotificationHelper.enableBootReceiver(this.getContext());
+    }
 
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, 10); // Poner a la hora, en formato 24h, a la que lanzar la alarma -> 10
-        c.set(Calendar.MINUTE, 00);
-        c.set(Calendar.SECOND, 0);
-        // Esto lo pone en el codigo Notificaciones.java que pasaron por el mail
-        // c.add(Calendar.DAY_OF_YEAR, 1);
-
-        // Lo mostramos por el log
-        Log.d("Alarma de Diario creada", "setalarm freq(hours) = " + freq + " -> alarm @ " +
-                c.get(Calendar.DAY_OF_MONTH) + "/" + (c.get(Calendar.MONTH) + 1) + " " +
-                c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" +
-                c.get(Calendar.SECOND));
-
-        // Creamos el alarmManager
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        // Creamos el intent
-        Intent intent = new Intent(this, NotificationReceiver.class);
-        // Creamos el pending intent
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        // Configuramos que se repita la alarma cada freqMillis
-        // TODO: Algo falla al poner o el repeating o el c.add(Calendar.DAY_OF_YEAR, freq);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                c.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-    }*/
+    private void startLocationService() {
+        StationViewModel stationViewModel = ViewModelProviders.of(this).get(StationViewModel.class);
+        LocationAlertReceiver locationAlertReceiver = new LocationAlertReceiver(stationViewModel);
+        locationAlertReceiver.setAlarm(this.getContext());
+        LocationAlertReceiver.enableBootReceiver(this.getContext());
+    }
 
 }

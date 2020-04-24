@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout2"
@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Preguntas generales"
+                android:text="@string/fragment_general_questions_preguntasGenerales_text"
                 android:textColor="#000000"
                 android:textSize="20sp" />
 
@@ -44,7 +44,7 @@
                     android:id="@+id/startingSymptomsLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Cuándo empezó por primera vez con los síntomas de la cefalea en racimos?" />
+                    android:text="@string/fragment_general_questions_startingSymptomsLbl_generalQuestions_text" />
 
                 <EditText
                     android:id="@+id/startingSymptomsTxt_generalQuestions"
@@ -59,7 +59,7 @@
                     android:id="@+id/diagnosticationDateLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Cuándo fue diagnosticado de cefalea en racimos?" />
+                    android:text="@string/fragment_general_questions_diagnosticationDateLbl_generalQuestions_text" />
 
                 <EditText
                     android:id="@+id/diagnosticationDateTxt_generalQuestions"
@@ -74,7 +74,7 @@
                     android:id="@+id/diagnosticatedFamiliarLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Tiene algún familiar que también esté diagnosticado de cefalea en racimos?" />
+                    android:text="@string/fragment_general_questions_diagnosticatedFamiliarLbl_generalQuestions_text" />
 
                 <RadioGroup
                     android:id="@+id/diagnosticatedFamiliarRGroup_generalQuestions"
@@ -87,21 +87,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Sí"
-                        android:text="Si" />
+                        android:text="@string/fragment_general_questions_diagnosticatedFamiliarYesRButton_generalQuestions_text" />
 
                     <RadioButton
                         android:id="@+id/diagnosticatedFamiliarNoRButton_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="No"
-                        android:text="No" />
+                        android:text="@string/fragment_general_questions_diagnosticatedFamiliarNoRButton_generalQuestions_text" />
                 </RadioGroup>
 
                 <TextView
                     android:id="@+id/annualHeadachesLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Cuántos brotes de cefalea en racimos suele tener al año?" />
+                    android:text="@string/fragment_general_questions_annualHeadachesLbl_generalQuestions_text" />
 
                 <EditText
                     android:id="@+id/annualHeadachesTxt_generalQuestions"
@@ -114,7 +114,7 @@
                     android:id="@+id/headachesDurationLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Cuántos dias le suele durar cada brote?" />
+                    android:text="@string/fragment_general_questions_headachesDurationLbl_generalQuestions_text" />
 
                 <EditText
                     android:id="@+id/headachesDurationTxt_generalQuestions"
@@ -127,7 +127,7 @@
                     android:id="@+id/seasonalOutbreaksLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Cree que los brotes son más frecuentes en alguna época del año?" />
+                    android:text="@string/fragment_general_questions_seasonalOutbreaksLbl_generalQuestions_text" />
 
                 <LinearLayout
                     android:id="@+id/seasonalOutbreaksCBoxes_generalQuestions"
@@ -140,35 +140,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Otoño"
-                        android:text="Otoño" />
+                        android:text="@string/fragment_general_questions_seasonalOutbreaksFallCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/seasonalOutbreaksWinterCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Invierno"
-                        android:text="Invierno" />
+                        android:text="@string/fragment_general_questions_seasonalOutbreaksWinterCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/seasonalOutbreaksSpringCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Primavera"
-                        android:text="Primavera" />
+                        android:text="@string/fragment_general_questions_seasonalOutbreaksSpringCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/seasonalOutbreaksSummerCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Verano"
-                        android:text="Verano" />
+                        android:text="@string/fragment_general_questions_seasonalOutbreaksSummerCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/seasonalOutbreaksNoCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="No"
-                        android:text="No" />
+                        android:text="@string/fragment_general_questions_seasonalOutbreaksNoCBox_generalQuestions_text" />
 
                 </LinearLayout>
 
@@ -176,7 +176,7 @@
                     android:id="@+id/causesLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Reconoce algún desencadenante del brote de dolor?" />
+                    android:text="@string/fragment_general_questions_causesLbl_generalQuestions_text" />
 
                 <LinearLayout
                     android:id="@+id/causesCBoxes_generalQuestions"
@@ -188,43 +188,43 @@
                         android:id="@+id/causesStressCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Estrés"
-                        android:tag="Estrés"/>
+                        android:tag="Estrés"
+                        android:text="@string/fragment_general_questions_causesStressCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/causesAlcoholCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Alcohol"
-                        android:tag="Alcohol"/>
+                        android:tag="Alcohol"
+                        android:text="@string/fragment_general_questions_causesAlcoholCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/causesAtmosphericalCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Atmosféricos"
-                        android:tag="Atmosféricos"/>
+                        android:tag="Atmosféricos"
+                        android:text="@string/fragment_general_questions_causesAtmosphericalCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/causesMealsCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Determinados alimentos"
-                        android:tag="Determinados Alimentos"/>
+                        android:tag="Determinados Alimentos"
+                        android:text="@string/fragment_general_questions_causesMealsCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/causesOtherCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Otros"
-                        android:tag="Otros"/>
+                        android:tag="Otros"
+                        android:text="@string/fragment_general_questions_causesOtherCBox_generalQuestions_text" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/causesOtherLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Si hay otros, decir cuál/cuáles" />
+                    android:text="@string/fragment_general_questions_causesOtherLbl_generalQuestions_text" />
 
                 <EditText
                     android:id="@+id/causesOtherTxt_generalQuestions"
@@ -238,7 +238,7 @@
                     android:id="@+id/otherHeadacheLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Tiene otro tipo de cefalea asociada?" />
+                    android:text="@string/fragment_general_questions_otherHeadacheLbl_generalQuestions_text" />
 
                 <RadioGroup
                     android:id="@+id/otherHeadacheRGroup_generalQuestions"
@@ -249,56 +249,56 @@
                         android:id="@+id/otherHeadacheNoRButton_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="No" />
+                        android:text="@string/fragment_general_questions_otherHeadacheNoRButton_generalQuestions_text" />
 
                     <RadioButton
                         android:id="@+id/otherHeadacheMigraineRButton_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Migraña"
-                        android:tag="Migrana"/>
+                        android:tag="Migrana"
+                        android:text="@string/fragment_general_questions_otherHeadacheMigraineRButton_generalQuestions_text" />
 
                     <RadioButton
                         android:id="@+id/otherHeadacheParoxymalRButton_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Hemicránea paroxística/continua"
-                        android:tag="Hemicránea paroxística/coninua"/>
+                        android:tag="Hemicránea paroxística/coninua"
+                        android:text="@string/fragment_general_questions_otherHeadacheParoxymalRButton_generalQuestions_text" />
 
                     <RadioButton
                         android:id="@+id/otherHeadacheNeuralgiaRButton_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Neuralgia del trigémino"
-                        android:tag="Neuralgia del trigémino"/>
+                        android:tag="Neuralgia del trigémino"
+                        android:text="@string/fragment_general_questions_otherHeadacheNeuralgiaRButton_generalQuestions_text" />
 
                     <RadioButton
                         android:id="@+id/otherHeadacheTensionalRButton_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cefalea tensional"
-                        android:tag="Cefalea tensional"/>
+                        android:tag="Cefalea tensional"
+                        android:text="@string/fragment_general_questions_otherHeadacheTensionalRButton_generalQuestions_text" />
 
                     <RadioButton
                         android:id="@+id/otherHeadacheSUNARButton_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="SUNCT/SUNA"
-                        android:tag="SUNCT/SUNA"/>
+                        android:tag="SUNCT/SUNA"
+                        android:text="@string/fragment_general_questions_otherHeadacheSUNARButton_generalQuestions_text" />
 
                     <RadioButton
                         android:id="@+id/otherHeadacheOtherRButton_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Otra"
-                        android:tag="Otros"/>
+                        android:tag="Otros"
+                        android:text="@string/fragment_general_questions_otherHeadacheOtherRButton_generalQuestions_text" />
                 </RadioGroup>
 
                 <TextView
                     android:id="@+id/otherHeadacheOtherLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Si es otra, decir cuál" />
+                    android:text="@string/fragment_general_questions_otherHeadacheOtherLbl_generalQuestions_text" />
 
                 <EditText
                     android:id="@+id/otherHeadacheOtherTxt_generalQuestions"
@@ -312,7 +312,7 @@
                     android:id="@+id/chronicIllnessLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Tiene alguna enfermedad crónica asociada?" />
+                    android:text="@string/fragment_general_questions_chronicIllnessLbl_generalQuestions_text" />
 
                 <RadioGroup
                     android:id="@+id/chronicIllnessRGroup_generalQuestions"
@@ -324,14 +324,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="No"
-                        android:text="No" />
+                        android:text="@string/fragment_general_questions_chronicIllnessNoRButton_generalQuestions_text" />
 
                     <RadioButton
                         android:id="@+id/chronicIllnessOtherRButton_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Otra"
-                        android:tag="Otros"/>
+                        android:tag="Otros"
+                        android:text="@string/fragment_general_questions_chronicIllnessOtherRButton_generalQuestions_text" />
 
                 </RadioGroup>
 
@@ -339,7 +339,7 @@
                     android:id="@+id/otherChronicIllnessOtherLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Si es otra, decir cuál" />
+                    android:text="@string/fragment_general_questions_otherChronicIllnessOtherLbl_generalQuestions_text" />
 
                 <EditText
                     android:id="@+id/otherChronicIllnessOtherTxt_generalQuestions"
@@ -353,7 +353,7 @@
                     android:id="@+id/otherIllnessMedicationLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Toma medicación de forma habitual para otras enfermedades?" />
+                    android:text="@string/fragment_general_questions_otherIllnessMedicationLbl_generalQuestions_text" />
 
                 <LinearLayout
                     android:id="@+id/otherIllnessMedicationCBoxes_generalQuestions"
@@ -366,49 +366,49 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Hipertensión"
-                        android:text="Hipertensión" />
+                        android:text="@string/fragment_general_questions_otherIllnessMedicationHypertensionCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/otherIllnessMedicationDiabetesCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Diabetes"
-                        android:text="Diabetes" />
+                        android:text="@string/fragment_general_questions_otherIllnessMedicationDiabetesCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/otherIllnessMedicationCholesterolCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Colesterol"
-                        android:text="Colesterol" />
+                        android:text="@string/fragment_general_questions_otherIllnessMedicationCholesterolCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/otherIllnessMedicationAnxietyCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Ansiedad"
-                        android:text="Ansiedad" />
+                        android:text="@string/fragment_general_questions_otherIllnessMedicationAnxietyCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/otherIllnessMedicationDepressionCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Depresión"
-                        android:text="Depresión" />
+                        android:text="@string/fragment_general_questions_otherIllnessMedicationDepressionCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/otherIllnessMedicationPneumopatyCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Neumopatía"
-                        android:text="Neumopatía" />
+                        android:text="@string/fragment_general_questions_otherIllnessMedicationPneumopatyCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/otherIllnessMedicationOtherCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Otras"
-                        android:text="Otras" />
+                        android:text="@string/fragment_general_questions_otherIllnessMedicationOtherCBox_generalQuestions_text" />
 
                 </LinearLayout>
 
@@ -416,7 +416,7 @@
                     android:id="@+id/otherIllnessMedicationOtherLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Si es otra, decir cuál" />
+                    android:text="@string/fragment_general_questions_otherIllnessMedicationOtherLbl_generalQuestions_text" />
 
                 <EditText
                     android:id="@+id/otherIllnessMedicationOtherTxt_generalQuestions"
@@ -430,7 +430,7 @@
                     android:id="@+id/provenTreatmentsLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Qué tratamientos preventivos para la cefalea en racimos ha probado hasta la fecha?" />
+                    android:text="@string/fragment_general_questions_provenTreatmentsLbl_generalQuestions_text" />
 
                 <LinearLayout
                     android:id="@+id/provenTreatmentsCBoxes_generalQuestions"
@@ -443,42 +443,42 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Verapamilo (Manidon)"
-                        android:text="Verapamilo (Manidon)" />
+                        android:text="@string/fragment_general_questions_provenTreatmentsVerapamiloCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/provenTreatmentsTopiramatoCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Topiramato (Topamax)"
-                        android:text="Topiramato (Topamax)" />
+                        android:text="@string/fragment_general_questions_provenTreatmentsTopiramatoCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/provenTreatmentsLithiumCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Litio"
-                        android:text="Litio" />
+                        android:text="@string/fragment_general_questions_provenTreatmentsLithiumCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/provenTreatmentsGabapentinCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Gabapentina"
-                        android:text="Gabapentina" />
+                        android:text="@string/fragment_general_questions_provenTreatmentsGabapentinCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/provenTreatmentsMelatoninCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Melatonina"
-                        android:text="Melatonina" />
+                        android:text="@string/fragment_general_questions_provenTreatmentsMelatoninCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/provenTreatmentsOtherCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Otras"
-                        android:text="Otras" />
+                        android:text="@string/fragment_general_questions_provenTreatmentsOtherCBox_generalQuestions_text" />
 
                 </LinearLayout>
 
@@ -486,7 +486,7 @@
                     android:id="@+id/provenTreatmentsOtherLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Si es otra, decir cuál" />
+                    android:text="@string/fragment_general_questions_provenTreatmentsOtherLbl_generalQuestions_text" />
 
                 <EditText
                     android:id="@+id/provenTreatmentsOtherTxt_generalQuestions"
@@ -500,7 +500,7 @@
                     android:id="@+id/provingTreatmentsLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Qué tratamientos preventivos para la cefalea en racimos está tomando actualmente?" />
+                    android:text="@string/fragment_general_questions_provingTreatmentsLbl_generalQuestions_text" />
 
                 <LinearLayout
                     android:id="@+id/provingTreatmentsCBoxes_generalQuestions"
@@ -513,42 +513,42 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Verapamilo (Manidon)"
-                        android:text="Verapamilo (Manidon)" />
+                        android:text="@string/fragment_general_questions_provingTreatmentsVerapamiloCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/provingTreatmentsTopiramatoCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Topiramato (Topamax)"
-                        android:text="Topiramato (Topamax)" />
+                        android:text="@string/fragment_general_questions_provingTreatmentsTopiramatoCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/provingTreatmentsLithiumCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Litio"
-                        android:text="Litio" />
+                        android:text="@string/fragment_general_questions_provingTreatmentsLithiumCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/provingTreatmentsGabapentinCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Gabapentina"
-                        android:text="Gabapentina" />
+                        android:text="@string/fragment_general_questions_provingTreatmentsGabapentinCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/provingTreatmentsMelatoninCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Melatonina"
-                        android:text="Melatonina" />
+                        android:text="@string/fragment_general_questions_provingTreatmentsMelatoninCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/provingTreatmentsOtherCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Otras"
-                        android:text="Otras" />
+                        android:text="@string/fragment_general_questions_provingTreatmentsOtherCBox_generalQuestions_text" />
 
                 </LinearLayout>
 
@@ -557,7 +557,7 @@
                     android:id="@+id/provingTreatmentsOtherLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Si es otra, decir cuál" />
+                    android:text="@string/fragment_general_questions_provingTreatmentsOtherLbl_generalQuestions_text" />
 
                 <EditText
                     android:id="@+id/provingTreatmentsOtherTxt_generalQuestions"
@@ -571,7 +571,7 @@
                     android:id="@+id/acutePhaseTreatmentLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Qué tratamientos de fase aguda suele tomar para la cefalea en racimos?" />
+                    android:text="@string/fragment_general_questions_acutePhaseTreatmentLbl_generalQuestions_text" />
 
                 <LinearLayout
                     android:id="@+id/acutePhaseTreatmentCBoxes_generalQuestions"
@@ -584,42 +584,42 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Oxígeno"
-                        android:text="Oxígeno" />
+                        android:text="@string/fragment_general_questions_acutePhaseTreatmentOxygenCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/acutePhaseTreatmentSumatriptanCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Sumatriptan"
-                        android:text="Sumatriptan" />
+                        android:text="@string/fragment_general_questions_acutePhaseTreatmentSumatriptanCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/acutePhaseTreatmentZolmitriptanCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Zolmitriptan"
-                        android:text="Zolmitriptan" />
+                        android:text="@string/fragment_general_questions_acutePhaseTreatmentZolmitriptanCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/acutePhaseTreatmentAntiinflamatoriesCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Antiinflamatorios"
-                        android:text="Antiinflamatorios" />
+                        android:text="@string/fragment_general_questions_acutePhaseTreatmentAntiinflamatoriesCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/acutePhaseTreatmentParacetamolCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Paracetamol/Nolotil"
-                        android:text="Paracetamol/Nolotil" />
+                        android:text="@string/fragment_general_questions_acutePhaseTreatmentParacetamolCBox_generalQuestions_text" />
 
                     <CheckBox
                         android:id="@+id/acutePhaseTreatmentOtherCBox_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Otras"
-                        android:text="Otras" />
+                        android:text="@string/fragment_general_questions_acutePhaseTreatmentOtherCBox_generalQuestions_text" />
 
                 </LinearLayout>
 
@@ -628,7 +628,7 @@
                     android:id="@+id/acutePhaseTreatmentOtherLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Si es otro, decir cuál" />
+                    android:text="@string/fragment_general_questions_acutePhaseTreatmentOtherLbl_generalQuestions_text" />
 
                 <EditText
                     android:id="@+id/acutePhaseTreatmentOtherTxt_generalQuestions"
@@ -642,7 +642,7 @@
                     android:id="@+id/tracingHospitalLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Recibe seguimiento por neurología de forma habitual en algún hospital?" />
+                    android:text="@string/fragment_general_questions_tracingHospitalLbl_generalQuestions_text" />
 
                 <RadioGroup
                     android:id="@+id/tracingHospitalRGroup_generalQuestions"
@@ -655,28 +655,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="HRJC"
-                        android:text="Hospital Rey Juan Carlos de Móstoles" />
+                        android:text="@string/fragment_general_questions_tracingHospitalHRJCRButton_generalQuestions_text" />
 
                     <RadioButton
                         android:id="@+id/tracingHospitalNoRButton_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="No"
-                        android:text="No" />
+                        android:text="@string/fragment_general_questions_tracingHospitalNoRButton_generalQuestions_text" />
 
                     <RadioButton
                         android:id="@+id/tracingHospitalOtherRButton_generalQuestions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:tag="Otro"
-                        android:text="Otros" />
+                        android:text="@string/fragment_general_questions_tracingHospitalOtherRButton_generalQuestions_text" />
                 </RadioGroup>
 
                 <TextView
                     android:id="@+id/tracingHospitalOtherLbl_generalQuestions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Si es otro, decir cuál" />
+                    android:text="@string/fragment_general_questions_tracingHospitalOtherLbl_generalQuestions_text" />
 
                 <EditText
                     android:id="@+id/tracingHospitalOtherTxt_generalQuestions"
@@ -700,7 +700,7 @@
                         android:background="@drawable/roundedbutton"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
-                        android:text="SIGUIENTE" />
+                        android:text="@string/fragment_general_questions_nextBtn_generalQuestions_text" />
 
                     <Button
                         android:id="@+id/backBtn_generalQuestions"
@@ -710,7 +710,7 @@
                         android:background="@drawable/roundedbutton"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
-                        android:text="ATRAS"/>
+                        android:text="@string/fragment_general_questions_backBtn_generalQuestions_text" />
                 </LinearLayout>
 
             </LinearLayout>

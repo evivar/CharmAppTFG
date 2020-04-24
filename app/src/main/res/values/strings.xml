@@ -51,7 +51,7 @@
     <string-array name="sportTime_spinner">
         <item></item>
         <item>Nada</item>
-        <item>30 Minutos</item>
+        <item>30 minutos</item>
         <item>1 hora</item>
         <item>2 horas</item>
         <item>Más de 2 horas</item>

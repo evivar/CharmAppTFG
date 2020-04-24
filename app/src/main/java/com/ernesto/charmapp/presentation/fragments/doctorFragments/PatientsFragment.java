@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ernesto.charmapp.R;
-import com.ernesto.charmapp.data.RetrofitClient;
-import com.ernesto.charmapp.domain.Doctor;
-import com.ernesto.charmapp.domain.Patient;
+import com.ernesto.charmapp.data.retrofit.RetrofitClient;
+import com.ernesto.charmapp.domain.retrofitEntities.Doctor;
+import com.ernesto.charmapp.domain.retrofitEntities.Patient;
 import com.ernesto.charmapp.interactors.adaptors.PatientListAdapter;
 import com.ernesto.charmapp.interactors.responses.patientResponses.ReadAllPatientsResponse;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;

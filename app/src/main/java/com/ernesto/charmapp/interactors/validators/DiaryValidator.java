@@ -14,7 +14,7 @@ public class DiaryValidator {
     public boolean validate(String sleep_time, String sport_time, String alcohol, String smoke, String feeling) {
         boolean valid = true;
 
-        if((sleep_time == null) || (sleep_time.isEmpty()) || (sleep_time.length() == 0) || (sleep_time.length() > 3)){
+        if ((sleep_time == null) || (sleep_time.isEmpty()) || (sleep_time.length() == 0) || (sleep_time.length() > 3) || (Integer.parseInt(sleep_time) >= 24)) {
             valid = false;
             wrongFields += "Tiempo de sueño\n";
         }

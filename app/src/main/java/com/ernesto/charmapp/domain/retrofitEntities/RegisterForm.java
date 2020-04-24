@@ -1,10 +1,19 @@
-package com.ernesto.charmapp.domain;
+package com.ernesto.charmapp.domain.retrofitEntities;
 
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Clase RegisterForm
+ * <p>
+ * Clase que representa la entidad Patients de la base de datos
+ * <p>
+ * Clase generada usando <a href="http://www.jsonschema2pojo.org/" style="text-decoration:none; color:black"> jsonschema2pojo </a>
+ *
+ * @author Ernesto Vivar Laviña evivar@ucm.es
+ */
 public class RegisterForm implements Serializable {
 
     // Sección de datos personales
@@ -58,7 +67,7 @@ public class RegisterForm implements Serializable {
     private ArrayList<String> symptoms;
 
     public void completePersonalData(String email, String phone, String name, String surname1, String surname2, String birthDate, String gender, String profession,
-                                     String professionPlace, String sector, String otherSector, String homeCP, String jobCP){
+                                     String professionPlace, String sector, String otherSector, String homeCP, String jobCP) {
         this.email = email;
         this.phone = phone;
         this.name = name;
@@ -74,7 +83,7 @@ public class RegisterForm implements Serializable {
         this.jobCP = jobCP;
     }
 
-    public void completeGeneralQuestions(){
+    public void completeGeneralQuestions() {
 
     }
 
@@ -86,13 +95,13 @@ public class RegisterForm implements Serializable {
         this.sport = sport;
     }
 
-    public void completePainQuality (String location, String kind, ArrayList<String> symptoms) {
+    public void completePainQuality(String location, String kind, ArrayList<String> symptoms) {
         this.location = location;
         this.kind = kind;
         this.symptoms = symptoms;
     }
 
-    public void registerPatient(){
+    public void registerPatient() {
 
     }
 
@@ -100,27 +109,27 @@ public class RegisterForm implements Serializable {
     @Override
     public String toString() {
         String res = "";
-        res += email +"\n";
-        res += phone +"\n";
-        res += name +"\n";
-        res += surname1 +"\n";
-        res += surname2 +"\n";
-        res += birthDate +"\n";
-        res += gender +"\n";
-        res += profession +"\n";
-        res += professionPlace +"\n";
-        res += sector +"\n";
-        res += otherSector +"\n";
-        res += homeCP +"\n";
-        res += jobCP +"\n";
-        res += smoking +"\n";
-        res += alcohol +"\n";
-        res += caffeine +"\n";
-        res += diet +"\n";
-        res += sport +"\n";
-        res += location +"\n";
-        res += kind +"\n";
-        res += symptoms +"\n";
+        res += email + "\n";
+        res += phone + "\n";
+        res += name + "\n";
+        res += surname1 + "\n";
+        res += surname2 + "\n";
+        res += birthDate + "\n";
+        res += gender + "\n";
+        res += profession + "\n";
+        res += professionPlace + "\n";
+        res += sector + "\n";
+        res += otherSector + "\n";
+        res += homeCP + "\n";
+        res += jobCP + "\n";
+        res += smoking + "\n";
+        res += alcohol + "\n";
+        res += caffeine + "\n";
+        res += diet + "\n";
+        res += sport + "\n";
+        res += location + "\n";
+        res += kind + "\n";
+        res += symptoms + "\n";
         return res;
     }
 
