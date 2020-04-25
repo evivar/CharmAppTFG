@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.ernesto.charmapp.R;
+import com.ernesto.charmapp.data.sqlite.StationDatabase;
 import com.ernesto.charmapp.presentation.activities.patientActivities.PatientLoginActivity;
 
 import gr.net.maroulis.library.EasySplashScreen;
@@ -21,6 +22,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StationDatabase.getInstance(this);
         EasySplashScreen splashScreen = new EasySplashScreen(SplashScreenActivity.this)
                 .withFullScreen()
                 .withTargetActivity(PatientLoginActivity.class)
@@ -34,7 +36,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         splashScreen.getBeforeLogoTextView().setTypeface(ResourcesCompat.getFont(this, R.font.muli));
         View splashScreenView = splashScreen.create();
         setContentView(splashScreenView);
-        //requestPermissions();
+        requestPermissions();
     }
 
     public void requestPermissions() {

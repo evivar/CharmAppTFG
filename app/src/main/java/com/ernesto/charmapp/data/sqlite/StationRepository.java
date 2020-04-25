@@ -2,14 +2,22 @@ package com.ernesto.charmapp.data.sqlite;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.ernesto.charmapp.data.retrofit.RetrofitClient;
+import com.ernesto.charmapp.domain.retrofitEntities.StationRetrofit;
 import com.ernesto.charmapp.domain.sqlite.daos.StationSQLiteDAO;
 import com.ernesto.charmapp.domain.sqlite.entities.StationSQLiteEntity;
+import com.ernesto.charmapp.interactors.responses.stationResponses.ReadAllStationsResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class StationRepository {
 
@@ -21,6 +29,10 @@ public class StationRepository {
         StationDatabase database = StationDatabase.getInstance(context);
         stationDAO = database.stationDAO();
         allStations = stationDAO.readAllStations();
+    }
+
+    public void populateDatabase() {
+        new PopulateDataBaseAT(stationDAO).execute();
     }
 
     public void createStation(StationSQLiteEntity station) {
@@ -53,6 +65,48 @@ public class StationRepository {
 
     public void deleteStation(StationSQLiteEntity station) {
         new DeleteStationAT(stationDAO).execute(station);
+    }
+
+    private static class PopulateDataBaseAT extends AsyncTask<Void, Void, Void> {
+
+        private StationSQLiteDAO stationDAO;
+
+        public PopulateDataBaseAT(StationSQLiteDAO stationDAO) {
+            this.stationDAO = stationDAO;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Call<ReadAllStationsResponse> readAllStations = RetrofitClient
+                    .getInstance()
+                    .getAPI()
+                    .readAllStations();
+            readAllStations.enqueue(new Callback<ReadAllStationsResponse>() {
+                @Override
+                public void onResponse(Call<ReadAllStationsResponse> call, Response<ReadAllStationsResponse> response) {
+                    ReadAllStationsResponse stationsResponse = response.body();
+                    if (!stationsResponse.getError()) {
+                        for (StationRetrofit s : stationsResponse.getStations()) {
+                            StationSQLiteEntity station = new StationSQLiteEntity(Integer.parseInt(s.getStationUrlId()), s.getCity(), s.getCountry(), s.getWebSource(), s.getType(), Double.parseDouble(s.getLongitude()), Double.parseDouble(s.getLat()), 0);
+                            station.setId(Integer.parseInt(s.getStationId()));
+                            stationDAO.createStation(station);
+                        }
+                    } else {
+                        Log.d("Llenar BD", "Error al llenar la base de datos");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ReadAllStationsResponse> call, Throwable t) {
+
+                }
+            });
+
+
+            //StationSQLiteEntity station = new StationSQLiteEntity(412, "Madrid", "ES", "ACQUIN", "meteo", 40.0, -3.75, 0);
+            //db.stationDAO().createStation(station);
+            return null;
+        }
     }
 
     private static class CreateStationAT extends AsyncTask<StationSQLiteEntity, Void, Void> {
