@@ -69,7 +69,7 @@ public class PatientIndexFragment extends Fragment {
         patient = (Patient) arguments.getSerializable("patient");
         this.checkIfDiaryIsFilled();
         this.createDiaryAlarm();
-        this.startLocationService();
+        //this.startLocationService();
     }
 
     @Nullable

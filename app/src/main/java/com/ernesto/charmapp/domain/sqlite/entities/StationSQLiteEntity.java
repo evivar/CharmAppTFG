@@ -1,12 +1,13 @@
 package com.ernesto.charmapp.domain.sqlite.entities;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "station_table")
 public class StationSQLiteEntity {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     private int url_id;
@@ -23,6 +24,7 @@ public class StationSQLiteEntity {
 
     private double latitude;
 
+    @Nullable
     private double altitude;
 
     public StationSQLiteEntity(int url_id, String city, String country, String web_source, String type, double longitude, double latitude, double altitude) {
@@ -106,5 +108,20 @@ public class StationSQLiteEntity {
 
     public void setAltitude(double altitude) {
         this.altitude = altitude;
+    }
+
+    @Override
+    public String toString() {
+        return "StationSQLiteEntity{" +
+                "id=" + id +
+                ", url_id=" + url_id +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", web_source='" + web_source + '\'' +
+                ", type='" + type + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", altitude=" + altitude +
+                '}';
     }
 }

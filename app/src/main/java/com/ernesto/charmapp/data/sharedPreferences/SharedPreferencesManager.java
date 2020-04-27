@@ -126,6 +126,13 @@ public class SharedPreferencesManager {
         editor.apply();
     }
 
+    public void populateStations(boolean populated) {
+        SharedPreferences sharedPreferencesManager = context.getSharedPreferences(SHARED_PREFFERENCES_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferencesManager.edit();
+        editor.putBoolean("DBPopulated", populated);
+        editor.apply();
+    }
+
     /**
      * Método que comprueba si el usuario esta logeado o no
      *
@@ -180,6 +187,11 @@ public class SharedPreferencesManager {
     public boolean isOnBoardingCompleted() {
         SharedPreferences sharedPreferencesManager = context.getSharedPreferences(SHARED_PREFFERENCES_NAME, Context.MODE_PRIVATE);
         return sharedPreferencesManager.getBoolean("OnBoardingCompleted", false);
+    }
+
+    public boolean isDBPopulate() {
+        SharedPreferences sharedPreferencesManager = context.getSharedPreferences(SHARED_PREFFERENCES_NAME, Context.MODE_PRIVATE);
+        return sharedPreferencesManager.getBoolean("DBPopulated", false);
     }
 
     /**

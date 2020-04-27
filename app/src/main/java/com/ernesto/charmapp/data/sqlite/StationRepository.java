@@ -77,6 +77,8 @@ public class StationRepository {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            final List<StationRetrofit> stationsRetrofit = new ArrayList<>();
+            final List<StationSQLiteEntity> stationsSQLite = new ArrayList<>();
             Call<ReadAllStationsResponse> readAllStations = RetrofitClient
                     .getInstance()
                     .getAPI()
@@ -86,10 +88,15 @@ public class StationRepository {
                 public void onResponse(Call<ReadAllStationsResponse> call, Response<ReadAllStationsResponse> response) {
                     ReadAllStationsResponse stationsResponse = response.body();
                     if (!stationsResponse.getError()) {
+                        System.out.println("IMPRIMIENDO DESDE STATIONREPOSITORY.JAVA");
                         for (StationRetrofit s : stationsResponse.getStations()) {
                             StationSQLiteEntity station = new StationSQLiteEntity(Integer.parseInt(s.getStationUrlId()), s.getCity(), s.getCountry(), s.getWebSource(), s.getType(), Double.parseDouble(s.getLongitude()), Double.parseDouble(s.getLat()), 0);
                             station.setId(Integer.parseInt(s.getStationId()));
-                            stationDAO.createStation(station);
+                            //stationDAO.createStation(station);
+                            System.out.println(station.toString());
+                            stationsRetrofit.add(s);
+                            stationsSQLite.add(station);
+
                         }
                     } else {
                         Log.d("Llenar BD", "Error al llenar la base de datos");
@@ -101,6 +108,11 @@ public class StationRepository {
 
                 }
             });
+            if (!stationsSQLite.isEmpty()) {
+                for (StationSQLiteEntity stationEntity : stationsSQLite) {
+                    stationDAO.createStation(stationEntity);
+                }
+            }
 
 
             //StationSQLiteEntity station = new StationSQLiteEntity(412, "Madrid", "ES", "ACQUIN", "meteo", 40.0, -3.75, 0);

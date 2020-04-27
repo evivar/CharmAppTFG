@@ -29,7 +29,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.ernesto.charmapp.data.retrofit.RetrofitClient;
 import com.ernesto.charmapp.data.sqlite.StationRepository;
-import com.ernesto.charmapp.domain.sqlite.entities.StationSQLiteEntity;
 import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse;
 import com.ernesto.charmapp.presentation.viewModel.StationViewModel;
 
@@ -61,6 +60,7 @@ public class LocationAlertReceiver extends BroadcastReceiver {
     //TODO: Las pilla de puta madre tronkii
     @Override
     public void onReceive(Context context, Intent intent) {
+        new MeterUnRegistroAT().execute(context);
         PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
         // Poner el codigo
@@ -141,9 +141,9 @@ public class LocationAlertReceiver extends BroadcastReceiver {
         @Override
         protected Void doInBackground(Context... contexts) {
             StationRepository repository = new StationRepository(contexts[0]);
-            StationSQLiteEntity station = new StationSQLiteEntity(123, "Madrid", "ES", "ERNES", "meteo", 40.0, -3.75, 0);
-            station.setId(1);
-            repository.createStation(station);
+            //StationSQLiteEntity station = new StationSQLiteEntity(99999, "Test", "Test", "Test", "Test", 60, -3,0);
+            //repository.createStation(station);
+            //repository.populateDatabase();
             return null;
         }
     }

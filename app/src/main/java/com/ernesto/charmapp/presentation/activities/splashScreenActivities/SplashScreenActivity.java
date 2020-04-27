@@ -1,14 +1,11 @@
 package com.ernesto.charmapp.presentation.activities.splashScreenActivities;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.ernesto.charmapp.R;
@@ -36,19 +33,5 @@ public class SplashScreenActivity extends AppCompatActivity {
         splashScreen.getBeforeLogoTextView().setTypeface(ResourcesCompat.getFont(this, R.font.muli));
         View splashScreenView = splashScreen.create();
         setContentView(splashScreenView);
-        requestPermissions();
-    }
-
-    public void requestPermissions() {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.READ_CALENDAR,
-                            Manifest.permission.WRITE_CALENDAR},
-                    1);
-        }
     }
 }

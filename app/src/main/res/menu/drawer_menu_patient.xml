@@ -19,6 +19,7 @@
         <item
             android:id="@+id/nav_weather"
             android:icon="@drawable/ic_wheather"
+            android:enabled="false"
             android:title="Registros atmosféricos" />
         <item
             android:id="@+id/nav_profile"
