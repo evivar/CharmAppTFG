@@ -257,7 +257,7 @@ public class HeadacheFragment extends Fragment {
             Date today = new Date();
             Date userDate = new SimpleDateFormat("yyyy-MM-dd").parse(selectedDate);
 
-            ok = today.before(new Date((userDate.getTime()))) && today.after(userDate);
+            ok = today.before(new Date(userDate.getTime())) && today.after(userDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -23,13 +23,13 @@ public class SplashScreenActivity extends AppCompatActivity {
         EasySplashScreen splashScreen = new EasySplashScreen(SplashScreenActivity.this)
                 .withFullScreen()
                 .withTargetActivity(PatientLoginActivity.class)
-                .withSplashTimeOut(3000)
-                .withBackgroundColor(Color.parseColor("#1a1b29"))
+                .withSplashTimeOut(2000)
+                .withBackgroundColor(Color.parseColor("#FFFFFF"))
                 .withBeforeLogoText("CharmApp")
-                .withLogo(R.drawable.ic_iconocharmapp_w);
+                .withLogo(R.drawable.ic_icono);
 
-        splashScreen.getBeforeLogoTextView().setTextColor(Color.WHITE);
-        splashScreen.getBeforeLogoTextView().setTextSize(75);
+        splashScreen.getBeforeLogoTextView().setTextColor(Color.parseColor("#63B6E2"));
+        splashScreen.getBeforeLogoTextView().setTextSize(40);
         splashScreen.getBeforeLogoTextView().setTypeface(ResourcesCompat.getFont(this, R.font.muli));
         View splashScreenView = splashScreen.create();
         setContentView(splashScreenView);

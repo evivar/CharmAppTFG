@@ -27,16 +27,14 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
-import com.ernesto.charmapp.data.retrofit.RetrofitClient;
+import com.ernesto.charmapp.data.sharedPreferences.SharedPreferencesManager;
 import com.ernesto.charmapp.data.sqlite.StationRepository;
-import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse;
+import com.ernesto.charmapp.domain.sqlite.entities.StationSQLiteEntity;
 import com.ernesto.charmapp.presentation.viewModel.StationViewModel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.List;
 
 public class LocationAlertReceiver extends BroadcastReceiver {
 
@@ -60,11 +58,16 @@ public class LocationAlertReceiver extends BroadcastReceiver {
     //TODO: Las pilla de puta madre tronkii
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        // this.checkDBPopulated(context);
+
         new MeterUnRegistroAT().execute(context);
         PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
         // Poner el codigo
         String locGPS = "";
+        double latGPS = 0;
+        double longGPS = 0;
         String locNTW = "";
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -86,6 +89,8 @@ public class LocationAlertReceiver extends BroadcastReceiver {
                 gps = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (gps != null) {
                     locGPS = "Latitud: " + String.valueOf(gps.getLatitude()) + "Longitud: " + String.valueOf(gps.getLongitude());
+                    latGPS = gps.getLatitude();
+                    longGPS = gps.getLongitude();
                 }
             }
             if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
@@ -94,31 +99,31 @@ public class LocationAlertReceiver extends BroadcastReceiver {
                     locNTW = "Latitud: " + String.valueOf(ntw.getLatitude()) + "Longitud: " + String.valueOf(ntw.getLongitude());
                 }
             }
-            Call<CrisisResponse> testService = RetrofitClient
-                    .getInstance()
-                    .getAPI()
-                    .testService(Calendar.getInstance().getTime().toString(), (locGPS + " " + locNTW));
-            testService.enqueue(new Callback<CrisisResponse>() {
-                @Override
-                public void onResponse(Call<CrisisResponse> call, Response<CrisisResponse> response) {
-                    Log.d(TAG, "onResponse: Insercion correcta" + response.body().getMensaje());
-
+            /*try {
+                List<StationSQLiteEntity> nearStations = new ReadNearStationsAT(latGPS, longGPS).execute(context).get();
+                for (StationSQLiteEntity s : nearStations) {
+                    Log.d(TAG, "onReceive: " + s.toString());
                 }
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }*/
 
-                @Override
-                public void onFailure(Call<CrisisResponse> call, Throwable t) {
-
-                }
-            });
-
-
-            Toast.makeText(context,
-                    "GPS: " + locGPS + "\n"
-                            + "NTW: " + locNTW + "\n",
-                    Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "GPS: " + locGPS + "\n" + "NTW: " + locNTW, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "onReceive: " + "GPS: " + locGPS + "\n" + "NTW: " + locNTW);
         }
 
 
+    }
+
+    private void checkDBPopulated(Context context) {
+        StationRepository repository = new StationRepository(context);
+        if (!SharedPreferencesManager.getInstance(context).isDBPopulate()) {
+            repository.populateDatabase();
+        } else {
+            repository.readAllStations();
+        }
     }
 
     public void setAlarm(Context context) {
@@ -140,11 +145,45 @@ public class LocationAlertReceiver extends BroadcastReceiver {
 
         @Override
         protected Void doInBackground(Context... contexts) {
+
+
             StationRepository repository = new StationRepository(contexts[0]);
-            //StationSQLiteEntity station = new StationSQLiteEntity(99999, "Test", "Test", "Test", "Test", 60, -3,0);
-            //repository.createStation(station);
-            //repository.populateDatabase();
+            StationSQLiteEntity station = new StationSQLiteEntity(99999, "Test", "Test", "Test", "Test", 60, -3, 0, 0, 0, 0, 0);
+            repository.createStation(station);
             return null;
+        }
+    }
+
+    private static class ReadNearStationsAT extends AsyncTask<Context, Void, List<StationSQLiteEntity>> {
+
+        private double loc_cos_lat;
+
+        private double loc_sin_lat;
+
+        private double loc_cos_long;
+
+        private double loc_sin_long;
+
+        public ReadNearStationsAT(double latitude, double longitude) {
+            this.loc_cos_lat = Math.cos(latitude * Math.PI / 180);
+            this.loc_sin_lat = Math.sin(latitude * Math.PI / 180);
+            this.loc_cos_long = Math.cos(longitude * Math.PI / 180);
+            this.loc_sin_long = Math.sin(longitude * Math.PI / 180);
+        }
+
+        @Override
+        protected List<StationSQLiteEntity> doInBackground(Context... contexts) {
+            StationRepository repository = new StationRepository(contexts[0]);
+            List<StationSQLiteEntity> stations5km = new ArrayList<>();
+            /*try {
+                stations5km = repository.readNearStationsV2(loc_sin_lat, loc_cos_lat, loc_cos_long, loc_cos_lat);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }*/
+
+            return (!stations5km.isEmpty()) ? stations5km : new ArrayList<>();
         }
     }
 }

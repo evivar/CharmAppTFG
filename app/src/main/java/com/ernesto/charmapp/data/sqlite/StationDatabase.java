@@ -16,25 +16,33 @@ import com.ernesto.charmapp.domain.sqlite.daos.StationSQLiteDAO;
 import com.ernesto.charmapp.domain.sqlite.entities.StationSQLiteEntity;
 import com.ernesto.charmapp.interactors.responses.stationResponses.ReadAllStationsResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
 
-@Database(entities = {StationSQLiteEntity.class}, version = 11)
+@Database(entities = {StationSQLiteEntity.class}, version = 13)
 public abstract class StationDatabase extends RoomDatabase {
 
     private static StationDatabase instance;
 
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            System.out.println("ESTOY EN EL CALLBACK");
-            Log.d("StationDatabase", "onCreate: CALLBACK");
+            System.out.println("LLAMADA AL ONCREATE");
             new LoadStationsAT(instance).execute();
         }
+
+       /*+@Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+            System.out.println("LLAMADA AL ONOPEN");
+            new LoadStationsAT(instance).execute();
+        }*/
     };
 
     public static synchronized StationDatabase getInstance(Context context) {
@@ -44,6 +52,7 @@ public abstract class StationDatabase extends RoomDatabase {
                     .addCallback(roomCallback)
                     .build();
             //No tienes que hacer nada más, simplemente cuando vayas a hacer una query (y la bd no se haya creado antes, se ejecutará el callback y cargará esas tablas okey, gracias
+            instance.query("SELECT 1", null);
         }
         return instance;
     }
@@ -67,28 +76,29 @@ public abstract class StationDatabase extends RoomDatabase {
                     .getInstance()
                     .getAPI()
                     .readAllStations();
-            readAllStations.enqueue(new retrofit2.Callback<ReadAllStationsResponse>() {
-                @Override
-                public void onResponse(Call<ReadAllStationsResponse> call, Response<ReadAllStationsResponse> response) {
+            try {
+                Response<ReadAllStationsResponse> response = readAllStations.execute();
+                if (response.isSuccessful()) { //Ahora si, no?
                     ReadAllStationsResponse stationsResponse = response.body();
-                    if (!stationsResponse.getError()) {
-                        allStations = stationsResponse.getStations();
-                    } else {
-                        Log.d("Llenar BD", "Error al llenar la base de datos");
+                    List<StationRetrofit> stations = stationsResponse.getStations();
+                    for (int i = 0; i < stations.size(); i++) {
+                        StationRetrofit s = stations.get(i);
+                        System.out.println("Station " + i + " of " + stations.size());
+                        allStations.add(s);
+                        StationSQLiteEntity station = new StationSQLiteEntity(Integer.parseInt(s.getStationUrlId()), s.getCity(), s.getCountry(), s.getWebSource(), s.getType(), Double.parseDouble(s.getLongitude()), Double.parseDouble(s.getLat()), 0
+                                , 0, 0, 0, 0);
+                        station.setId(Integer.parseInt(s.getStationId()));
+                        station.setCos_latitude(Math.cos(station.getLatitude() * Math.PI / 180));
+                        station.setSin_latitude(Math.sin(station.getLatitude() * Math.PI / 180));
+                        station.setSin_longitude(Math.cos(station.getLongitude() * Math.PI / 180));
+                        station.setCos_longitude(Math.sin(station.getLongitude() * Math.PI / 180));
+                        stationDAO.createStation(station);
                     }
+                } else {
+                    Log.d("Llenar BD", "Error al llenar la base de datos");
                 }
-
-                @Override
-                public void onFailure(Call<ReadAllStationsResponse> call, Throwable t) {
-
-                }
-            });
-            System.out.println("IMPRIMIENDO DESDE STATIONDATABASE.JAVA");
-            for (StationRetrofit s : allStations) {
-                StationSQLiteEntity station = new StationSQLiteEntity(Integer.parseInt(s.getStationUrlId()), s.getCity(), s.getCountry(), s.getWebSource(), s.getType(), Double.parseDouble(s.getLongitude()), Double.parseDouble(s.getLat()), 0);
-                station.setId(Integer.parseInt(s.getStationId()));
-                System.out.println(station.toString());
-                //this.stationDAO.createStation(station);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             return null;
         }

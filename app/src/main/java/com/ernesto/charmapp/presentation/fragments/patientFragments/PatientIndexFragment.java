@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.ernesto.charmapp.R;
 import com.ernesto.charmapp.data.location.LocationAlertReceiver;
@@ -28,7 +27,6 @@ import com.ernesto.charmapp.domain.retrofitEntities.Patient;
 import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse;
 import com.ernesto.charmapp.interactors.responses.diaryResponses.DiaryResponse;
 import com.ernesto.charmapp.presentation.dialogs.InfoDialog;
-import com.ernesto.charmapp.presentation.viewModel.StationViewModel;
 
 import java.sql.Date;
 import java.util.Calendar;
@@ -236,8 +234,8 @@ public class PatientIndexFragment extends Fragment {
     }
 
     private void startLocationService() {
-        StationViewModel stationViewModel = ViewModelProviders.of(this).get(StationViewModel.class);
-        LocationAlertReceiver locationAlertReceiver = new LocationAlertReceiver(stationViewModel);
+        //StationViewModel stationViewModel = ViewModelProviders.of(this).get(StationViewModel.class);
+        LocationAlertReceiver locationAlertReceiver = new LocationAlertReceiver(/*stationViewModel*/);
         locationAlertReceiver.setAlarm(this.getContext());
         LocationAlertReceiver.enableBootReceiver(this.getContext());
     }

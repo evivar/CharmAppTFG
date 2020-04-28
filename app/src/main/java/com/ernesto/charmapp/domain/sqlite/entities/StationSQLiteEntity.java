@@ -27,7 +27,15 @@ public class StationSQLiteEntity {
     @Nullable
     private double altitude;
 
-    public StationSQLiteEntity(int url_id, String city, String country, String web_source, String type, double longitude, double latitude, double altitude) {
+    private double cos_latitude;
+
+    private double sin_latitude;
+
+    private double cos_longitude;
+
+    private double sin_longitude;
+
+    public StationSQLiteEntity(int url_id, String city, String country, String web_source, String type, double longitude, double latitude, double altitude, double cos_latitude, double sin_latitude, double cos_longitude, double sin_longitude) {
         this.url_id = url_id;
         this.city = city;
         this.country = country;
@@ -36,6 +44,10 @@ public class StationSQLiteEntity {
         this.longitude = longitude;
         this.latitude = latitude;
         this.altitude = altitude;
+        this.cos_latitude = cos_latitude;
+        this.sin_latitude = sin_latitude;
+        this.cos_longitude = cos_longitude;
+        this.sin_longitude = sin_longitude;
     }
 
     public int getId() {
@@ -108,6 +120,38 @@ public class StationSQLiteEntity {
 
     public void setAltitude(double altitude) {
         this.altitude = altitude;
+    }
+
+    public double getCos_latitude() {
+        return cos_latitude;
+    }
+
+    public void setCos_latitude(double cos_latitude) {
+        this.cos_latitude = cos_latitude;
+    }
+
+    public double getSin_latitude() {
+        return sin_latitude;
+    }
+
+    public void setSin_latitude(double sin_latitude) {
+        this.sin_latitude = sin_latitude;
+    }
+
+    public double getCos_longitude() {
+        return cos_longitude;
+    }
+
+    public void setCos_longitude(double cos_longitude) {
+        this.cos_longitude = cos_longitude;
+    }
+
+    public double getSin_longitude() {
+        return sin_longitude;
+    }
+
+    public void setSin_longitude(double sin_longitude) {
+        this.sin_longitude = sin_longitude;
     }
 
     @Override

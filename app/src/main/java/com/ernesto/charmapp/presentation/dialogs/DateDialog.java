@@ -33,6 +33,8 @@ public class DateDialog extends DialogFragment {
         int year = cal.get(Calendar.YEAR);
 
         android.app.DatePickerDialog datePickerDialog = new android.app.DatePickerDialog(getActivity(), listener, year, month, day);
+        datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMaxDate(cal.getTimeInMillis() + 30l * 24 * 60 * 60 * 1000);
 
         return datePickerDialog;
     }

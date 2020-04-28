@@ -16,10 +16,13 @@ import androidx.fragment.app.Fragment;
 import com.ernesto.charmapp.R;
 import com.ernesto.charmapp.data.retrofit.RetrofitClient;
 import com.ernesto.charmapp.domain.retrofitEntities.Patient;
+import com.ernesto.charmapp.interactors.hash.SHA512;
 import com.ernesto.charmapp.interactors.responses.UpdateResponse;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
+
+import java.security.NoSuchAlgorithmException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -109,41 +112,47 @@ public class PatientProfileFragment extends Fragment {
             public void onClick(View v) {
                 saveFields();
                 if (!oldPassword.equals("") && !newPassword.equals("")) {
-                    final Call<UpdateResponse> changePassword = RetrofitClient
-                            .getInstance()
-                            .getAPI()
-                            .updatePatientPassword(email, oldPassword, newPassword);
-                    changePassword.enqueue(new Callback<UpdateResponse>() {
-                        @Override
-                        public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {
-                            UpdateResponse changePasswordResponse = response.body();
-                            Toast.makeText(getActivity(), changePasswordResponse.getMensaje(), Toast.LENGTH_LONG).show();
-                            if (changePasswordResponse.getMensaje().equals("La contraseña actual no es correcta")) {
-                                oldPasswordTxt.setError("La contraseña actual no es correcta");
-                                oldPasswordTxt.requestFocus();
-                            }
-                            if(!changePasswordResponse.getError()){
-                                getActivity().getSupportFragmentManager().beginTransaction()
-                                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
-                                        .addToBackStack(null)
-                                        .replace(R.id.fragmentContainer_patient, PatientIndexFragment.create(patient), "PATIENT_INDEX_FRAGMENT")
-                                        .commit();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<UpdateResponse> call, Throwable t) {
-
-                        }
-                    });
-                }
-                else{
+                    try {
+                        updatePassword();
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
+                } else {
                     showErrorDialog();
                 }
             }
         });
-
         return v;
+    }
+
+    public void updatePassword() throws NoSuchAlgorithmException {
+        final Call<UpdateResponse> changePassword = RetrofitClient
+                .getInstance()
+                .getAPI()
+                .updatePatientPassword(email, SHA512.hashPassword(oldPassword), SHA512.hashPassword(newPassword));
+        changePassword.enqueue(new Callback<UpdateResponse>() {
+            @Override
+            public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {
+                UpdateResponse changePasswordResponse = response.body();
+                Toast.makeText(getActivity(), changePasswordResponse.getMensaje(), Toast.LENGTH_LONG).show();
+                if (changePasswordResponse.getMensaje().equals("La contraseña actual no es correcta")) {
+                    oldPasswordTxt.setError("La contraseña actual no es correcta");
+                    oldPasswordTxt.requestFocus();
+                }
+                if (!changePasswordResponse.getError()) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+                            .addToBackStack(null)
+                            .replace(R.id.fragmentContainer_patient, PatientIndexFragment.create(patient), "PATIENT_INDEX_FRAGMENT")
+                            .commit();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     public void saveFields() {
@@ -155,5 +164,6 @@ public class PatientProfileFragment extends Fragment {
         ErrorDialog errorDialog = new ErrorDialog("Error: Revise los siguientes campos antes de continuar", "Contraseña actual");
         errorDialog.show(getActivity().getSupportFragmentManager(), "ERROR_DIALOG");
     }
+
 
 }

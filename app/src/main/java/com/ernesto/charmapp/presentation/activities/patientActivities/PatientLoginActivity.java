@@ -16,13 +16,11 @@ import androidx.core.app.ActivityCompat;
 import com.ernesto.charmapp.R;
 import com.ernesto.charmapp.data.retrofit.RetrofitClient;
 import com.ernesto.charmapp.data.sharedPreferences.SharedPreferencesManager;
+import com.ernesto.charmapp.interactors.hash.SHA512;
 import com.ernesto.charmapp.interactors.responses.patientResponses.PatientResponse;
 import com.ernesto.charmapp.interactors.validators.LoginValidator;
 import com.ernesto.charmapp.presentation.activities.onBoardingActivities.OnBoardingActivity;
 
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import retrofit2.Call;
@@ -120,7 +118,7 @@ public class PatientLoginActivity extends AppCompatActivity {
         email = emailTxt.getText().toString();
         password = passwordTxt.getText().toString();
         if (validator.validate(email, password)) {
-            Call<PatientResponse> patientLogin = RetrofitClient.getInstance().getAPI().login(email, SHA512(password));
+            Call<PatientResponse> patientLogin = RetrofitClient.getInstance().getAPI().login(email, SHA512.hashPassword(password));
             patientLogin.enqueue(new Callback<PatientResponse>() {
                 @Override
                 public void onResponse(Call<PatientResponse> call, Response<PatientResponse> response) {
@@ -152,24 +150,6 @@ public class PatientLoginActivity extends AppCompatActivity {
     // </editor-fold>
 
     // <editor-fold desc="Métodos privados">
-
-    /**
-     * Método que hashea la contraseña del usuario mediante el algoritmo SHA512
-     *
-     * @param password Contraseña introducida por el usuario
-     * @return Contraseña hasheada
-     * @throws NoSuchAlgorithmException Se lanza si el algoritmo no estuvera disponible
-     */
-    private String SHA512(String password) throws NoSuchAlgorithmException {
-        String hashedPassword = "";
-
-        MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
-
-        messageDigest.update(password.getBytes(StandardCharsets.UTF_8));
-        byte[] digest = messageDigest.digest();
-        hashedPassword = String.format("%064x", new BigInteger(1, digest));
-        return hashedPassword;
-    }
 
     public void requestPermissions() {
         if (ActivityCompat.checkSelfPermission(this,
