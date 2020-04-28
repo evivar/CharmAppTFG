@@ -5,7 +5,6 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     tools:context=".presentation.fragments.onBoardingFragments.OnBoardingWelcomeFragment">
 
     <TextView
@@ -13,12 +12,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/muli"
+        android:maxLines="3"
         android:text="@string/fragment_on_boarding_welcome_welcomeTxtOnBoarding_text"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="#ffffff"
+        android:textColor="#63B6E2"
         android:textSize="74sp"
         android:textStyle="bold"
+        app:autoSizeMinTextSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

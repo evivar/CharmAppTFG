@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/viewPagerOnBoarding"
         app:stl_dividerThickness="0dp"
-        app:stl_indicatorColor="@color/colorPrimaryDark" />
+        app:stl_indicatorColor="#63B6E2" />
 
     <LinearLayout
         android:id="@+id/botonesLayout"

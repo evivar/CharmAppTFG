@@ -163,7 +163,7 @@
     <string name="fragment_on_boarding_index_IndexDescriptionTxtOnBoarding_text">Esta es la pantalla principal. Desde aquí podrás acceder a todas las funciones de la aplicación</string>
     <string name="fragment_on_boarding_profile_ProfileDescriptionTxtOnBoarding_text">Aquí podrás ver la información de tu perfil y modificar la contraseña</string>
     <string name="fragment_on_boarding_profile_ProfileTxtOnBoarding_text">Información del usuario</string>
-    <string name="fragment_on_boarding_welcome_welcomeTxtOnBoarding_text">Bienvenido a CHARM</string>
+    <string name="fragment_on_boarding_welcome_welcomeTxtOnBoarding_text">Bienvenido a CharmApp</string>
     <string name="fragment_pain_quality_cualidadDelDolorLbl_painQuality_text">Cualidad del dolor</string>
     <string name="fragment_pain_quality_locationLbl_painQuality_text">Localización del dolor</string>
     <string name="fragment_pain_quality_locationRightRButton_painQuality_text">Hemicraneal derecho</string>
