@@ -12,7 +12,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.ernesto.charmapp.data.retrofit.RetrofitClient;
 import com.ernesto.charmapp.domain.retrofitEntities.StationRetrofit;
+import com.ernesto.charmapp.domain.sqlite.daos.ForecastDataSQLiteDAO;
 import com.ernesto.charmapp.domain.sqlite.daos.StationSQLiteDAO;
+import com.ernesto.charmapp.domain.sqlite.entities.ForecastDataSQLiteEntity;
 import com.ernesto.charmapp.domain.sqlite.entities.StationSQLiteEntity;
 import com.ernesto.charmapp.interactors.responses.stationResponses.ReadAllStationsResponse;
 
@@ -23,7 +25,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Response;
 
-@Database(entities = {StationSQLiteEntity.class}, version = 13)
+@Database(entities = {StationSQLiteEntity.class, ForecastDataSQLiteEntity.class}, version = 14)
 public abstract class StationDatabase extends RoomDatabase {
 
     private static StationDatabase instance;
@@ -58,6 +60,8 @@ public abstract class StationDatabase extends RoomDatabase {
     }
 
     public abstract StationSQLiteDAO stationDAO();
+
+    public abstract ForecastDataSQLiteDAO forecastDataDAO();
 
     private static class LoadStationsAT extends AsyncTask<Void, Void, Void> {
 

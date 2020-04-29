@@ -58,30 +58,18 @@ public class LocationAlertReceiver extends BroadcastReceiver {
     //TODO: Las pilla de puta madre tronkii
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        // this.checkDBPopulated(context);
-
-        new MeterUnRegistroAT().execute(context);
         PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
         // Poner el codigo
         String locGPS = "";
         double latGPS = 0;
         double longGPS = 0;
+        double latNTW = 0;
+        double longNTW = 0;
         String locNTW = "";
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-
             Toast.makeText(context, "No has dado los permisos necesarios", Toast.LENGTH_SHORT).show();
-
-            //return;
         } else {
             Location gps;
             Location ntw;
@@ -91,27 +79,21 @@ public class LocationAlertReceiver extends BroadcastReceiver {
                     locGPS = "Latitud: " + String.valueOf(gps.getLatitude()) + "Longitud: " + String.valueOf(gps.getLongitude());
                     latGPS = gps.getLatitude();
                     longGPS = gps.getLongitude();
+                    Log.d(TAG, "onReceive: Latitud: " + latGPS + " Longitud: " + longGPS);
                 }
-            }
-            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                 ntw = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 if (ntw != null) {
                     locNTW = "Latitud: " + String.valueOf(ntw.getLatitude()) + "Longitud: " + String.valueOf(ntw.getLongitude());
+                    latNTW = ntw.getLatitude();
+                    longNTW = ntw.getLongitude();
+                    Log.d(TAG, "onReceive: Latitud: " + latNTW + " Longitud: " + longNTW);
                 }
+            } else {
+                // TODO: En el caso que no se pueda coger la localización
             }
-            /*try {
-                List<StationSQLiteEntity> nearStations = new ReadNearStationsAT(latGPS, longGPS).execute(context).get();
-                for (StationSQLiteEntity s : nearStations) {
-                    Log.d(TAG, "onReceive: " + s.toString());
-                }
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
 
-            //Toast.makeText(context, "GPS: " + locGPS + "\n" + "NTW: " + locNTW, Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "onReceive: " + "GPS: " + locGPS + "\n" + "NTW: " + locNTW);
+
         }
 
 
