@@ -4,61 +4,55 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
 import com.ernesto.charmapp.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RegisterRequestFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class RegisterRequestFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private EditText editTextName;
 
-    public RegisterRequestFragment() {
-        // Required empty public constructor
-    }
+    private EditText editTextSurname;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RegisterRequestFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RegisterRequestFragment newInstance(String param1, String param2) {
-        RegisterRequestFragment fragment = new RegisterRequestFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private EditText editTextEmail;
+
+    private EditText editTextPhone;
+
+    private Button sendBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register_request, container, false);
+        View v = inflater.inflate(R.layout.fragment_register_request, container, false);
+
+        this.editTextName = v.findViewById(R.id.nameTxt_request);
+        this.editTextSurname = v.findViewById(R.id.surnameTxt_request);
+        this.editTextEmail = v.findViewById(R.id.emailTxt_request);
+        this.editTextPhone = v.findViewById(R.id.phoneTxt_request);
+
+        this.sendBtn = v.findViewById(R.id.saveBtn_request);
+
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = editTextName.getText().toString();
+                String surname = editTextSurname.getText().toString();
+                String email = editTextEmail.getText().toString();
+                String phone = editTextPhone.getText().toString();
+
+
+            }
+        });
+
+        return v;
     }
 }

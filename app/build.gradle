@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-string-extractor'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 'android-R'
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.ernesto.charmapp"
         minSdkVersion 22
-        targetSdkVersion 29
+        targetSdkVersion 'R'
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
