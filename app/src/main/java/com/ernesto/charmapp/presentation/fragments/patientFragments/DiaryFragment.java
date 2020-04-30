@@ -1,11 +1,14 @@
 package com.ernesto.charmapp.presentation.fragments.patientFragments;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -20,11 +23,13 @@ import com.ernesto.charmapp.domain.retrofitEntities.Diary;
 import com.ernesto.charmapp.domain.retrofitEntities.Patient;
 import com.ernesto.charmapp.interactors.responses.diaryResponses.DiaryResponse;
 import com.ernesto.charmapp.interactors.validators.DiaryValidator;
+import com.ernesto.charmapp.presentation.dialogs.DiaryDateDialog;
 import com.ernesto.charmapp.presentation.dialogs.ErrorDialog;
 import com.skyhope.eventcalenderlibrary.CalenderEvent;
 import com.skyhope.eventcalenderlibrary.model.Event;
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import retrofit2.Call;
@@ -41,6 +46,10 @@ public class DiaryFragment extends Fragment {
     private Patient patient;
 
     private Diary diary;
+
+    private EditText diaryDateTxt;
+
+    private String diaryDate;
 
     private EditText sleepTimeTxt;
 
@@ -88,6 +97,8 @@ public class DiaryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_diary, container, false);
 
+        this.diaryDateTxt = v.findViewById(R.id.diaryDateTxt_diary);
+        this.diaryDateTxt.setText(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
         this.sleepTimeTxt = v.findViewById(R.id.sleepTimeTxt_diary);
         this.sportTimeSpinner = v.findViewById(R.id.sportTimeSpinner_diary);
         this.alcoholSpinner = v.findViewById(R.id.alcoholSpinner_diary);
@@ -95,9 +106,16 @@ public class DiaryFragment extends Fragment {
         this.feelingTxt = v.findViewById(R.id.feelingTxt_diary);
         this.calenderEvent = v.findViewById(R.id.calender_event);
 
-        if(diary.getSleepTime() != (null)){
+        if (diary.getSleepTime() != (null)) {
             fillDiary();
         }
+
+        this.diaryDateTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickerDialog(diaryDateTxt);
+            }
+        });
 
         this.saveBtn = v.findViewById(R.id.saveBtn_diary);
         this.saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -105,14 +123,15 @@ public class DiaryFragment extends Fragment {
             public void onClick(final View view) {
                 saveFields();
                 validator = new DiaryValidator();
-                if (validator.validate(sleepTime, sportTime, alcohol, smoke, feeling)) {
+                if (validator.validate(sleepTime, diaryDate, sportTime, alcohol, smoke, feeling, patient.getPatientId())) {
                     Call<DiaryResponse> createDiary = RetrofitClient
                             .getInstance()
                             .getAPI()
-                            .createDiary(patient.getPatientId(), new Date(System.currentTimeMillis()).toString(), sleepTime, "123456789", sportTime, alcohol, smoke, feeling);
+                            .createDiary(patient.getPatientId(), /*new Date(System.currentTimeMillis()).toString()*/diaryDate, sleepTime, "123456789", sportTime, alcohol, smoke, feeling);
                     createDiary.enqueue(new Callback<DiaryResponse>() {
                         @Override
                         public void onResponse(Call<DiaryResponse> call, Response<DiaryResponse> response) {
+                            Log.d("Crear diario", "onResponse: " + response.body().toString());
                             DiaryResponse diaryResponse = response.body();
                             if (!diaryResponse.getError()) {
                                 Calendar calendar = Calendar.getInstance();
@@ -125,9 +144,9 @@ public class DiaryFragment extends Fragment {
                                         .replace(R.id.fragmentContainer_patient, PatientIndexFragment.create(patient), "PATIENT_INDEX_FRAGMENT")
                                         .commit();
                             } else if ((diaryResponse.getError()) && (diaryResponse.getMensaje().equals("Ya ha rellenado el formulario para el dia de hoy"))) {
-                                Toast.makeText(getActivity(), diaryResponse.getMensaje(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "Fecha no válida, ya has rellenado el diario para el día: " + diaryDate, Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(getActivity(), diaryResponse.getMensaje(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "Fecha no válida, ya has rellenado el diario para el día: " + diaryDate, Toast.LENGTH_LONG).show();
                             }
                         }
 
@@ -146,6 +165,7 @@ public class DiaryFragment extends Fragment {
     }
 
     public void saveFields() {
+        diaryDate = diaryDateTxt.getText().toString();
         sleepTime = sleepTimeTxt.getText().toString();
         sportTime = sportTimeSpinner.getSelectedItem().toString();
         alcohol = alcoholSpinner.getSelectedItem().toString();
@@ -153,9 +173,49 @@ public class DiaryFragment extends Fragment {
         feeling = feelingTxt.getText().toString();
     }
 
+    public void showDatePickerDialog(final EditText dateTxt) {
+        DiaryDateDialog newFragment = DiaryDateDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 porque Enero es el 0
+                final String selectedDate = year + "-" + twoDigits(month + 1) + "-" + twoDigits(day);
+                try {
+                    java.util.Date datePickerDate = new SimpleDateFormat("dd-MM-yyyy").parse(selectedDate);
+                    dateTxt.setText(selectedDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+    }
+
     public void showErrorDialog() {
         ErrorDialog errorDialog = new ErrorDialog("Error: Revise los siguientes campos antes de continuar", validator.getWrongFields());
         errorDialog.show(getActivity().getSupportFragmentManager(), "ERROR_DIALOG");
+    }
+
+    public void showErrorDialog(String error, String msg) {
+        ErrorDialog errorDialog = new ErrorDialog(error, msg);
+        errorDialog.show(getActivity().getSupportFragmentManager(), "ERROR_DIALOG");
+    }
+
+    private boolean isValidDate(String selectedDate) {
+        boolean ok = false;
+        try {
+            java.util.Date today = new java.util.Date();
+            java.util.Date userDate = new SimpleDateFormat("yyyy-MM-dd").parse(selectedDate);
+
+            ok = today.before(new java.util.Date((userDate.getTime() + 16l * 60 * 60 * 24 * 1000))) && today.after(userDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return ok;
+    }
+
+
+    private String twoDigits(int n) {
+        return (n <= 9) ? ("0" + n) : String.valueOf(n);
     }
 
     private void fillDiary() {

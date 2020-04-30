@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "station_table")
 public class StationSQLiteEntity {
 
+
     @PrimaryKey(autoGenerate = true)
     private int id;
 

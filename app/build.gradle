@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.ernesto.charmapp"
         minSdkVersion 22
-        targetSdkVersion 'R'
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

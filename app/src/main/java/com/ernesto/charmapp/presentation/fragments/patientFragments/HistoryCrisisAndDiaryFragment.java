@@ -196,7 +196,7 @@ public class HistoryCrisisAndDiaryFragment extends Fragment {
                     e.printStackTrace();
                 }
                 diaryValidator = new DiaryValidator();
-                if (diaryValidator.validate(sleepTimeDiary, sportTimeDiary, alcoholDiary, smokeDiary, feelingDiary)) {
+                if (diaryValidator.validate(sleepTimeDiary, diary.getDate(), sportTimeDiary, alcoholDiary, smokeDiary, feelingDiary, patient.getPatientId())) {
 
                     final Call<UpdateResponse> updateDiary = RetrofitClient
                             .getInstance()

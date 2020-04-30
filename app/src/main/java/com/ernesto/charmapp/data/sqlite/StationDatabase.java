@@ -39,7 +39,7 @@ public abstract class StationDatabase extends RoomDatabase {
             new LoadStationsAT(instance).execute();
         }
 
-       /*+@Override
+       /*@Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
             System.out.println("LLAMADA AL ONOPEN");

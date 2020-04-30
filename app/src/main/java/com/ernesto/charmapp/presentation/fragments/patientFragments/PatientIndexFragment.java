@@ -26,7 +26,6 @@ import com.ernesto.charmapp.domain.retrofitEntities.Headache;
 import com.ernesto.charmapp.domain.retrofitEntities.Patient;
 import com.ernesto.charmapp.interactors.responses.crisisResponses.CrisisResponse;
 import com.ernesto.charmapp.interactors.responses.diaryResponses.DiaryResponse;
-import com.ernesto.charmapp.presentation.dialogs.InfoDialog;
 
 import java.sql.Date;
 import java.util.Calendar;
@@ -67,7 +66,7 @@ public class PatientIndexFragment extends Fragment {
         patient = (Patient) arguments.getSerializable("patient");
         this.checkIfDiaryIsFilled();
         this.createDiaryAlarm();
-        //this.startLocationService();
+        this.startLocationService();
     }
 
     @Nullable
@@ -92,7 +91,12 @@ public class PatientIndexFragment extends Fragment {
                             if (diaryResponse.getDiary() != null && !diaryResponse.getError()) {
                                 Diary lastDiary = diaryResponse.getDiary();
                                 Date date = new Date(System.currentTimeMillis());
-                                if (!lastDiary.getDate().equals(date.toString())) {
+                                getActivity().getSupportFragmentManager().beginTransaction()
+                                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+                                        .addToBackStack(null)
+                                        .replace(R.id.fragmentContainer_patient, DiaryFragment.create(patient, lastDiary), "DIARY_FRAGMENT")
+                                        .commit();
+                                /*if (!lastDiary.getDate().equals(date.toString())) {
                                     getActivity().getSupportFragmentManager().beginTransaction()
                                             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                                             .addToBackStack(null)
@@ -101,7 +105,7 @@ public class PatientIndexFragment extends Fragment {
                                 } else {
                                     InfoDialog dialog = new InfoDialog("Ya ha rellenado el diario de hoy");
                                     dialog.show(getFragmentManager(), "tagAlerta");
-                                }
+                                }*/
                             } else {
                                 Toast.makeText(getActivity(), "Primer diario del paciente", Toast.LENGTH_LONG).show();
                                 getActivity().getSupportFragmentManager().beginTransaction()

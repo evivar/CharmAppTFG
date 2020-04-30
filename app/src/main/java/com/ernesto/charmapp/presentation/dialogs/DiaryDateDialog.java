@@ -9,12 +9,12 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
-public class DateDialog extends DialogFragment {
+public class DiaryDateDialog extends DialogFragment {
 
     private android.app.DatePickerDialog.OnDateSetListener listener;
 
-    public static DateDialog newInstance(android.app.DatePickerDialog.OnDateSetListener listener) {
-        DateDialog fragment = new DateDialog();
+    public static DiaryDateDialog newInstance(android.app.DatePickerDialog.OnDateSetListener listener) {
+        DiaryDateDialog fragment = new DiaryDateDialog();
         fragment.setListener(listener);
         return fragment;
     }
@@ -33,8 +33,8 @@ public class DateDialog extends DialogFragment {
         int year = cal.get(Calendar.YEAR);
 
         android.app.DatePickerDialog datePickerDialog = new android.app.DatePickerDialog(getActivity(), listener, year, month, day);
-        datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
-        datePickerDialog.getDatePicker().setMaxDate(cal.getTimeInMillis() + 30l * 24 * 60 * 60 * 1000);
+        datePickerDialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis() - 15l * 24 * 60 * 60 * 1000);
 
         return datePickerDialog;
     }

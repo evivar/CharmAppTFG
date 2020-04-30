@@ -158,8 +158,7 @@ public class PatientLoginActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                             Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.READ_CALENDAR,
-                            Manifest.permission.WRITE_CALENDAR},
+                            Manifest.permission.INTERNET},
                     1);
         }
     }

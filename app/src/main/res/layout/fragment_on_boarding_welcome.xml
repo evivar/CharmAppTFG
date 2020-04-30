@@ -12,16 +12,24 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/muli"
-        android:maxLines="3"
+        android:maxLines="2"
         android:text="@string/fragment_on_boarding_welcome_welcomeTxtOnBoarding_text"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="#63B6E2"
-        android:textSize="74sp"
-        android:textStyle="bold"
+        android:textColor="#05b5dd"
+        android:textSize="40sp"
         app:autoSizeMinTextSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_icono"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTxtOnBoarding" />
 </androidx.constraintlayout.widget.ConstraintLayout>

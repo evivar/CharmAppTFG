@@ -63,6 +63,22 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/diaryDateLbl_diary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Fecha del diario" />
+
+                    <EditText
+                        android:id="@+id/diaryDateTxt_diary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:inputType="date"
+                        android:textSize="14sp" />
+
+                    <TextView
                         android:id="@+id/sleepTimeLbl_diary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

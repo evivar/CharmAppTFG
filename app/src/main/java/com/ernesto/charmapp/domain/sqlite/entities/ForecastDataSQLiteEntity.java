@@ -1,22 +1,27 @@
 package com.ernesto.charmapp.domain.sqlite.entities;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
-@Entity(tableName = "forecastData_table")
+@Entity(tableName = "forecastData_table", primaryKeys = {"patient_id", "timestamp"})
+
 public class ForecastDataSQLiteEntity {
 
-    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo
+    @NonNull
     private int patient_id;
-
-    @PrimaryKey(autoGenerate = false)
-    private String timestamp;
 
     private double avg_temp;
 
     private double avg_pressure;
 
     private double avg_rainfall;
+
+    @ColumnInfo
+    @NonNull
+    private String timestamp;
+
 
     public ForecastDataSQLiteEntity(double avg_temp, double avg_pressure, double avg_rainfall) {
         this.avg_temp = avg_temp;

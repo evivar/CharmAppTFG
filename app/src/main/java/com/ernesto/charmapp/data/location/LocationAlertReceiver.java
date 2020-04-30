@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
-import com.ernesto.charmapp.data.sharedPreferences.SharedPreferencesManager;
 import com.ernesto.charmapp.data.sqlite.StationRepository;
 import com.ernesto.charmapp.domain.sqlite.entities.StationSQLiteEntity;
 import com.ernesto.charmapp.presentation.viewModel.StationViewModel;
@@ -35,6 +34,7 @@ import com.ernesto.charmapp.presentation.viewModel.StationViewModel;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class LocationAlertReceiver extends BroadcastReceiver {
 
@@ -81,7 +81,8 @@ public class LocationAlertReceiver extends BroadcastReceiver {
                     longGPS = gps.getLongitude();
                     Log.d(TAG, "onReceive: Latitud: " + latGPS + " Longitud: " + longGPS);
                 }
-            } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            }
+            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                 ntw = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 if (ntw != null) {
                     locNTW = "Latitud: " + String.valueOf(ntw.getLatitude()) + "Longitud: " + String.valueOf(ntw.getLongitude());
@@ -89,23 +90,20 @@ public class LocationAlertReceiver extends BroadcastReceiver {
                     longNTW = ntw.getLongitude();
                     Log.d(TAG, "onReceive: Latitud: " + latNTW + " Longitud: " + longNTW);
                 }
-            } else {
-                // TODO: En el caso que no se pueda coger la localización
             }
 
 
+            List<StationSQLiteEntity> meteoStations;
+            /*meteoStations = */
+            new ReadNearStationsAT(latGPS, longGPS).execute(context);
+                /*System.out.println(meteoStations.size());
+                for(StationSQLiteEntity s : meteoStations){
+                    System.out.println(s.toString());
+                }*/
+
         }
 
 
-    }
-
-    private void checkDBPopulated(Context context) {
-        StationRepository repository = new StationRepository(context);
-        if (!SharedPreferencesManager.getInstance(context).isDBPopulate()) {
-            repository.populateDatabase();
-        } else {
-            repository.readAllStations();
-        }
     }
 
     public void setAlarm(Context context) {
@@ -123,20 +121,7 @@ public class LocationAlertReceiver extends BroadcastReceiver {
         alarmManager.cancel(pendingIntent);
     }
 
-    private static class MeterUnRegistroAT extends AsyncTask<Context, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Context... contexts) {
-
-
-            StationRepository repository = new StationRepository(contexts[0]);
-            StationSQLiteEntity station = new StationSQLiteEntity(99999, "Test", "Test", "Test", "Test", 60, -3, 0, 0, 0, 0, 0);
-            repository.createStation(station);
-            return null;
-        }
-    }
-
-    private static class ReadNearStationsAT extends AsyncTask<Context, Void, List<StationSQLiteEntity>> {
+    private static class ReadNearStationsAT extends AsyncTask<Context, Void, Void> {
 
         private double loc_cos_lat;
 
@@ -154,18 +139,21 @@ public class LocationAlertReceiver extends BroadcastReceiver {
         }
 
         @Override
-        protected List<StationSQLiteEntity> doInBackground(Context... contexts) {
+        protected Void doInBackground(Context... contexts) {
             StationRepository repository = new StationRepository(contexts[0]);
             List<StationSQLiteEntity> stations5km = new ArrayList<>();
-            /*try {
-                stations5km = repository.readNearStationsV2(loc_sin_lat, loc_cos_lat, loc_cos_long, loc_cos_lat);
+            try {
+                stations5km = repository.readMeteoStations(loc_sin_lat, loc_cos_lat, loc_cos_long, loc_sin_long);
+                for (int i = 0; i < stations5km.size(); i++) {
+                    System.out.println(stations5km.get(i).toString());
+                }
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }*/
+            }
 
-            return (!stations5km.isEmpty()) ? stations5km : new ArrayList<>();
+            return null;
         }
     }
 }
