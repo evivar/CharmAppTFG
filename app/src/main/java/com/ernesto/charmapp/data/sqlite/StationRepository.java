@@ -14,7 +14,6 @@ import com.ernesto.charmapp.interactors.responses.stationResponses.ReadAllStatio
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,11 +24,10 @@ public class StationRepository {
     public static final double FIVE_KM = 5.0;
 
     public static final double DEG2RAD = 6371;
-
-    private StationSQLiteDAO stationDAO;
-
-    private LiveData<List<StationSQLiteEntity>> allStations;
     public static final double MAX_DISTANCE = Math.cos(FIVE_KM / DEG2RAD);
+    public static final double MAX_DISTANCE1 = 0.99999999;
+    private StationSQLiteDAO stationDAO;
+    private LiveData<List<StationSQLiteEntity>> allStations;
     private List<StationSQLiteEntity> allStationsList;
 
     public StationRepository(Context context) {
@@ -51,12 +49,35 @@ public class StationRepository {
         return allStations;
     }
 
-    public List<StationSQLiteEntity> readMeteoStations(double sin_lat, double cos_lat, double cos_long, double sin_long) throws ExecutionException, InterruptedException {
-        return new ReadMeteoStationsAT(stationDAO).execute(sin_lat, cos_lat, cos_long, sin_long).get();
+    public List<StationSQLiteEntity> readAllStationsList() {
+        return allStationsList;
     }
 
-    public List<StationSQLiteEntity> readPollutionStations(double sin_lat, double cos_lat, double cos_long, double sin_long) throws ExecutionException, InterruptedException {
-        return new ReadPollutionStationsAT(stationDAO).execute(sin_lat, cos_lat, cos_long, sin_long).get();
+    public List<StationSQLiteEntity> readMeteoStations(double latitude, double longitude) {
+        Log.d("Repository", "readMeteoStations: allstationsList" + allStationsList.size());
+        List<StationSQLiteEntity> meteoStations = new ArrayList<>();
+        for (StationSQLiteEntity s : allStationsList) {
+            if ((Math.acos(Math.sin(s.getLatitude() * 0.0175) * Math.sin(latitude * 0.0175) +
+                    Math.cos(s.getLatitude() * 0.0175) * Math.cos(latitude * 0.0175) * Math.cos((longitude * 0.0175) - (s.getLongitude() * 0.0175))) * 3959 <= 3.10686)
+                    &&
+                    (s.getType().equals("meteo"))) {
+                meteoStations.add(s);
+            }
+        }
+        return meteoStations;
+    }
+
+    public List<StationSQLiteEntity> readPollutionStations(double latitude, double longitude) {
+        List<StationSQLiteEntity> pollutionStations = new ArrayList<>();
+        for (StationSQLiteEntity s : allStationsList) {
+            if ((Math.acos(Math.sin(s.getLatitude() * 0.0175) * Math.sin(latitude * 0.0175) +
+                    Math.cos(s.getLatitude() * 0.0175) * Math.cos(latitude * 0.0175) * Math.cos((longitude * 0.0175) - (s.getLongitude() * 0.0175))) * 3959 <= 3.10686)
+                    &&
+                    (s.getType().equals("pollution"))) {
+                pollutionStations.add(s);
+            }
+        }
+        return pollutionStations;
     }
 
     public void updateStation(StationSQLiteEntity station) {
@@ -149,11 +170,11 @@ public class StationRepository {
 
         @Override
         protected List<StationSQLiteEntity> doInBackground(Double... coordinates) {
-            return stationDAO.readMeteoStations(coordinates[0], coordinates[1], coordinates[2], coordinates[3], MAX_DISTANCE);
+            return stationDAO.readMeteoStations(coordinates[0], coordinates[1], coordinates[2], coordinates[3], MAX_DISTANCE1);
         }
     }
 
-    private static class ReadPollutionStationsAT extends AsyncTask<Double, Void, List<StationSQLiteEntity>> {
+    private static class ReadPollutionStationsAT extends AsyncTask<Double, Void, List<String>> {
         private StationSQLiteDAO stationDAO;
 
         public ReadPollutionStationsAT(StationSQLiteDAO stationDAO) {
@@ -161,8 +182,8 @@ public class StationRepository {
         }
 
         @Override
-        protected List<StationSQLiteEntity> doInBackground(Double... coordinates) {
-            return stationDAO.readPollutionStations(coordinates[0], coordinates[1], coordinates[2], coordinates[3], MAX_DISTANCE);
+        protected List<String> doInBackground(Double... coordinates) {
+            return stationDAO.readPollutionStations(coordinates[0], coordinates[1], coordinates[2], coordinates[3], MAX_DISTANCE, "pollution");
         }
     }
 

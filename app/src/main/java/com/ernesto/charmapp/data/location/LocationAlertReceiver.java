@@ -27,11 +27,11 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
+import com.ernesto.charmapp.data.sqlite.ForecastDataRepository;
 import com.ernesto.charmapp.data.sqlite.StationRepository;
 import com.ernesto.charmapp.domain.sqlite.entities.StationSQLiteEntity;
 import com.ernesto.charmapp.presentation.viewModel.StationViewModel;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -93,13 +93,17 @@ public class LocationAlertReceiver extends BroadcastReceiver {
             }
 
 
-            List<StationSQLiteEntity> meteoStations;
-            /*meteoStations = */
-            new ReadNearStationsAT(latGPS, longGPS).execute(context);
-                /*System.out.println(meteoStations.size());
-                for(StationSQLiteEntity s : meteoStations){
+            try {
+                List<StationSQLiteEntity> meteoStations = new ReadNearStationsAT(latNTW, longNTW).execute(context).get();
+                System.out.println(meteoStations.size());
+                for (StationSQLiteEntity s : meteoStations) {
                     System.out.println(s.toString());
-                }*/
+                }
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
         }
 
@@ -121,7 +125,11 @@ public class LocationAlertReceiver extends BroadcastReceiver {
         alarmManager.cancel(pendingIntent);
     }
 
-    private static class ReadNearStationsAT extends AsyncTask<Context, Void, Void> {
+    private static class ReadNearStationsAT extends AsyncTask<Context, Void, List<StationSQLiteEntity>> {
+
+        private double latitude;
+
+        private double longitude;
 
         private double loc_cos_lat;
 
@@ -132,28 +140,25 @@ public class LocationAlertReceiver extends BroadcastReceiver {
         private double loc_sin_long;
 
         public ReadNearStationsAT(double latitude, double longitude) {
-            this.loc_cos_lat = Math.cos(latitude * Math.PI / 180);
-            this.loc_sin_lat = Math.sin(latitude * Math.PI / 180);
-            this.loc_cos_long = Math.cos(longitude * Math.PI / 180);
-            this.loc_sin_long = Math.sin(longitude * Math.PI / 180);
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.loc_cos_lat = Math.cos((latitude * Math.PI) / 180);
+            this.loc_sin_lat = Math.sin((latitude * Math.PI) / 180);
+            this.loc_cos_long = Math.cos((longitude * Math.PI) / 180);
+            this.loc_sin_long = Math.sin((longitude * Math.PI) / 180);
+            this.calcCos();
+        }
+
+        private void calcCos() {
+            Log.d(TAG, "calcCos: " + loc_sin_lat + " " + loc_cos_lat + " " + loc_sin_long + " " + loc_cos_long);
         }
 
         @Override
-        protected Void doInBackground(Context... contexts) {
-            StationRepository repository = new StationRepository(contexts[0]);
-            List<StationSQLiteEntity> stations5km = new ArrayList<>();
-            try {
-                stations5km = repository.readMeteoStations(loc_sin_lat, loc_cos_lat, loc_cos_long, loc_sin_long);
-                for (int i = 0; i < stations5km.size(); i++) {
-                    System.out.println(stations5km.get(i).toString());
-                }
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            return null;
+        protected List<StationSQLiteEntity> doInBackground(Context... contexts) {
+            StationRepository stationRepository = new StationRepository(contexts[0]);
+            ForecastDataRepository forecastRepository = new ForecastDataRepository(contexts[0]);
+            List<StationSQLiteEntity> meteoStations = stationRepository.readMeteoStations(latitude, longitude);
+            return meteoStations;
         }
     }
 }
